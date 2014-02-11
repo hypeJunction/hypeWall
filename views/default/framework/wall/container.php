@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * Displays status and upload forms
+ */
+
+namespace hypeJunction\Wall;
+
+if (!elgg_is_logged_in()) {
+	return;
+}
+
+if (!elgg_in_context('activity') && !elgg_in_context('wall')) {
+	return;
+}
+
+elgg_load_js('jquery.form');
+elgg_load_css('wall');
+elgg_load_js('wall.status');
+
+$user = elgg_get_logged_in_user_entity();
+$page_owner = elgg_get_page_owner_entity();
+
+$user_icon = elgg_view_entity_icon($user, 'medium', array(
+	'use_hover' => false,
+	'img_class' => 'wall-poster-avatar'
+		));
+
+if ($page_owner && $page_owner->guid != $user->guid) {
+	$page_owner_icon = elgg_view_entity_icon($page_owner, 'small', array(
+		'use_hover' => false,
+		'img_class' => 'wall-owner-avatar'
+	));
+}
+
+if (elgg_get_plugin_setting('status', PLUGIN_ID)) {
+	elgg_register_menu_item('wall-filter', array(
+		'name' => 'status',
+		'text' => '<i class="wall-icon wall-icon-status"></i>',
+		'title' => elgg_echo('wall:status'),
+		'href' => '#wall-form-status',
+		'class' => 'wall-tab',
+		'selected' => true,
+		'priority' => 100
+	));
+	$forms = elgg_view_form('wall/status', array(
+		'id' => 'wall-form-status',
+		'class' => 'wall-form',
+			), $vars);
+}
+
+if (elgg_get_plugin_setting('url', PLUGIN_ID)) {
+	elgg_register_menu_item('wall-filter', array(
+		'name' => 'url',
+		'text' => '<i class="wall-icon wall-icon-url"></i>',
+		'title' => elgg_echo('wall:url'),
+		'href' => '#wall-form-url',
+		'class' => 'wall-tab',
+		'priority' => 150
+	));
+	$forms .= elgg_view_form('wall/url', array(
+		'id' => 'wall-form-url',
+		'class' => 'wall-form hidden',
+			), $vars);
+}
+
+if (elgg_get_plugin_setting('photo', PLUGIN_ID)) {
+	elgg_register_menu_item('wall-filter', array(
+		'name' => 'photo',
+		'text' => '<i class="wall-icon wall-icon-photo"></i>',
+		'title' => elgg_echo('wall:photo'),
+		'href' => '#wall-form-photo',
+		'class' => 'wall-tab',
+		'priority' => 200
+	));
+	$forms .= elgg_view_form('wall/photo', array(
+		'id' => 'wall-form-photo',
+		'class' => 'wall-form hidden',
+		'enctype' => 'multipart/form-data',
+			), $vars);
+}
+
+//if (elgg_get_plugin_setting('file', PLUGIN_ID)) {
+//	elgg_register_menu_item('wall-filter', array(
+//		'name' => 'file',
+//		'text' => '<i class="wall-icon wall-icon-file"></i>',
+//		'title' => elgg_echo('wall:file'),
+//		'href' => '#wall-form-file',
+//		'class' => 'wall-tab',
+//		'priority' => 300
+//	));
+//	$forms .= elgg_view_form('wall/file', array(
+//		'id' => 'wall-form-file',
+//		'class' => 'wall-form hidden',
+//		'enctype' => 'multipart/form-data'
+//			), $vars);
+//}
+
+if (elgg_get_plugin_setting('content', PLUGIN_ID)) {
+	elgg_register_menu_item('wall-filter', array(
+		'name' => 'content',
+		'text' => '<i class="wall-icon wall-icon-content"></i>',
+		'title' => elgg_echo('wall:content'),
+		'href' => '#wall-form-content',
+		'class' => 'wall-tab',
+		'priority' => 300
+	));
+	$forms .= elgg_view_form('wall/content', array(
+		'id' => 'wall-form-content',
+		'class' => 'wall-form hidden',
+		'enctype' => 'multipart/form-data'
+			), $vars);
+}
+
+$forms .= elgg_view('framework/wall/container/extend', $vars);
+
+$tabs = elgg_view_menu('wall-filter', array(
+	'sort_by' => 'priority'
+		));
+
+$forms = $tabs . $forms;
+
+echo elgg_view_image_block($user_icon, $forms, array(
+	'class' => 'wall-container'
+));

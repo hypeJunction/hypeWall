@@ -17,17 +17,6 @@ $url = elgg_view('input/wall/url', array(
 	'placeholder' => elgg_echo('wall:url:placeholder'),
 		));
 
-$friends = elgg_view('input/wall/friend', array(
-	'name' => 'friend_guids',
-	'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
-		));
-
-$location = elgg_view('input/wall/location', array(
-	'name' => 'location',
-	'data-hint-text' => elgg_echo('wall:tag:location:hint'),
-		));
-
-
 $access = elgg_view('input/access', array(
 	'class' => 'wall-access',
 	'name' => 'access_id'
@@ -46,12 +35,8 @@ $hidden .= elgg_view('input/hidden', array(
 $html = <<<HTML
 	<fieldset class="wall-fieldset-status">$status</fieldset>
 	<fieldset class="wall-fieldset-attachment">
-		<div class="wall-input-url hidden">$url</div>
+		<div class="wall-input-url">$url</div>
 		<div class="wall-url-preview"></div>
-	</fieldset>
-	<fieldset class="wall-fieldset-tags">
-		<div class="wall-input-tag-location">$location</div>
-		<div class="wall-input-tag-friends">$friends</div>
 	</fieldset>
 	<fieldset class="elgg-foot">
 		<ul class="wall-bar-controls">

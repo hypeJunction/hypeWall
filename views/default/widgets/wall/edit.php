@@ -13,6 +13,6 @@ $dropdown = elgg_view('input/dropdown', $params);
 
 ?>
 <div>
-	<?php echo elgg_echo('hj:wall:numbertodisplay'); ?>:
+	<?php echo elgg_echo('wall:numbertodisplay'); ?>:
 	<?php echo $dropdown; ?>
 </div>

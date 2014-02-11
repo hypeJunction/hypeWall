@@ -46,17 +46,17 @@ $view_params = array(
 
 elgg_push_breadcrumb($owner->name);
 
-$title = elgg_echo('hj:wall:owner', array($owner->name));
+$title = elgg_echo('wall:owner', array($owner->name));
 
 $content = elgg_view('hj/wall/container');
 $content .= elgg_view_entity_list($posts, $view_params);
 
 echo $content;
 
-$wall_url = "wall/user/" . elgg_get_page_owner_entity()->username;
+$wall_url = "wall/owner/" . elgg_get_page_owner_entity()->username;
 $wall_link = elgg_view('output/url', array(
 	'href' => $wall_url,
-	'text' => elgg_echo('hj:wall:moreposts'),
+	'text' => elgg_echo('wall:moreposts'),
 	'is_trusted' => true,
 		));
 echo "<span class=\"elgg-widget-more\">$wall_link</span>";

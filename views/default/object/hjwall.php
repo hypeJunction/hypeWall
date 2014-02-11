@@ -1,44 +1,59 @@
 <?php
 
-$object = elgg_extract('entity', $vars);
-$subject = $object->getOwnerEntity();
+namespace hypeJunction\Wall;
 
-$extras = hj_wall_get_tags_str($object);
+$entity = elgg_extract('entity', $vars);
+$poster = $entity->getOwnerEntity();
+$wall_owner = $entity->getContainerEntity();
 
-$wall_owner = elgg_get_entities_from_relationship(array(
-	'type' => 'user',
-	'relationship' => 'wall_owner',
-	'relationship_guid' => $object->guid,
-	'inverse_relationship' => true
-		));
-
-if (elgg_instanceof($wall_owner) && $wall_owner->guid != $subject->guid && $wall_owner->guid != elgg_get_page_owner_guid()) {
+if ($wall_owner->guid != $poster->guid && $wall_owner->guid != elgg_get_page_owner_guid()) {
 	$by = elgg_view('output/url', array(
-		'text' => $subject->name,
-		'href' => $subject->getURL()
+		'text' => $poster->name,
+		'href' => $poster->getURL()
 	));
 	$on = elgg_view('output/url', array(
 		'text' => $wall_owner->name,
 		'href' => $wall_owner->getURL()
 	));
-	$prefix = elgg_echo('hj:wall:new:wall:post', array($by, $on));
+	$summary = elgg_echo('wall:new:wall:post', array($by, $on));
 }
 
-$body = parse_urls($prefix . $object->description . $extras);
+$message = format_wall_message($entity);
 
-if (!$attachment = get_entity($object->attachment)) {
-	$body .= '<div class="elgg-content">' . $object->attachment . '</div>';
-} else {
-	$body .= '<div class="elgg-content">' . elgg_view_entity($attachment, array(
-		'full_view' => false,
-		'icon_size' => 'master'
+if ($entity->address) {
+	$att_str = elgg_view('output/wall/url', array(
+		'value' => $entity->address,
 	));
 }
+$att_str .= $entity->html;
+$attachments = elgg_get_entities_from_relationship(array(
+	'relationship' => 'attached',
+	'relationship_guid' => $entity->guid,
+	'inverse_relationship' => true,
+	'limit' => false,
+		));
+if ($attachments) {
+	if (count($attachments) > 1) {
+		$att_str .= elgg_view_entity_list($attachments, array(
+			'list_type' => 'gallery',
+			'full_view' => false,
+			'size' => 'medium'
+		));
+	} else {
+		foreach ($attachments as $attachment) {
+			$att_str .= elgg_view('output/wall/attachment', array(
+				'entity' => $attachment
+			));
+		}
+	}
+}
 
-$body .= elgg_view_comments($object);
+if ($vars['full_view']) {
+	$body .= elgg_view_comments($entity);
+}
 
-$metadata = elgg_view_menu('hjentityhead', array(
-	'entity' => $object,
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $entity,
 	'handler' => 'hjwall',
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
@@ -49,14 +64,21 @@ if (elgg_in_context('widgets')) {
 }
 
 $params = array(
-	'entity' => $object,
-	'title' => $subject->name,
+	'entity' => $entity,
+	'title' => $message,
+	'tags' => false,
 	'metadata' => $metadata,
 	'subtitle' => $summary,
-	'content' => $body,
-
+	'content' => $att_str,
 );
+
 $params = $params + $vars;
 $content = elgg_view('object/elements/summary', $params);
-echo elgg_view_image_block(elgg_view_entity_icon($subject, 'small'), $content, array('class' => 'hj-wall-post'));
+
+$user_icon = elgg_view_entity_icon($poster, 'small', array(
+	'use_hover' => false,
+	'img_class' => 'wall-poster-avatar'
+		));
+
+echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
 

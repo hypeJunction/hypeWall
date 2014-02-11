@@ -4,28 +4,23 @@
 	<name>hypeWall</name>
 	<version>2.0.0.0</version>
 
-    <description>User walls</description>
-    <category>content</category>
+	<description>User walls</description>
+	<category>content</category>
 
 	<author>Ismayil Khayredinov (ismayil.khayredinov@gmail.com)</author>
-    <website>http://hypeJunction.com</website>
-    <copyright>2011-2014 (c) Ismayil Khayredinov</copyright>
-    <license>GNU Public License version 2</license>
+	<website>http://hypeJunction.com</website>
+	<copyright>2011-2014 (c) Ismayil Khayredinov</copyright>
+	<license>GNU Public License version 2</license>
 
 	<requires>
-        <type>elgg_release</type>
+		<type>elgg_release</type>
 		<version>1.8</version>
-    </requires>
-
-	<suggests>
+	</requires>
+	
+	<requires>
 		<type>plugin</type>
-		<name>hypeEmbed</name>
-	</suggests>
-
-	<suggests>
-		<type>plugin</type>
-		<name>file</name>
-		<version>1.8.1</version>
-	</suggests>
+		<name>elgg_tokeninput</name>
+		<version>1.0.2</version>
+	</requires>
 	
 </plugin_manifest>

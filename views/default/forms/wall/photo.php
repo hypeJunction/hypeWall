@@ -1,64 +1,72 @@
 <?php
 
+/**
+ * Form that allows users to update their status
+ */
+
+namespace hypeJunction\Wall;
+
 $status = elgg_view('input/plaintext', array(
-	'name' => 'description',
-	'class' => 'hj-wall-status',
-	'placeholder' => elgg_echo('hj:wall:photo:placeholder')
+	'name' => 'status',
+	'class' => 'wall-input-description',
+	'placeholder' => elgg_echo('wall:status:placeholder')
 		));
 
-$file = elgg_view('input/file', array(
-	'name' => 'upload',
-	'id' => 'hj-wall-photo-upload'
-));
-
-$friends = elgg_view('input/wall_tags', array(
-	'name' => 'wall_tag',
-	'class' => 'hj-wall-friends',
-	'value' => elgg_echo('hj:wall:tag:friends')
-		));
-
-if (elgg_is_active_plugin('hypeMaps')) {
-	elgg_load_js('hj.maps.base');
-	elgg_load_js('hj.maps.google');
-	
-	$location = elgg_view('input/text', array(
-		'name' => 'location',
-		'class' => 'hj-wall-location'
-			));
+$container_guid = elgg_get_plugin_user_setting('wall_collection', 0, PLUGIN_ID);
+if (!$container_guid) {
+	$container_guid = elgg_get_page_owner_guid();
 }
 
+$filedrop = elgg_view('input/wall/filedrop', array(
+	'container_guid' => $container_guid
+));
+
+$friends = elgg_view('input/wall/friend', array(
+	'name' => 'friend_guids',
+	'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
+		));
+
+$location = elgg_view('input/wall/location', array(
+	'name' => 'location',
+	'data-hint-text' => elgg_echo('wall:tag:location:hint'),
+		));
+
 $access = elgg_view('input/access', array(
-	'class' => 'hj-wall-access',
+	'class' => 'wall-access',
 	'name' => 'access_id'
 		));
 
-$wall_owner = elgg_view('input/hidden', array(
-	'name' => 'wall_owner',
-	'value' => elgg_get_page_owner_guid()
-));
-
 $button = elgg_view('input/submit', array(
-	'value' => elgg_echo('share'),
-	'class' => 'hidden'
+	'value' => elgg_echo('wall:post'),
+	'class' => 'elgg-button elgg-button-submit',
 		));
 
+$hidden .= elgg_view('input/hidden', array(
+	'name' => 'origin',
+	'value' => 'wall',
+		));
+
+$hidden .= elgg_view('input/container_guid', array(
+	'name' => 'container_guid',
+	'value' => $container_guid
+));
+
 $html = <<<HTML
-<div class="hj-wall-form-wrapper">
-	$status
-	<div class="hj-wall-photo-input">$file</div>
-	<div class="hj-wall-form-attachment"></div>
-	<div class="hj-wall-form-taginput">
-		$friends
-		$location
-	</div>
-	$wall_owner
-	<div class="hj-wall-form-bar clearfix">
-		<ul class="hj-wall-bar-controls">
+	<fieldset class="wall-fieldset-status">$status</fieldset>
+	<fieldset class="wall-fieldset-attachment">
+		<div class="wall-input-filedrop">$filedrop</div>
+	</fieldset>
+	<fieldset class="wall-fieldset-tags">
+		<div class="wall-input-tag-location">$location</div>
+		<div class="wall-input-tag-friends">$friends</div>
+	</fieldset>
+	<fieldset class="elgg-foot">
+		<ul class="wall-bar-controls">
 			<li>$access</li>
 			<li>$button</li>
 		</ul>
-	</div>
-</div>
+	</fieldset>
+	$hidden
 HTML;
 
 echo $html;
