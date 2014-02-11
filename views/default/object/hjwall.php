@@ -80,12 +80,12 @@ $user_icon = elgg_view_entity_icon($poster, 'small', array(
 	'img_class' => 'wall-poster-avatar'
 		));
 
-if ($poster->guid !== elgg_get_page_owner_guid()) {
-	echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
-} else {
+if ($poster->guid == elgg_get_page_owner_guid()) {
 	echo elgg_view_image_block('', $content, array(
 		'image_alt' => $user_icon,
 		'class' => 'wall-post-alt'
 	));
+} else {
+	echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
 }
 

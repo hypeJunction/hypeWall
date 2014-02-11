@@ -161,7 +161,7 @@ if ($wall_post->save()) {
 		if (get_input('river') && get_input('river') != 'false') {
 			echo elgg_list_river(array('object_guids' => $wall_post->guid));
 		} else {
-			elgg_set_page_owner_guid($container->guid);
+			elgg_set_page_owner_guid($wall_owner->guid);
 			echo elgg_view_entity($wall_post, array('full_view' => false));
 		}
 	}

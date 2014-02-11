@@ -44,7 +44,7 @@ function page_handler($page) {
 			$title = elgg_echo('wall:owner', array($owner->name));
 			elgg_push_breadcrumb($title, PAGEHANDLER . "/owner/$owner->username");
 
-			if (isset($page[1])) {
+			if (isset($page[2])) {
 				$guid = get_input('guid');
 				$post = get_entity($guid);
 			}

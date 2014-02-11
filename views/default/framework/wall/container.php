@@ -21,7 +21,7 @@ elgg_load_js('wall.status');
 $user = elgg_get_logged_in_user_entity();
 $page_owner = elgg_get_page_owner_entity();
 
-$user_icon = elgg_view_entity_icon($user, 'medium', array(
+$user_icon = elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
 	'use_hover' => false,
 	'img_class' => 'wall-poster-avatar'
 		));

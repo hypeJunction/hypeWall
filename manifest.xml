@@ -6,6 +6,7 @@
 
 	<description>User walls</description>
 	<category>content</category>
+	<category>shares</category>
 
 	<author>Ismayil Khayredinov (ismayil.khayredinov@gmail.com)</author>
 	<website>http://hypeJunction.com</website>
@@ -16,11 +17,38 @@
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
-	
+
 	<requires>
 		<type>plugin</type>
 		<name>elgg_tokeninput</name>
 		<version>1.0.2</version>
 	</requires>
-	
+
+	<sugests>
+		<type>plugin</type>
+		<name>hypeEmbed</name>
+		<version>1.0.2</version>
+	</suggests>
+	<sugests>
+		<type>plugin</type>
+		<name>ecml</name>
+	</suggests>
+
+	<screenshot>
+		<description>URL embed form</description>
+		<path>screenshots/form-url.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Photo upload form</description>
+		<path>screenshots/form-photos.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Content attachment form</description>
+		<path>screenshots/form-content.png</path>
+	</screenshot>
+	<screenshot>
+		<description>River view</description>
+		<path>screenshots/river.png</path>
+	</screenshot>
+
 </plugin_manifest>
