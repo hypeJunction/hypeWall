@@ -120,6 +120,8 @@ $tabs = elgg_view_menu('wall-filter', array(
 
 $forms = $tabs . $forms;
 
+$class = (elgg_in_context('activity')) ? 'wall-river' : 'wall-to-wall';
+
 echo elgg_view_image_block($user_icon, $forms, array(
-	'class' => 'wall-container'
+	'class' => "wall-container $class"
 ));

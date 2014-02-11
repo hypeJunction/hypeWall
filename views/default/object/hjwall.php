@@ -6,7 +6,7 @@ $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();
 $wall_owner = $entity->getContainerEntity();
 
-if ($wall_owner->guid != $poster->guid && $wall_owner->guid != elgg_get_page_owner_guid()) {
+if ($wall_owner && $wall_owner->guid != $poster->guid && $wall_owner->guid != elgg_get_page_owner_guid()) {
 	$by = elgg_view('output/url', array(
 		'text' => $poster->name,
 		'href' => $poster->getURL()
@@ -80,5 +80,12 @@ $user_icon = elgg_view_entity_icon($poster, 'small', array(
 	'img_class' => 'wall-poster-avatar'
 		));
 
-echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
+if ($poster->guid !== elgg_get_page_owner_guid()) {
+	echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
+} else {
+	echo elgg_view_image_block('', $content, array(
+		'image_alt' => $user_icon,
+		'class' => 'wall-post-alt'
+	));
+}
 

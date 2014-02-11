@@ -3,7 +3,6 @@
 .htaccess
 robots.txt
 /nbproject/
-/vendors/
 /sass/
 /.sass-cache/
 composer.lock

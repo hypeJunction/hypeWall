@@ -158,7 +158,12 @@ if ($wall_post->save()) {
 	}
 
 	if (elgg_is_xhr()) {
-		echo elgg_list_river(array('object_guids' => $wall_post->guid));
+		if (get_input('river') && get_input('river') != 'false') {
+			echo elgg_list_river(array('object_guids' => $wall_post->guid));
+		} else {
+			elgg_set_page_owner_guid($container->guid);
+			echo elgg_view_entity($wall_post, array('full_view' => false));
+		}
 	}
 
 	system_message(elgg_echo('wall:create:success'));

@@ -202,7 +202,8 @@
 			dataType: 'json',
 			data: {
 				'X-Requested-With': 'XMLHttpRequest', // simulate XHR
-				container_guid: elgg.get_page_owner_guid()
+				container_guid: elgg.get_page_owner_guid(),
+				river: $form.closest('.wall-container').is('.wall-river')
 			},
 			beforeSend: function() {
 				$form.find('[type="submit"]').addClass('elgg-state-disabled').text(elgg.echo('wall:process:posting')).prop('disabled', true);
@@ -233,12 +234,16 @@
 					$form.find('textarea').focus();
 
 					if (data.output) {
-						if (elgg.trigger_hook('refresh', 'river', {data: data, method: 'framework.wall.formSubmit'}, false) !== false) {
-							var items = $(data.output).html();
-							$(items).children('li').addClass('wall-item-new').bind('refresh.before', function(e) {
-								$(this).remove();
-							})
-							$('.elgg-list-river').prepend($(items));
+						if ($form.closest('.wall-container').is('.wall-river')) {
+							if (elgg.trigger_hook('refresh', 'river', {data: data, method: 'framework.wall.formSubmit'}, false) !== false) {
+								var items = $(data.output).html();
+								$(items).children('li').addClass('wall-item-new').bind('refresh.before', function(e) {
+									$(this).remove();
+								})
+								$('.elgg-list-river').prepend($(items));
+							}
+						} else {
+							$('.wall-post-list').prepend($('<li>').addClass('elgg-item').html(data.output));
 						}
 					}
 				}

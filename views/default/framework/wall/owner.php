@@ -8,13 +8,13 @@ if (!$owner) {
 
 $dbprefix = elgg_get_config('dbprefix');
 echo elgg_list_entities(array(
-	'type' => 'object',
-	'subtype' => 'hjwall',
+	'types' => 'object',
+	'subtypes' => 'hjwall',
 	'joins' => array(
-		"JOIN {$dbprefix}entity_relationships r ON r.guid_one = $owner->guid AND r.guid_two = e.guid",
+		"JOIN {$dbprefix}entity_relationships r ON r.guid_one = $owner->guid",
 	),
 	'wheres' => array(
-		"r.relationship IN ('wall_owner', 'tagged_in')"
+		"(e.owner_guid = $owner->guid OR e.container_guid = $owner->guid OR (r.guid_two = e.guid AND r.relationship = 'tagged_in'))"
 	),
 	'list_class' => 'wall-post-list',
 ));

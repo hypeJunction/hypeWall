@@ -391,6 +391,42 @@ body.wall-state-loading:before {
   margin-top: 0;
   z-index: 5;
 }
+.wall-post-list .wall-post-alt > .elgg-body {
+  background: #ffffff;
+  position: relative;
+  margin-right: 15px;
+  border: 1px solid #cccccc;
+  margin-right: 60px;
+  padding: 10px;
+}
+.wall-post-list .wall-post-alt > .elgg-body:before {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 15px 15px 0 0;
+  border-color: #cccccc transparent transparent transparent;
+  margin-right: -16px;
+  margin-top: -1px;
+  z-index: 1;
+}
+.wall-post-list .wall-post-alt > .elgg-body:after {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 15px 15px 0 0;
+  border-color: #fff transparent transparent transparent;
+  margin-right: -14px;
+  margin-top: 0;
+  z-index: 5;
+}
 
 .wall-item-new {
   -webkit-box-shadow: 0px 0px 3px #0054a7;
