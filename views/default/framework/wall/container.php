@@ -108,7 +108,6 @@ if (elgg_get_plugin_setting('content', PLUGIN_ID)) {
 	$forms .= elgg_view_form('wall/content', array(
 		'id' => 'wall-form-content',
 		'class' => 'wall-form hidden',
-		'enctype' => 'multipart/form-data'
 			), $vars);
 }
 
