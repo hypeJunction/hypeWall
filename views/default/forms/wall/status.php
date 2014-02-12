@@ -17,16 +17,23 @@ $url = elgg_view('input/wall/url', array(
 	'placeholder' => elgg_echo('wall:url:placeholder'),
 		));
 
-$friends = elgg_view('input/wall/friend', array(
-	'name' => 'friend_guids',
-	'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
-		));
+if (WALL_GEOPOSITIONING) {
+	$location = '<div class="wall-input-tag-location">';
+	$location .= elgg_view('input/wall/location', array(
+		'name' => 'location',
+		'data-hint-text' => elgg_echo('wall:tag:location:hint'),
+	));
+	$location .= '</div>';
+}
 
-$location = elgg_view('input/wall/location', array(
-	'name' => 'location',
-	'data-hint-text' => elgg_echo('wall:tag:location:hint'),
-		));
-
+if (WALL_TAG_FRIENDS) {
+	$friends = '<div class="wall-input-tag-friends">';
+	$friends .= elgg_view('input/wall/friend', array(
+		'name' => 'friend_guids',
+		'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
+	));
+	$friends .= '</div>';
+}
 
 $access = elgg_view('input/access', array(
 	'class' => 'wall-access',
@@ -50,8 +57,8 @@ $html = <<<HTML
 		<div class="wall-url-preview"></div>
 	</fieldset>
 	<fieldset class="wall-fieldset-tags">
-		<div class="wall-input-tag-location">$location</div>
-		<div class="wall-input-tag-friends">$friends</div>
+		$location
+		$friends
 	</fieldset>
 	<fieldset class="elgg-foot">
 		<ul class="wall-bar-controls">

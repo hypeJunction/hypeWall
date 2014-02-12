@@ -5,6 +5,10 @@
  */
 namespace hypeJunction\Wall;
 
+if (!WALL_GEOPOSITIONING) {
+	return;
+}
+
 $geopositioning = get_geopositioning();
 ?>
 

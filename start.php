@@ -14,6 +14,9 @@ namespace hypeJunction\Wall;
 const PLUGIN_ID = 'hypeWall';
 const PAGEHANDLER = 'wall';
 
+define('WALL_GEOPOSITIONING', elgg_get_plugin_setting('geopositioning', PLUGIN_ID));
+define('WALL_TAG_FRIENDS', elgg_get_plugin_setting('tag_friends', PLUGIN_ID));
+
 require_once __DIR__ . '/lib/functions.php';
 require_once __DIR__ . '/lib/hooks.php';
 require_once __DIR__ . '/lib/page_handlers.php';

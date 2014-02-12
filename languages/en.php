@@ -7,11 +7,14 @@ $english = array(
 	'wall' => 'Wall',
 
 	'wall:settings:form' => 'Wall forms',
+	'wall:settings:features' => 'Wall post features',
 	'wall:settings:status' => 'Update status',
 	'wall:settings:url' => 'Share a link',
 	'wall:settings:photo' => 'Share a photo',
 	'wall:settings:file' => 'Share a file',
 	'wall:settings:content' => 'Share content',
+	'wall:settings:geopositioning' => 'Enable geopositioning',
+	'wall:settings:tag_friends' => 'Enable tagging of friends',
 
 	'wall:usersettings:river_access_id' => 'Visibility of wall tags',
 	'wall:usersettings:river_access_id:help' => 'Who can see that you were tagged in someone else\'s wall post, if the original post was not shared with them?',

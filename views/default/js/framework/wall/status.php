@@ -262,6 +262,9 @@
 		});
 	};
 	elgg.register_hook_handler('init', 'system', framework.wall.init);
-	elgg.register_hook_handler('init', 'system', framework.wall.findMe);
+
+	if (elgg.session.geopositioning) {
+		elgg.register_hook_handler('init', 'system', framework.wall.findMe);
+	}
 
 <?php if (FALSE) : ?></script><?php endif; ?>

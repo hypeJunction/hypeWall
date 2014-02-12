@@ -65,3 +65,29 @@ echo elgg_view('input/dropdown', array(
 	)
 ));
 echo '</div>';
+
+echo '<h3>' . elgg_echo('wall:settings:features') . '</h3>';
+
+echo '<div>';
+echo '<label>' . elgg_echo('wall:settings:geopositioning') . '</label>';
+echo elgg_view('input/dropdown', array(
+	'name' => 'params[geopositioning]',
+	'value' => $entity->geopositioning,
+	'options_values' => array(
+		0 => elgg_echo('option:no'),
+		1 => elgg_echo('option:yes'),
+	)
+));
+echo '</div>';
+
+echo '<div>';
+echo '<label>' . elgg_echo('wall:settings:tag_friends') . '</label>';
+echo elgg_view('input/dropdown', array(
+	'name' => 'params[tag_friends]',
+	'value' => $entity->tag_friends,
+	'options_values' => array(
+		0 => elgg_echo('option:no'),
+		1 => elgg_echo('option:yes'),
+	)
+));
+echo '</div>';

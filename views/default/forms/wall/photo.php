@@ -19,17 +19,25 @@ if (!$container_guid) {
 
 $filedrop = elgg_view('input/wall/filedrop', array(
 	'container_guid' => $container_guid
-));
-
-$friends = elgg_view('input/wall/friend', array(
-	'name' => 'friend_guids',
-	'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
 		));
 
-$location = elgg_view('input/wall/location', array(
-	'name' => 'location',
-	'data-hint-text' => elgg_echo('wall:tag:location:hint'),
-		));
+if (WALL_GEOPOSITIONING) {
+	$location = '<div class="wall-input-tag-location">';
+	$location .= elgg_view('input/wall/location', array(
+		'name' => 'location',
+		'data-hint-text' => elgg_echo('wall:tag:location:hint'),
+	));
+	$location .= '</div>';
+}
+
+if (WALL_TAG_FRIENDS) {
+	$friends = '<div class="wall-input-tag-friends">';
+	$friends .= elgg_view('input/wall/friend', array(
+		'name' => 'friend_guids',
+		'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
+	));
+	$friends .= '</div>';
+}
 
 $access = elgg_view('input/access', array(
 	'class' => 'wall-access',
@@ -49,7 +57,7 @@ $hidden .= elgg_view('input/hidden', array(
 $hidden .= elgg_view('input/container_guid', array(
 	'name' => 'container_guid',
 	'value' => $container_guid
-));
+		));
 
 $html = <<<HTML
 	<fieldset class="wall-fieldset-status">$status</fieldset>
@@ -57,8 +65,8 @@ $html = <<<HTML
 		<div class="wall-input-filedrop">$filedrop</div>
 	</fieldset>
 	<fieldset class="wall-fieldset-tags">
-		<div class="wall-input-tag-location">$location</div>
-		<div class="wall-input-tag-friends">$friends</div>
+		$location
+		$friends
 	</fieldset>
 	<fieldset class="elgg-foot">
 		<ul class="wall-bar-controls">
