@@ -33,7 +33,7 @@ $att_str .= $object->html;
 
 $attachments = get_attachments($object);
 if ($attachments) {
-	if (count($attachments) > 1) {
+	if (count($attachments) > 0) {
 		$att_str .= elgg_view_entity_list($attachments, array(
 			'list_type' => 'gallery',
 			'full_view' => false,
