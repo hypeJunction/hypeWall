@@ -14,6 +14,19 @@ namespace hypeJunction\Wall;
 const PLUGIN_ID = 'hypeWall';
 const PAGEHANDLER = 'wall';
 
+if (!class_exists('hypeJunction\\Util\\Extractor')) {
+	elgg_register_class('hypeJunction\\Util\\Extractor', __DIR__ . '/classes/hypeJunction/Util/Extractor.php');
+}
+if (!class_exists('hypeJunction\\Filestore\\UploadHandler')) {
+	elgg_register_class('hypeJunction\\Filestore\\UploadHandler', __DIR__ . '/classes/hypeJunction/Filestore/UploadHandler.php');
+}
+
+define('WALL_MODEL', elgg_get_plugin_setting('model', PLUGIN_ID));
+define('WALL_MODEL_WALL', 1);
+define('WALL_MODEL_WIRE', 2);
+
+define('WALL_SUBTYPE', (WALL_MODEL == WALL_MODEL_WIRE) ? 'thewire' : 'hjwall');
+
 define('WALL_GEOPOSITIONING', elgg_get_plugin_setting('geopositioning', PLUGIN_ID));
 define('WALL_TAG_FRIENDS', elgg_get_plugin_setting('tag_friends', PLUGIN_ID));
 
@@ -30,12 +43,12 @@ function init() {
 	 * Handle pages and URLs
 	 */
 	elgg_register_page_handler(PAGEHANDLER, __NAMESPACE__ . '\\page_handler');
-	elgg_register_entity_url_handler('object', 'hjwall', __NAMESPACE__ . '\\url_handler');
+	elgg_register_entity_url_handler('object', WALL_SUBTYPE, __NAMESPACE__ . '\\url_handler');
 
 	/**
 	 * Add wall posts to search
 	 */
-	elgg_register_entity_type('object', 'hjwall');
+	elgg_register_entity_type('object', WALL_SUBTYPE);
 
 	/**
 	 * JS, CSS and Views
@@ -46,16 +59,12 @@ function init() {
 	elgg_register_simplecache_view('js/framework/wall/base');
 	elgg_register_js('wall.status', elgg_get_simplecache_url('js', 'framework/wall/status'), 'footer');
 
-	elgg_register_js('jquery.filedrop.js', '/mod/' . PLUGIN_ID . '/vendors/filedrop/jquery.filedrop.js', 'footer');
-
-	elgg_register_simplecache_view('js/framework/wall/filedrop');
-	elgg_register_js('wall.filedrop', elgg_get_simplecache_url('js', 'framework/wall/filedrop'), 'footer');
-
 	// Display wall form
 	elgg_extend_view('page/layouts/content/filter', 'framework/wall/container', 100);
 
-	// Load FontAwesome
+	// Load fonts
 	elgg_extend_view('page/elements/head', 'framework/fonts/font-awesome');
+	elgg_extend_view('page/elements/head', 'framework/fonts/open-sans');
 
 	// Add User Location to config
 	elgg_extend_view('js/initialize_elgg', 'js/framework/wall/config');
@@ -94,6 +103,8 @@ function init() {
 	elgg_register_widget_type('wall', elgg_echo('wall'), elgg_echo('wall:widget:description'));
 
 	elgg_register_plugin_hook_handler('get_views', 'ecml', __NAMESPACE__ . '\\get_ecml_views');
+
+	elgg_register_plugin_hook_handler('view', 'object/thewire', __NAMESPACE__ . '\\hijack_wire');
 }
 
 /**

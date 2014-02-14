@@ -29,6 +29,9 @@ http://fontawesome.io/
 https://github.com/hypeJunction/hypeEmbed
 https://github.com/Elgg/ecml
 
+* For drag&drop uploads, install elgg_dropzone
+https://github.com/hypeJunction/elgg_dropzone
+
 * Tokenizing Autocomplete is required for this plugin to run properly
 https://github.com/hypeJunction/elgg_tokeninput
 

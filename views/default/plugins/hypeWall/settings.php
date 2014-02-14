@@ -4,6 +4,31 @@ namespace hypeJunction\Wall;
 
 $entity = elgg_extract('entity', $vars);
 
+echo '<h3>' . elgg_echo('wall:settings:model') . '</h3>';
+
+if (elgg_is_active_plugin('thewire')) {
+
+	echo '<div>';
+	echo '<label>' . elgg_echo('wall:settings:model:select') . '</label>';
+	echo elgg_view('input/dropdown', array(
+		'name' => 'params[model]',
+		'value' => $entity->model,
+		'options_values' => array(
+			WALL_MODEL_WALL => elgg_echo('wall:settings:model:wall'),
+			WALL_MODEL_WIRE => elgg_echo('wall:settings:model:wire'),
+		)
+	));
+	echo '</div>';
+}
+
+echo '<div>';
+	echo '<label>' . elgg_echo('wall:settings:model:character_limit') . '</label>';
+	echo elgg_view('input/text', array(
+		'name' => 'params[character_limit]',
+		'value' => $entity->character_limit,
+	));
+	echo '</div>';
+
 echo '<h3>' . elgg_echo('wall:settings:form') . '</h3>';
 
 echo '<div>';

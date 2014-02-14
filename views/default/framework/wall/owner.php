@@ -9,7 +9,7 @@ if (!$owner) {
 $dbprefix = elgg_get_config('dbprefix');
 echo elgg_list_entities(array(
 	'types' => 'object',
-	'subtypes' => 'hjwall',
+	'subtypes' => array('hjwall', 'thewire'),
 	'joins' => array(
 		"JOIN {$dbprefix}entity_relationships r ON r.guid_one = $owner->guid",
 	),

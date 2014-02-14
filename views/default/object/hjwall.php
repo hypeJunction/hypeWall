@@ -54,7 +54,7 @@ if ($vars['full_view']) {
 
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $entity,
-	'handler' => 'hjwall',
+	'handler' => WALL_SUBTYPE,
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 		));
@@ -65,11 +65,11 @@ if (elgg_in_context('widgets')) {
 
 $params = array(
 	'entity' => $entity,
-	'title' => $message,
+	'title' => $summary,
 	'tags' => false,
 	'metadata' => $metadata,
-	'subtitle' => $summary,
-	'content' => $att_str,
+	'subtitle' => false,
+	'content' => $message .$att_str,
 );
 
 $params = $params + $vars;

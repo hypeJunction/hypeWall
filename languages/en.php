@@ -6,6 +6,12 @@ $english = array(
 	
 	'wall' => 'Wall',
 
+	'wall:settings:model' => 'Model',
+	'wall:settings:model:select' => 'Select the model for the wall posts',
+	'wall:settings:model:wall' => 'Use default wall functionality',
+	'wall:settings:model:wire' => 'Use wire',
+	'wall:settings:model:character_limit' => 'Limit the number of characters in a status message to (0 for no limit)',
+
 	'wall:settings:form' => 'Wall forms',
 	'wall:settings:features' => 'Wall post features',
 	'wall:settings:status' => 'Update status',
@@ -84,14 +90,11 @@ $english = array(
 	'wall:ecml:attachment' => 'Wall attachment',
 	'wall:ecml:river' => 'River layout',
 
-	'wall:filedrop:instructions' => 'Drag and Drop your files into this area or %s them from your computer',
-	'wall:filedrop:fallback' => 'select',
-	'wall:filedrop:browsernotsupported' => 'Your browser does not support drag&drop functionality',
-	'wall:filedrop:filetoolarge' => 'One or more files exceed allowed maximum file size',
-	'wall:filedrop:filetypenotallowed' => 'One or more files do not have an allowed file type',
-
 	'wall:upload:success' => 'File uploaded successfully',
 	'wall:upload:error' => 'File could not be uploaded',
+
+	'wall:characters_remaining' => "characters remaining",
+	'wall:make_bookmark' => 'Save this link to my bookmarks',
 	
 );
 

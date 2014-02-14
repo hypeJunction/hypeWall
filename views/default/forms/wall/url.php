@@ -6,7 +6,7 @@
 
 namespace hypeJunction\Wall;
 
-$status = elgg_view('input/plaintext', array(
+$status = elgg_view('input/wall/status', array(
 	'name' => 'status',
 	'class' => 'wall-input-status',
 	'placeholder' => elgg_echo('wall:status:placeholder')
@@ -21,6 +21,14 @@ $access = elgg_view('input/access', array(
 	'class' => 'wall-access',
 	'name' => 'access_id'
 		));
+
+if (elgg_is_active_plugin('bookmarks')) {
+	$bookmark = '<label>' . elgg_view('input/checkbox', array(
+				'checked' => true,
+				'name' => 'make_bookmark',
+				'value' => 1
+			)) . elgg_echo('wall:make_bookmark') . '</label>';
+}
 
 $button = elgg_view('input/submit', array(
 	'value' => elgg_echo('wall:post'),
@@ -40,6 +48,7 @@ $html = <<<HTML
 	</fieldset>
 	<fieldset class="elgg-foot">
 		<ul class="wall-bar-controls">
+			<li>$bookmark</li>
 			<li>$access</li>
 			<li>$button</li>
 		</ul>

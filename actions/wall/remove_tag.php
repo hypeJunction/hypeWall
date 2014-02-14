@@ -8,7 +8,7 @@ $guid = get_input('guid');
 $entity = get_entity($guid);
 $user = elgg_get_logged_in_user_entity();
 
-if (elgg_instanceof($entity, 'object', 'hjwall') && ($relationship = check_entity_relationship($user->guid, 'tagged_in', $entity->guid))) {
+if (elgg_instanceof($entity, 'object', WALL_SUBTYPE) && ($relationship = check_entity_relationship($user->guid, 'tagged_in', $entity->guid))) {
 	if ($relationship instanceof ElggRelationship) {
 		if ($relationship->delete()) {
 			elgg_delete_river(array(

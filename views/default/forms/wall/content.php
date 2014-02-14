@@ -6,7 +6,7 @@
 
 namespace hypeJunction\Wall;
 
-$status = elgg_view('input/plaintext', array(
+$status = elgg_view('input/wall/status', array(
 	'name' => 'status',
 	'class' => 'wall-input-description',
 	'placeholder' => elgg_echo('wall:status:placeholder')

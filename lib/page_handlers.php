@@ -49,7 +49,7 @@ function page_handler($page) {
 				$post = get_entity($guid);
 			}
 
-			if (elgg_instanceof($post, 'object', 'hjwall')) {
+			if (elgg_instanceof($post)) {
 				$post_owner = $post->getOwnerentity();
 				$title = elgg_echo('wall:post:owner', array($post_owner->name));
 				elgg_push_breadcrumb($title);
@@ -73,7 +73,7 @@ function page_handler($page) {
 			$guid = get_input('guid');
 			$post = get_entity($guid);
 
-			if (!elgg_instanceof($post, 'object', 'hjwall')) {
+			if (!elgg_instanceof($post, 'object', WALL_SUBTYPE)) {
 				return false;
 			}
 

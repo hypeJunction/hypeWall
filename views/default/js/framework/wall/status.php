@@ -97,6 +97,7 @@
 		});
 		$('.wall-find-me').live('click', framework.wall.findMe);
 		$('.wall-tab').live('click', framework.wall.switchTab);
+		$('textarea[data-limit]').live('keyup keydown', framework.wall.updateCounter);
 		$('.wall-input-status').live('keyup', framework.wall.parseUrl);
 		$('.wall-url').live('blur focusout preview clear', framework.wall.loadUrlPreview);
 		$('.wall-form').removeAttr('onsubmit')
@@ -151,7 +152,6 @@
 	 */
 	framework.wall.loadUrlPreview = function(e) {
 		var $elem = $(this);
-		$elem.closest('.wall-input-url').show();
 		var $form = $elem.closest('form');
 		var $preview = $form.find('.wall-url-preview');
 		var url = $elem.val();
@@ -174,6 +174,7 @@
 							maxWidth: 500
 						});
 					}
+					$elem.closest('.wall-input-url').show();
 					framework.wall.loadedUrlPreview = url;
 					framework.wall.loadedPreviewHtml = data;
 				}
@@ -213,25 +214,17 @@
 				if (data.status >= 0) {
 
 					$form.resetForm();
-					if ($('.wall-location-tokeninput', $form).length) {
-						$('.wall-location-tokeninput').bind('clear', function(e) {
+
+					if ($('.elgg-input-tokeninput', $form).length) {
+						$('.elgg-input-tokeninput', $form).bind('clear', function(e) {
 							$(this).tokenInput("clear");
 						}).trigger('clear');
 
 					}
-					if ($('.wall-tag-tokeninput', $form).length) {
-						$('.wall-tag-tokeninput').bind('clear', function(e) {
-							$(this).tokenInput("clear");
-						}).trigger('clear');
-					}
-					if ($('.wall-attachment-tokeninput', $form).length) {
-						$('.wall-attachment-tokeninput', $form).bind('clear', function(e) {
-							$(this).tokenInput("clear");
-						}).trigger('clear');
-					}
-					$('.wall-filedrop-queue').html('');
+					$('.elgg-dropzone-preview', $form).html('');
+					$('.token-input-dropdown').hide();
 					$form.find('.wall-url').trigger('clear');
-					$form.find('textarea').focus();
+					$form.find('textarea:first').trigger('click');
 
 					if (data.output) {
 						if ($form.closest('.wall-container').is('.wall-river')) {
@@ -261,10 +254,35 @@
 			}
 		});
 	};
+
+	/**
+	 * Update char limit counter
+	 * @param {object} e
+	 * @returns {void}
+	 */
+	framework.wall.updateCounter = function(e) {
+
+		var $textarea = $(this);
+		var limit = $textarea.data('limit');
+		var remaining = limit - $textarea.val().length;
+		var $form = $textarea.closest('form')
+		var $counter = $form.find('[data-counter]').eq(0);
+
+		$counter.find('[data-counter-indicator]').text(remaining);
+
+		if (remaining < 0) {
+			$counter.addClass('wall-status-counter-overflow');
+			$form.find('[type="submit"]').prop('disabled', true).addClass('elgg-state-disabled');
+		} else {
+			$counter.removeClass('wall-status-counter-overflow');
+			$form.find('[type="submit"]').prop('disabled', false).removeClass('elgg-state-disabled');
+		}
+	}
+
 	elgg.register_hook_handler('init', 'system', framework.wall.init);
 
 	if (elgg.session.geopositioning) {
-		elgg.register_hook_handler('init', 'system', framework.wall.findMe);
-	}
+	elgg.register_hook_handler('init', 'system', framework.wall.findMe);
+}
 
 <?php if (FALSE) : ?></script><?php endif; ?>

@@ -6,9 +6,9 @@
 
 namespace hypeJunction\Wall;
 
-$status = elgg_view('input/plaintext', array(
+$status = elgg_view('input/wall/status', array(
 	'name' => 'status',
-	'class' => 'wall-input-description',
+	'class' => 'wall-input-status',
 	'placeholder' => elgg_echo('wall:status:placeholder')
 		));
 
@@ -17,7 +17,7 @@ if (!$container_guid) {
 	$container_guid = elgg_get_page_owner_guid();
 }
 
-$filedrop = elgg_view('input/wall/filedrop', array(
+$files = elgg_view('input/wall/file', array(
 	'container_guid' => $container_guid
 		));
 
@@ -62,7 +62,7 @@ $hidden .= elgg_view('input/container_guid', array(
 $html = <<<HTML
 	<fieldset class="wall-fieldset-status">$status</fieldset>
 	<fieldset class="wall-fieldset-attachment">
-		<div class="wall-input-filedrop">$filedrop</div>
+		<div class="wall-dropzone">$files</div>
 	</fieldset>
 	<fieldset class="wall-fieldset-tags">
 		$location
