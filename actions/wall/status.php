@@ -63,7 +63,7 @@ if (!$status && !$address) {
 }
 
 if ($poster->guid == $container_guid) {
-	$title = elgg_echo('wall:post:status_udpate');
+	$title = elgg_echo('wall:post:status_update');
 } else {
 	$title = elgg_echo('wall:post:wall_to_wall', array(elgg_echo('wall:byline', array($poster->name))));
 }
