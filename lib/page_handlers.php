@@ -73,7 +73,7 @@ function page_handler($page) {
 			$guid = get_input('guid');
 			$post = get_entity($guid);
 
-			if (!elgg_instanceof($post, 'object', WALL_SUBTYPE)) {
+			if (!elgg_instanceof($post, 'object', 'hjwall')) {
 				return false;
 			}
 

@@ -12,7 +12,7 @@ $ia = elgg_set_ignore_access(true);
  */
 $wall_posts = new ElggBatch('elgg_get_entities_from_relationship', array(
 	'types' => 'object',
-	'subtypes' => WALL_SUBTYPE,
+	'subtypes' => 'hjwall',
 	'relationship' => 'wall_owner',
 	'limit' => false
 		));
@@ -38,7 +38,7 @@ foreach ($wall_posts as $wall_post) {
  */
 $wall_posts = new ElggBatch('elgg_get_entities_from_metadata', array(
 	'types' => 'object',
-	'subtypes' => WALL_SUBTYPE,
+	'subtypes' => 'hjwall',
 	'metadata_names' => 'attachment',
 	'limit' => false
 		));
@@ -65,13 +65,13 @@ $query = "	UPDATE {$dbprefix}entities e
 				JOIN {$dbprefix}metastrings msn ON msn.id = md.name_id
 				JOIN {$dbprefix}metastrings msv ON msv.id = md.value_id
 				SET e.subtype = $subtypeIdTo
-				WHERE e.subtype = $subtypeIdFrom AND msn.string = 'handler' AND msv.string = WALL_SUBTYPE ";
+				WHERE e.subtype = $subtypeIdFrom AND msn.string = 'handler' AND msv.string = 'hjwall' ";
 
 $wall_files = new ElggBatch('elgg_get_entities_from_metadata', array(
 	'types' => 'object',
 	'subtypes' => 'file',
 	'metadata_name_value_pairs' => array(
-		'name' => 'handler', 'value' => WALL_SUBTYPE
+		'name' => 'handler', 'value' => 'hjwall'
 	),
 	'limit' => false
 		));
@@ -139,7 +139,7 @@ $folders = new ElggBatch('elgg_get_entities_from_metadata', array(
 	'types' => 'object',
 	'subtypes' => 'hjfilefolder',
 	'metadata_name_value_pairs' => array(
-		'name' => 'handler', 'value' => WALL_SUBTYPE
+		'name' => 'handler', 'value' => 'hjwall'
 	),
 	'limit' => false
 		));
@@ -160,7 +160,7 @@ $query = "	UPDATE {$dbprefix}entities e
 				JOIN {$dbprefix}metastrings msn ON msn.id = md.name_id
 				JOIN {$dbprefix}metastrings msv ON msv.id = md.value_id
 				SET e.subtype = $subtypeIdTo
-				WHERE e.subtype = $subtypeIdFrom AND msn.string = 'handler' AND msv.string = WALL_SUBTYPE ";
+				WHERE e.subtype = $subtypeIdFrom AND msn.string = 'handler' AND msv.string = 'hjwall' ";
 
 
 elgg_set_ignore_access($ia);

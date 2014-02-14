@@ -43,12 +43,12 @@ function init() {
 	 * Handle pages and URLs
 	 */
 	elgg_register_page_handler(PAGEHANDLER, __NAMESPACE__ . '\\page_handler');
-	elgg_register_entity_url_handler('object', WALL_SUBTYPE, __NAMESPACE__ . '\\url_handler');
+	elgg_register_entity_url_handler('object', 'hjwall', __NAMESPACE__ . '\\url_handler');
 
 	/**
 	 * Add wall posts to search
 	 */
-	elgg_register_entity_type('object', WALL_SUBTYPE);
+	elgg_register_entity_type('object', 'hjwall');
 
 	/**
 	 * JS, CSS and Views
@@ -105,6 +105,7 @@ function init() {
 	elgg_register_plugin_hook_handler('get_views', 'ecml', __NAMESPACE__ . '\\get_ecml_views');
 
 	elgg_register_plugin_hook_handler('view', 'object/thewire', __NAMESPACE__ . '\\hijack_wire');
+	elgg_register_plugin_hook_handler('view', 'river/object/thewire/create', __NAMESPACE__ . '\\hijack_wire_river');
 }
 
 /**

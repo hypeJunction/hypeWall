@@ -19,7 +19,7 @@ function container_permissions_check($hook, $type, $return, $params) {
 	$user = elgg_extract('user', $params);
 	$subtype = elgg_extract('subtype', $params);
 
-	if ($subtype !== WALL_SUBTYPE) {
+	if ($subtype !== 'hjwall') {
 		return $return;
 	}
 
@@ -43,7 +43,8 @@ function entity_menu_setup($hook, $type, $return, $params) {
 
 	$entity = elgg_extract('entity', $params);
 
-	if (elgg_instanceof($entity, 'object', WALL_SUBTYPE)) {
+	if (elgg_instanceof($entity, 'object', 'hjwall')
+			|| elgg_instanceof($entity, 'object', 'thewire')) {
 
 		$logged_in = elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $entity->guid)) {
@@ -91,7 +92,8 @@ function river_menu_setup($hook, $type, $return, $params) {
 
 	$object = $item->getObjectEntity();
 
-	if (elgg_instanceof($object, 'object', WALL_SUBTYPE)) {
+	if (elgg_instanceof($object, 'object', 'hjwall')
+			|| elgg_instanceof($object, 'object', 'thewire')) {
 
 		$logged_in = elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $object->guid)) {
@@ -199,6 +201,32 @@ function hijack_wire($hook, $type, $return, $params) {
 
 	if ($entity->method == 'wall') {
 		return elgg_view('object/hjwall', $vars);
+	}
+
+	return $return;
+}
+
+/**
+ * Hijack wire river views to display more meaningful content
+ *
+ * @param string $hook	Equals 'view'
+ * @param string $type	Equals 'river/object/thewire/create'
+ * @param string $return HTML
+ * @param array $params  Additional params
+ * @uses $params['vars']
+ * @return string
+ */
+function hijack_wire_river($hook, $type, $return, $params) {
+
+	$vars = elgg_extract('vars', $params);
+	$item = elgg_extract('item', $vars);
+	if (!$item instanceof \ElggRiverItem) {
+		return $return;
+	}
+
+	$entity = $item->getObjectEntity();
+	if ($entity->method == 'wall') {
+		return elgg_view('river/object/hjwall/create', $vars);
 	}
 
 	return $return;

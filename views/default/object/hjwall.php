@@ -54,7 +54,7 @@ if ($vars['full_view']) {
 
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $entity,
-	'handler' => WALL_SUBTYPE,
+	'handler' => 'wall',
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 		));

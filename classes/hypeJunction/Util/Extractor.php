@@ -39,7 +39,7 @@ class Extractor {
 		return $extractor;
 	}
 
-	public static function render($text = '', $html = true) {
+	public static function render($text = '') {
 		$extractor = new Extractor($text);
 		return $extractor->html;
 	}

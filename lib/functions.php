@@ -3,9 +3,8 @@
 namespace hypeJunction\Wall;
 
 use ElggBatch;
-use ElggEntity;
-use ElggFile;
 use ElggObject;
+use hypeJunction\Util\Extractor;
 
 /**
  * Callback function for token input search
@@ -86,6 +85,7 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 function format_wall_message($object, $include_address = false) {
 
 	$status = $object->description;
+	$status = Extractor::render($status);
 
 	$message = array(0 => $status);
 
