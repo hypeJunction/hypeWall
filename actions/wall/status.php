@@ -63,7 +63,7 @@ if (!$status && !$address) {
 }
 
 if ($poster->guid == $container_guid) {
-	$title = elgg_echo('wall:post:status_update');
+	$title = elgg_echo('wall:post:status_update', array(elgg_echo('wall:byline', array($poster->name))));
 } else {
 	$title = elgg_echo('wall:post:wall_to_wall', array(elgg_echo('wall:byline', array($poster->name))));
 }
@@ -195,7 +195,7 @@ if ($guid && $wall_post) {
 			$bookmark->description = filter_tags($document->meta->description);
 			$bookmark->tags = string_to_tag_array(filter_tags($document->meta->keywords));
 		}
-		
+
 		$bookmark->save();
 	}
 

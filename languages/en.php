@@ -93,8 +93,8 @@ $english = array(
 	'wall:remove_tag:success' => 'You are no longer tagged in this post',
 	'wall:remove_tag:error' => 'Tag could not be removed',
 
-	'wall:post:status_update' => 'Status update',
-	'wall:post:wall_to_wall' => 'Wall post',
+	'wall:post:status_update' => 'Status update %s',
+	'wall:post:wall_to_wall' => 'Wall post %s',
 
 	'wall:ecml:url' => 'Wall URL address',
 	'wall:ecml:attachment' => 'Wall attachment',
