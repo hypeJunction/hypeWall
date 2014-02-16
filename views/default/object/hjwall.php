@@ -52,19 +52,25 @@ if ($vars['full_view']) {
 	$body .= elgg_view_comments($entity);
 }
 
-$metadata = elgg_view_menu('entity', array(
+$menu = elgg_view_menu('entity', array(
 	'entity' => $entity,
 	'handler' => 'wall',
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 		));
 
+if (elgg_in_context('thewire')) {
+	$metadata = $menu;
+	$menu = '';
+}
+
 $params = array(
 	'entity' => $entity,
 	'title' => (!empty($summary)) ? $summary : false,
+	'metadata' => $metadata,
 	'tags' => false,
 	'subtitle' => false,
-	'content' => $message . $att_str . $metadata,
+	'content' => $message . $att_str . $menu,
 );
 
 $params = $params + $vars;

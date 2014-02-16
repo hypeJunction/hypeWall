@@ -33,6 +33,11 @@ if ($page_owner && $page_owner->guid != $user->guid) {
 	));
 }
 
+$default = elgg_get_plugin_setting('default_form', PLUGIN_ID);
+if (!$default) {
+	$default = 'status';
+}
+
 if (elgg_get_plugin_setting('status', PLUGIN_ID)) {
 	elgg_register_menu_item('wall-filter', array(
 		'name' => 'status',
@@ -40,12 +45,16 @@ if (elgg_get_plugin_setting('status', PLUGIN_ID)) {
 		'title' => elgg_echo('wall:status'),
 		'href' => '#wall-form-status',
 		'class' => 'wall-tab',
-		'selected' => true,
+		'selected' => ($default == 'status'),
 		'priority' => 100
 	));
+	$class = 'wall-form';
+	if ($default !== 'status') {
+		$class .= ' hidden';
+	}
 	$forms = elgg_view_form('wall/status', array(
 		'id' => 'wall-form-status',
-		'class' => 'wall-form',
+		'class' => $class,
 			), $vars);
 }
 
@@ -55,12 +64,17 @@ if (elgg_get_plugin_setting('url', PLUGIN_ID)) {
 		'text' => '<i class="wall-icon wall-icon-url"></i>',
 		'title' => elgg_echo('wall:url'),
 		'href' => '#wall-form-url',
+		'selected' => ($default == 'url'),
 		'class' => 'wall-tab',
 		'priority' => 150
 	));
+	$class = 'wall-form';
+	if ($default !== 'url') {
+		$class .= ' hidden';
+	}
 	$forms .= elgg_view_form('wall/url', array(
 		'id' => 'wall-form-url',
-		'class' => 'wall-form hidden',
+		'class' => $class,
 			), $vars);
 }
 
@@ -70,12 +84,17 @@ if (elgg_get_plugin_setting('photo', PLUGIN_ID)) {
 		'text' => '<i class="wall-icon wall-icon-photo"></i>',
 		'title' => elgg_echo('wall:photo'),
 		'href' => '#wall-form-photo',
+		'selected' => ($default == 'photo'),
 		'class' => 'wall-tab',
 		'priority' => 200
 	));
+	$class = 'wall-form';
+	if ($default !== 'photo') {
+		$class .= ' hidden';
+	}
 	$forms .= elgg_view_form('wall/photo', array(
 		'id' => 'wall-form-photo',
-		'class' => 'wall-form hidden',
+		'class' => $class,
 		'enctype' => 'multipart/form-data',
 			), $vars);
 }
@@ -102,12 +121,17 @@ if (elgg_get_plugin_setting('content', PLUGIN_ID)) {
 		'text' => '<i class="wall-icon wall-icon-content"></i>',
 		'title' => elgg_echo('wall:content'),
 		'href' => '#wall-form-content',
+		'selected' => ($default == 'content'),
 		'class' => 'wall-tab',
 		'priority' => 300
 	));
+	$class = 'wall-form';
+	if ($default !== 'content') {
+		$class .= ' hidden';
+	}
 	$forms .= elgg_view_form('wall/content', array(
 		'id' => 'wall-form-content',
-		'class' => 'wall-form hidden',
+		'class' => $class,
 			), $vars);
 }
 

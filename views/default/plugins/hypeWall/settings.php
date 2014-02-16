@@ -22,12 +22,12 @@ if (elgg_is_active_plugin('thewire')) {
 }
 
 echo '<div>';
-	echo '<label>' . elgg_echo('wall:settings:model:character_limit') . '</label>';
-	echo elgg_view('input/text', array(
-		'name' => 'params[character_limit]',
-		'value' => $entity->character_limit,
-	));
-	echo '</div>';
+echo '<label>' . elgg_echo('wall:settings:model:character_limit') . '</label>';
+echo elgg_view('input/text', array(
+	'name' => 'params[character_limit]',
+	'value' => $entity->character_limit,
+));
+echo '</div>';
 
 echo '<h3>' . elgg_echo('wall:settings:form') . '</h3>';
 
@@ -66,6 +66,7 @@ echo elgg_view('input/dropdown', array(
 	)
 ));
 echo '</div>';
+
 //
 //echo '<div>';
 //echo '<label>' . elgg_echo('wall:settings:file') . '</label>';
@@ -87,6 +88,21 @@ echo elgg_view('input/dropdown', array(
 	'options_values' => array(
 		0 => elgg_echo('option:no'),
 		1 => elgg_echo('option:yes'),
+	)
+));
+echo '</div>';
+
+
+echo '<div>';
+echo '<label>' . elgg_echo('wall:settings:default_form') . '</label>';
+echo elgg_view('input/dropdown', array(
+	'name' => 'params[default_form]',
+	'value' => $entity->default_form,
+	'options_values' => array(
+		'status' => elgg_echo('wall:settings:status'),
+		'url' => elgg_echo('wall:settings:url'),
+		'photo' => elgg_echo('wall:settings:photo'),
+		'content' => elgg_echo('wall:settings:content'),
 	)
 ));
 echo '</div>';

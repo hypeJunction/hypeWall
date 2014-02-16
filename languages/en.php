@@ -13,6 +13,7 @@ $english = array(
 	'wall:settings:model:character_limit' => 'Limit the number of characters in a status message to (0 for no limit)',
 
 	'wall:settings:form' => 'Wall forms',
+	'wall:settings:default_form' => 'Default form',
 	'wall:settings:features' => 'Wall post features',
 	'wall:settings:status' => 'Update status',
 	'wall:settings:url' => 'Share a link',
