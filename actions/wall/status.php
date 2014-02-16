@@ -196,12 +196,31 @@ if ($guid && $wall_post) {
 	);
 	elgg_trigger_plugin_hook('status', 'user', $params);
 
+	// Notify tagged users
 	$tagged_friends = get_tagged_friends($wall_post);
 	foreach ($tagged_friends as $tagged_friend) {
+		if ($tagged_friend->guid == $poster->guid
+				|| $tagged_friend->guid == $container->guid) {
+			continue;
+		}
 		$to = $tagged_friend->guid;
 		$from = $poster->guid;
 		$subject = elgg_echo('wall:tagged:notification:subject', array($poster->name));
 		$body = elgg_echo('wall:tagged:notification:message', array(
+			$poster->name,
+			$message,
+			$wall_post->getURL()
+		));
+
+		notify_user($to, $from, $subject, $body);
+	}
+
+	// Notify wall owner
+	if ($poster->guid !== $container->guid && elgg_instanceof($container, 'user')) {
+		$to = $container->guid;
+		$from = $poster->guid;
+		$subject = elgg_echo('wall:owner:notification:subject', array($poster->name));
+		$body = elgg_echo('wall:owner:notification:message', array(
 			$poster->name,
 			$message,
 			$wall_post->getURL()

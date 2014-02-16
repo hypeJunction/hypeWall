@@ -46,6 +46,16 @@ $english = array(
 		%s
 	',
 
+	'wall:owner:notification:subject' => '%s posted on your wall',
+	'wall:owner:notification:message' => '
+		%s posted on your wall: <br />
+		<blockquote>
+			%s
+		</blockquote>
+		You can view the post here:
+		%s
+	',
+
 	'wall:owner:suffix' => ' on %s\'s wall',
 	'wall:byline' => ' by %s',
 	'wall:with' => '- with %s',
