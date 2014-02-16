@@ -1,7 +1,16 @@
 <?php
 
-if (!$vars['value'] && elgg_instanceof($vars['entity'])) {
-	$vars['value'] = $vars['entity']->location;
+namespace hypeJunction\Wall;
+
+if (!$vars['value']) {
+	$geopositioning = get_geopositioning();
+	if ($geopositioning['location']) {
+		$vars['value'] = $geopositioning['location'];
+	} else if (elgg_instanceof($vars['entity'])) {
+		$vars['value'] = $vars['entity']->location;
+	} else {
+		$vars['value'] = elgg_get_logged_in_user_entity()->location;
+	}
 }
 
 $vars['callback'] = 'hypeJunction\\Wall\\search_locations';
