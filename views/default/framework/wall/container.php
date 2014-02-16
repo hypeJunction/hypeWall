@@ -121,6 +121,9 @@ $forms = $tabs . $forms;
 
 $class = (elgg_in_context('activity')) ? 'wall-river' : 'wall-to-wall';
 
+if (elgg_in_context('widgets')) {
+	$user_icon = '';
+}
 echo elgg_view_image_block($user_icon, $forms, array(
 	'class' => "wall-container $class"
 ));

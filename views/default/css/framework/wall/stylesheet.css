@@ -364,15 +364,29 @@ body.wall-state-loading:before {
 .wall-post-list > li {
   border: none;
 }
-.wall-post-list .wall-post > .elgg-body {
+.wall-post-list .wall-post > .elgg-body .elgg-content {
+  *zoom: 1;
+}
+.wall-post-list .wall-post > .elgg-body .elgg-content:before, .wall-post-list .wall-post > .elgg-body .elgg-content:after {
+  content: " ";
+  display: table;
+}
+.wall-post-list .wall-post > .elgg-body .elgg-content:after {
+  clear: both;
+}
+.wall-post-list .wall-post > .elgg-body .elgg-menu-entity {
+  margin-top: 15px;
+  margin-left: 0;
+  float: none;
+}
+.wall-post-list .wall-post > .elgg-body .wall-bubble {
   background: #ffffff;
   position: relative;
   margin-left: 15px;
   border: 1px solid #cccccc;
-  margin-left: 60px;
-  padding: 10px;
+  padding: 5px;
 }
-.wall-post-list .wall-post > .elgg-body:before {
+.wall-post-list .wall-post > .elgg-body .wall-bubble:before {
   content: " ";
   position: absolute;
   left: 0;
@@ -386,7 +400,7 @@ body.wall-state-loading:before {
   margin-top: -1px;
   z-index: 1;
 }
-.wall-post-list .wall-post > .elgg-body:after {
+.wall-post-list .wall-post > .elgg-body .wall-bubble:after {
   content: " ";
   position: absolute;
   left: 0;
@@ -400,15 +414,29 @@ body.wall-state-loading:before {
   margin-top: 0;
   z-index: 5;
 }
-.wall-post-list .wall-post-alt > .elgg-body {
+.wall-post-list .wall-post-alt > .elgg-body .elgg-content {
+  *zoom: 1;
+}
+.wall-post-list .wall-post-alt > .elgg-body .elgg-content:before, .wall-post-list .wall-post-alt > .elgg-body .elgg-content:after {
+  content: " ";
+  display: table;
+}
+.wall-post-list .wall-post-alt > .elgg-body .elgg-content:after {
+  clear: both;
+}
+.wall-post-list .wall-post-alt > .elgg-body .elgg-menu-entity {
+  margin-top: 15px;
+  margin-left: 0;
+  float: none;
+}
+.wall-post-list .wall-post-alt > .elgg-body .wall-bubble {
   background: #ffffff;
   position: relative;
   margin-right: 15px;
   border: 1px solid #cccccc;
-  margin-right: 60px;
-  padding: 10px;
+  padding: 5px;
 }
-.wall-post-list .wall-post-alt > .elgg-body:before {
+.wall-post-list .wall-post-alt > .elgg-body .wall-bubble:before {
   content: " ";
   position: absolute;
   right: 0;
@@ -422,7 +450,7 @@ body.wall-state-loading:before {
   margin-top: -1px;
   z-index: 1;
 }
-.wall-post-list .wall-post-alt > .elgg-body:after {
+.wall-post-list .wall-post-alt > .elgg-body .wall-bubble:after {
   content: " ";
   position: absolute;
   right: 0;

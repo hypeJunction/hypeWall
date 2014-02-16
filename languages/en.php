@@ -95,7 +95,8 @@ $english = array(
 
 	'wall:characters_remaining' => "characters remaining",
 	'wall:make_bookmark' => 'Save this link to my bookmarks',
-	
+
+	'wall:numbertodisplay' => 'Number of latest posts to display',
 );
 
 add_translation("en", $english);

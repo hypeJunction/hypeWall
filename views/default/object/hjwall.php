@@ -59,21 +59,16 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'elgg-menu-hz',
 		));
 
-if (elgg_in_context('widgets')) {
-	$metadata = '';
-}
-
 $params = array(
 	'entity' => $entity,
 	'title' => $summary,
 	'tags' => false,
-	'metadata' => $metadata,
 	'subtitle' => false,
-	'content' => $message .$att_str,
+	'content' => $message . $att_str . $metadata,
 );
 
 $params = $params + $vars;
-$content = elgg_view('object/elements/summary', $params);
+$content = '<div class="wall-bubble">' . elgg_view('object/elements/summary', $params) . '</div>';
 
 $user_icon = elgg_view_entity_icon($poster, 'small', array(
 	'use_hover' => false,
