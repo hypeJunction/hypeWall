@@ -7,6 +7,8 @@
 
 namespace hypeJunction\Util;
 
+use UFCOE\Elgg\Url;
+
 class Extractor {
 
 	const REGEX_HASHTAG = '/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/';
@@ -71,7 +73,7 @@ class Extractor {
 		$text = $url;
 
 		if (class_exists('UFCOE\\Elgg\\Url')) {
-			$sniffer = new UFCOE\Elgg\Url();
+			$sniffer = new Url();
 			$guid = $sniffer->getGuid($url);
 			if ($entity = get_entity($guid)) {
 				if (elgg_instanceof($entity->user)) {
