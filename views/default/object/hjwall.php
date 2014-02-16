@@ -61,7 +61,7 @@ $metadata = elgg_view_menu('entity', array(
 
 $params = array(
 	'entity' => $entity,
-	'title' => $summary,
+	'title' => (!empty($summary)) ? $summary : false,
 	'tags' => false,
 	'subtitle' => false,
 	'content' => $message . $att_str . $metadata,

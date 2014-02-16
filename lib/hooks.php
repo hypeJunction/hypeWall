@@ -43,8 +43,7 @@ function entity_menu_setup($hook, $type, $return, $params) {
 
 	$entity = elgg_extract('entity', $params);
 
-	if (elgg_instanceof($entity, 'object', 'hjwall')
-			|| elgg_instanceof($entity, 'object', 'thewire')) {
+	if (elgg_instanceof($entity, 'object', 'hjwall') || elgg_instanceof($entity, 'object', 'thewire')) {
 
 		$logged_in = elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $entity->guid)) {
@@ -59,15 +58,33 @@ function entity_menu_setup($hook, $type, $return, $params) {
 		}
 
 		if ($entity->canEdit()) {
-			$return[] = ElggMenuItem::factory(array(
-						'name' => 'delete',
-						'text' => elgg_view_icon('delete'),
-						'title' => elgg_echo('wall:delete'),
-						'priority' => 900,
-						'href' => "action/wall/delete?guid=$entity->guid",
-						'is_action' => true,
-			));
+			if (elgg_instanceof($entity, 'object', 'hjwall')) {
+				$action = "action/wall/delete?guid=$entity->guid";
+			} else if (elgg_instanceof($entity, 'object', 'thewire')) {
+				$action = "action/thewire/delete?guid=$entity->guid";
+			}
+			if ($action) {
+				$return[] = ElggMenuItem::factory(array(
+							'name' => 'delete',
+							'text' => elgg_view_icon('delete'),
+							'title' => elgg_echo('wall:delete'),
+							'priority' => 900,
+							'href' => $action,
+							'is_action' => true,
+							'class' => 'elgg-requires-confirmation'
+				));
+			}
 		}
+
+		if ($params['handler'] == 'wall') {
+			foreach ($return as $key => $item) {
+				if ($item instanceof ElggMenuItem && $item->getName() == 'edit') {
+					unset($return[$key]);
+				}
+			}
+		}
+
+		
 	}
 
 	return $return;
@@ -92,8 +109,7 @@ function river_menu_setup($hook, $type, $return, $params) {
 
 	$object = $item->getObjectEntity();
 
-	if (elgg_instanceof($object, 'object', 'hjwall')
-			|| elgg_instanceof($object, 'object', 'thewire')) {
+	if (elgg_instanceof($object, 'object', 'hjwall') || elgg_instanceof($object, 'object', 'thewire')) {
 
 		$logged_in = elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $object->guid)) {
@@ -106,15 +122,23 @@ function river_menu_setup($hook, $type, $return, $params) {
 						'is_action' => true,
 			));
 		}
+	}
 
-		if ($object->canEdit()) {
+	if ($object->canEdit()) {
+		if (elgg_instanceof($object, 'object', 'hjwall')) {
+			$action = "action/wall/delete?guid=$object->guid";
+		} else if (elgg_instanceof($object, 'object', 'thewire')) {
+			$action = "action/thewire/delete?guid=$object->guid";
+		}
+		if ($action) {
 			$return[] = ElggMenuItem::factory(array(
 						'name' => 'delete',
 						'text' => elgg_view_icon('delete'),
 						'title' => elgg_echo('wall:delete'),
 						'priority' => 900,
-						'href' => "action/wall/delete?guid=$object->guid",
+						'href' => $action,
 						'is_action' => true,
+						'class' => 'elgg-requires-confirmation'
 			));
 		}
 	}
