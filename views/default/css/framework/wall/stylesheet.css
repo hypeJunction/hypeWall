@@ -489,3 +489,7 @@ body.wall-state-loading:before {
   color: darkred;
   font-weight: bold;
 }
+
+.wall-url-preview img, .wall-url-preview iframe, .wall-url-preview object, .wall-url-preview embed {
+  max-width: 100%;
+}
