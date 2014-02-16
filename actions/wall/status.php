@@ -196,7 +196,7 @@ if ($guid && $wall_post) {
 	);
 	elgg_trigger_plugin_hook('status', 'user', $params);
 
-	$tagged_friends = get_tagged_friends($object);
+	$tagged_friends = get_tagged_friends($wall_post);
 	foreach ($tagged_friends as $tagged_friend) {
 		$to = $tagged_friend->guid;
 		$from = $poster->guid;
