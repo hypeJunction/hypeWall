@@ -86,7 +86,7 @@ if ($subtype == 'thewire' && is_callable('thewire_save_post')) {
 }
 
 if ($guid && $wall_post) {
-	
+
 	// Wall post access id is set to private, which means it should be visible only to the poster and tagged users
 	// Creating a new ACL for that
 	if ($access_id == ACCESS_PRIVATE && count($friend_guids)) {
@@ -175,14 +175,27 @@ if ($guid && $wall_post) {
 	}
 
 	if ($wall_post->address && get_input('make_bookmark', false)) {
+
+		if (is_callable('hypeJunction\\Embed\\get_iframely_metatags_from_url')) {
+			$document = call_user_func_array('hypeJunction\Embed\get_iframely_metatags_from_url', array($wall_post->address, 'iframely'));
+		}
+
 		$bookmark = new ElggObject;
 		$bookmark->subtype = "bookmarks";
 		$bookmark->container_guid = ($container->canWriteToContainer($poster->guid, 'object', 'bookmarks')) ? $container->guid : ELGG_ENTITIES_ANY_VALUE;
-		$bookmark->title = $wall_post->title;
 		$bookmark->address = $wall_post->address;
-		$bookmark->description = $wall_post->description;
 		$bookmark->access_id = $access_id;
-		$bookmark->tags = $wall_post->tags;
+
+		if (empty($document)) {
+			$bookmark->title = $wall_post->title;
+			$bookmark->description = $wall_post->description;
+			$bookmark->tags = $wall_post->tags;
+		} else {
+			$bookmark->title = filter_tags($document->meta->title);
+			$bookmark->description = filter_tags($document->meta->description);
+			$bookmark->tags = string_to_tag_array(filter_tags($document->meta->keywords));
+		}
+		
 		$bookmark->save();
 	}
 
@@ -199,8 +212,7 @@ if ($guid && $wall_post) {
 	// Notify tagged users
 	$tagged_friends = get_tagged_friends($wall_post);
 	foreach ($tagged_friends as $tagged_friend) {
-		if ($tagged_friend->guid == $poster->guid
-				|| $tagged_friend->guid == $container->guid) {
+		if ($tagged_friend->guid == $poster->guid || $tagged_friend->guid == $container->guid) {
 			continue;
 		}
 		$to = $tagged_friend->guid;
