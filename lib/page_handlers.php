@@ -9,7 +9,7 @@ namespace hypeJunction\Wall;
  * @return string
  */
 function url_handler($entity) {
-	return elgg_normalize_url(PAGEHANDLER . '/post/' . $entity->getOwnerEntity()->username . '/' . $entity->guid);
+	return elgg_normalize_url(PAGEHANDLER . '/owner/' . $entity->getOwnerEntity()->username . '/' . $entity->guid);
 }
 
 /**
@@ -70,7 +70,7 @@ function page_handler($page) {
 			break;
 
 		case 'post' :
-			$guid = get_input('guid');
+			$guid = $page[1];
 			$post = get_entity($guid);
 
 			if (!elgg_instanceof($post, 'object', 'hjwall')) {
