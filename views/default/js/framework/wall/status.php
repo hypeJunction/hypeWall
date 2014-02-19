@@ -236,7 +236,7 @@
 								$('.elgg-list-river').prepend($(items));
 							}
 						} else {
-							$('.wall-post-list').prepend($('<li>').addClass('elgg-item').html(data.output));
+							$('.wall-post-list,.wall-widget-list').prepend($('<li>').addClass('elgg-item').html(data.output));
 						}
 					}
 				}
