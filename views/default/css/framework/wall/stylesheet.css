@@ -210,6 +210,7 @@ body.wall-state-loading:before {
   border: 1px solid #cccccc;
   background: transparent;
   padding: 0;
+  z-index: 100;
 }
 .wall-container form .token-input-list input[type="text"] {
   height: auto;
