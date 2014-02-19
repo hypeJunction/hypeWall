@@ -360,6 +360,13 @@ body.wall-state-loading:before {
   line-height: 20px;
   font-weight: normal;
 }
+.elgg-widget-content .wall-container {
+  margin: 0;
+}
+.elgg-widget-content .wall-container form {
+  padding: 10px 0;
+  margin-left: -10px;
+}
 
 .wall-tagged-friends, .wall-tagged-location, .wall-tagged-attachments {
   font-size: 90%;
