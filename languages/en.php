@@ -72,7 +72,7 @@ $english = array(
 	'wall:photo' => 'Share a photo',
 	'wall:file' => 'Share a file',
 	'wall:owner' => '%s\'s Wall',
-	'wall:moreposts' => 'Most posts',
+	'wall:moreposts' => 'More posts',
 	'wall:filefolder' => 'Wall Uploads',
 	'wall:upload' => 'Wall File Upload',
 	'wall:photo:placeholder' => 'Tell something about this photo',
@@ -117,7 +117,7 @@ $english = array(
 	'wall:ownership:your' => 'on your %s',
 	'wall:ownership:owner' => 'on %s\'s %s',
 
-
+	'wall:widget:showaddform' => 'Show a form to add new posts',
 	
 );
 

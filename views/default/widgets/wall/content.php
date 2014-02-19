@@ -1,10 +1,35 @@
 <?php
 
 elgg_push_context('wall');
-$content = elgg_view("framework/wall/container", array('size' => 'small'));
-$content .= elgg_view("framework/wall/owner", array(
-	'limit' => $vars['entity']->num_display
+
+if ($vars['entity']->show_add_form) {
+	$content = elgg_view("framework/wall/container");
+}
+
+$owner = elgg_get_page_owner_entity();
+if (!$owner) {
+	if (!elgg_is_logged_in()) {
+		return false;
+	}
+	$owner = elgg_get_logged_in_user_entity();
+}
+
+$dbprefix = elgg_get_config('dbprefix');
+$content .= elgg_list_entities(array(
+	'types' => 'object',
+	'subtypes' => array('hjwall', 'thewire'),
+	'joins' => array(
+		"JOIN {$dbprefix}entity_relationships r ON r.guid_one = $owner->guid",
+	),
+	'wheres' => array(
+		"(e.owner_guid = $owner->guid OR e.container_guid = $owner->guid OR (r.guid_two = e.guid AND r.relationship = 'tagged_in'))"
+	),
+	'list_class' => 'wall-widget-list',
+	'full_view' => false,
+	'limit' => $vars['entity']->num_display,
+	'pagination' => false,
 ));
+
 elgg_pop_context();
 
 echo $content;

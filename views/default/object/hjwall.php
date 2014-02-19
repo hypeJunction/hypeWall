@@ -62,12 +62,17 @@ if (elgg_in_context('thewire')) {
 	$menu = '';
 }
 
+if (elgg_in_context('widgets')) {
+	$menu = $metadata = '';
+	$subtitle = elgg_echo('byline', array($poster->name)) . ' ' . elgg_view_friendly_time($entity->time_created);
+}
+
 $params = array(
 	'entity' => $entity,
 	'title' => (!empty($summary)) ? $summary : false,
 	'metadata' => $metadata,
 	'tags' => false,
-	'subtitle' => false,
+	'subtitle' => $subtitle,
 	'content' => $message . $att_str . $menu,
 );
 
@@ -79,15 +84,19 @@ $user_icon = elgg_view_entity_icon($poster, 'small', array(
 	'img_class' => 'wall-poster-avatar'
 		));
 
-if ($poster->guid == elgg_get_page_owner_guid()) {
-	echo elgg_view_image_block('', $content, array(
-		'image_alt' => $user_icon,
-		'class' => 'wall-post-alt'
-	));
-} else {
-	echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
-}
+if (!elgg_in_context('widgets')) {
+	if ($poster->guid == elgg_get_page_owner_guid()) {
+		echo elgg_view_image_block('', $content, array(
+			'image_alt' => $user_icon,
+			'class' => 'wall-post-alt'
+		));
+	} else {
+		echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
+	}
 
-if (elgg_extract('full_view', $vars, true)) {
-	echo elgg_view_comments($entity);
+	if (elgg_extract('full_view', $vars, false)) {
+		echo elgg_view_comments($entity);
+	}
+} else {
+	echo $content;
 }
