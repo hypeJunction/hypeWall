@@ -83,8 +83,6 @@ function entity_menu_setup($hook, $type, $return, $params) {
 				}
 			}
 		}
-
-		
 	}
 
 	return $return;
@@ -254,4 +252,69 @@ function hijack_wire_river($hook, $type, $return, $params) {
 	}
 
 	return $return;
+}
+
+/**
+ * We want notifications to be more meaningful and include additional information,
+ * such as tags, attached entities etc. We will therefore ignore the default
+ * notification logic and build our own
+ * @see \hypeJunction\Wall\send_notifications
+ *
+ * @param string $hook		Equals 'object:notifications'
+ * @param string $type		Equals 'object'
+ * @param boolean $return	Flag
+ * @param array $params		Additional params
+ * @return boolean			Updated flag
+ */
+function ignore_default_notifications($hook, $type, $return, $params) {
+
+	$event = elgg_extract('event', $params);
+	$object_type = elgg_extract('object_type', $params);
+	$object = elgg_extract('object', $params);
+
+	// We don't want the default notification handler to send out notifications when a wall post is made
+	if ($event == 'create' && $object_type == 'object' && ($object->origin == 'wall' || $object->method == 'wall')) {
+		return true;
+	}
+
+	return $return;
+}
+
+/**
+ *
+ * @param type $hook
+ * @param type $type
+ * @param type $message
+ * @param type $params
+ * @return null
+ */
+function prepare_notification_message($hook, $type, $message, $params) {
+
+	$entity = elgg_extract('entity', $params);
+	$to_entity = elgg_extract('to_entity', $params);
+
+	if (elgg_instanceof($entity, 'object', 'hjwall') || (elgg_instanceof($entity, 'object', 'thewire') && $entity->origin == 'wall')) {
+
+		$poster = $entity->getOwnerEntity();
+		$wall_owner = $entity->getContainerEntity();
+
+		$target = elgg_echo("wall:target:{$entity->getSubtype()}");
+		
+		if ($poster->guid == $wall_owner->guid) {
+			$ownership = elgg_echo('wall:ownership:own', array($target));
+		} else if ($wall_owner->guid == $to_entity->guid) {
+			$ownership = elgg_echo('wall:ownership:your', array($target));
+		} else {
+			$ownership = elgg_echo('wall:ownership:owner', array($wall_owner->name, $target));
+		}
+
+		return elgg_echo('wall:new:notification:message', array(
+			$poster->name,
+			$ownership,
+			format_wall_message($entity, true),
+			$entity->getURL()
+		));
+	}
+
+	return $message;
 }

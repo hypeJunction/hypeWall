@@ -35,7 +35,7 @@ $address = get_input('address');
 $access_id = get_input('access_id');
 $container_guid = get_input('container_guid');
 if ($container_guid) {
-	$container = get_entity($container);
+	$container = get_entity($container_guid);
 	if (elgg_instanceof($container)) {
 		if ($container->guid !== $poster->guid) {
 			$subtype = 'hjwall';
@@ -52,6 +52,8 @@ if ($container_guid) {
 if (!$container) {
 	$container = $poster;
 }
+
+elgg_set_page_owner_guid($container->guid);
 
 if (!$subtype) {
 	$subtype = WALL_SUBTYPE;
@@ -86,6 +88,8 @@ if ($subtype == 'thewire' && is_callable('thewire_save_post')) {
 }
 
 if ($guid && $wall_post) {
+
+	$wall_post->origin = 'wall';
 
 	// Wall post access id is set to private, which means it should be visible only to the poster and tagged users
 	// Creating a new ACL for that
@@ -185,6 +189,7 @@ if ($guid && $wall_post) {
 		$bookmark->container_guid = ($container->canWriteToContainer($poster->guid, 'object', 'bookmarks')) ? $container->guid : ELGG_ENTITIES_ANY_VALUE;
 		$bookmark->address = $wall_post->address;
 		$bookmark->access_id = $access_id;
+		$bookmark->origin = 'wall';
 
 		if (empty($document)) {
 			$bookmark->title = $wall_post->title;
@@ -199,61 +204,34 @@ if ($guid && $wall_post) {
 		$bookmark->save();
 	}
 
-	$message = format_wall_message($wall_post);
-	$params = array(
-		'entity' => $wall_post,
-		'user' => $poster,
-		'message' => $message,
-		'url' => $wall_post->getURL(),
-		'origin' => 'wall',
-	);
-	elgg_trigger_plugin_hook('status', 'user', $params);
+	if ($wall_post->save()) {
+		$message = format_wall_message($wall_post);
+		$params = array(
+			'entity' => $wall_post,
+			'user' => $poster,
+			'message' => $message,
+			'url' => $wall_post->getURL(),
+			'origin' => 'wall',
+		);
+		elgg_trigger_plugin_hook('status', 'user', $params);
 
-	// Notify tagged users
-	$tagged_friends = get_tagged_friends($wall_post);
-	foreach ($tagged_friends as $tagged_friend) {
-		if ($tagged_friend->guid == $poster->guid || $tagged_friend->guid == $container->guid) {
-			continue;
+		// Trigger a publish event, so that we can send out notifications
+		elgg_trigger_event('publish', 'object', $wall_post);
+
+		if (elgg_is_xhr()) {
+			if (get_input('river') && get_input('river') != 'false') {
+				echo elgg_list_river(array('object_guids' => $wall_post->guid));
+			} else {
+				elgg_set_page_owner_guid($wall_owner->guid);
+				echo elgg_view_entity($wall_post, array('full_view' => false));
+			}
 		}
-		$to = $tagged_friend->guid;
-		$from = $poster->guid;
-		$subject = elgg_echo('wall:tagged:notification:subject', array($poster->name));
-		$body = elgg_echo('wall:tagged:notification:message', array(
-			$poster->name,
-			$message,
-			$wall_post->getURL()
-		));
 
-		notify_user($to, $from, $subject, $body);
+		system_message(elgg_echo('wall:create:success'));
+		forward($wall_post->getURL());
 	}
-
-	// Notify wall owner
-	if ($poster->guid !== $container->guid && elgg_instanceof($container, 'user')) {
-		$to = $container->guid;
-		$from = $poster->guid;
-		$subject = elgg_echo('wall:owner:notification:subject', array($poster->name));
-		$body = elgg_echo('wall:owner:notification:message', array(
-			$poster->name,
-			$message,
-			$wall_post->getURL()
-		));
-
-		notify_user($to, $from, $subject, $body);
-	}
-
-	if (elgg_is_xhr()) {
-		if (get_input('river') && get_input('river') != 'false') {
-			echo elgg_list_river(array('object_guids' => $wall_post->guid));
-		} else {
-			elgg_set_page_owner_guid($wall_owner->guid);
-			echo elgg_view_entity($wall_post, array('full_view' => false));
-		}
-	}
-
-	system_message(elgg_echo('wall:create:success'));
-	forward($wall_post->getURL());
-} else {
-	register_error(elgg_echo('wall:create:error'));
-	forward(REFERER);
 }
+
+register_error(elgg_echo('wall:create:error'));
+forward(REFERER);
 

@@ -21,16 +21,16 @@ elgg_load_js('wall.status');
 $user = elgg_get_logged_in_user_entity();
 $page_owner = elgg_get_page_owner_entity();
 
-$user_icon = elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
+$user_icon = '<div class="wall-poster-avatar-container">' . elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
 	'use_hover' => false,
 	'img_class' => 'wall-poster-avatar'
-		));
+		)) . '</div>';
 
-if ($page_owner && $page_owner->guid != $user->guid) {
-	$page_owner_icon = elgg_view_entity_icon($page_owner, 'small', array(
+if ($page_owner && $page_owner->guid !== $user->guid) {
+	$page_owner_icon = '<div class="wall-owner-avatar-container">' . elgg_view_entity_icon($page_owner, 'small', array(
 		'use_hover' => false,
 		'img_class' => 'wall-owner-avatar'
-	));
+	)) . '</div>';
 }
 
 $default = elgg_get_plugin_setting('default_form', PLUGIN_ID);
@@ -148,6 +148,7 @@ $class = (elgg_in_context('activity')) ? 'wall-river' : 'wall-to-wall';
 if (elgg_in_context('widgets')) {
 	$user_icon = '';
 }
-echo elgg_view_image_block($user_icon, $forms, array(
+
+echo elgg_view_image_block($user_icon . $page_owner_icon, $forms, array(
 	'class' => "wall-container $class"
 ));

@@ -6,7 +6,7 @@ $subject = $vars['item']->getSubjectEntity();
 $object = $vars['item']->getObjectEntity();
 $wall_owner = $object->getContainerEntity();
 
-if ($wall_owner->guid != $subject->guid && $wall_owner->guid != elgg_get_page_owner_guid()) {
+if ($wall_owner->guid !== $subject->guid && $wall_owner->guid !== elgg_get_page_owner_guid()) {
 	$by = elgg_view('output/url', array(
 		'text' => $subject->name,
 		'href' => $subject->getURL()

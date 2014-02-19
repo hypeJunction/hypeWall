@@ -84,13 +84,24 @@ body.wall-state-loading:before {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.wall-container .wall-poster-avatar, .wall-container .wall-owner-avatar {
+.wall-container > .elgg-image {
+  position: relative;
+}
+.wall-container > .elgg-image .wall-poster-avatar, .wall-container > .elgg-image .wall-owner-avatar {
   -webkit-border-radius: 1000px;
   -moz-border-radius: 1000px;
   -ms-border-radius: 1000px;
   -o-border-radius: 1000px;
   border-radius: 1000px;
   border: 1px solid #cccccc;
+}
+.wall-container > .elgg-image .wall-owner-avatar {
+  border: 5px solid white;
+}
+.wall-container > .elgg-image .wall-owner-avatar-container {
+  position: absolute;
+  right: 0;
+  margin: -25px -12px 0 0;
 }
 .wall-container form {
   padding: 10px;
@@ -139,6 +150,10 @@ body.wall-state-loading:before {
   margin-top: 0;
   z-index: 5;
 }
+.elgg-module-widget .wall-container form .wall-fieldset-status:before, .elgg-module-widget .wall-container form .wall-fieldset-status:after {
+  content: "";
+  margin-left: 0;
+}
 .wall-container form .wall-fieldset-attachment {
   margin-left: 15px;
 }
@@ -155,10 +170,16 @@ body.wall-state-loading:before {
   height: 75px;
   margin: 0;
   padding: 8px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .wall-container form textarea:focus {
   background: white;
   border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .wall-container form textarea[data-limit] {
   margin-bottom: 20px;
@@ -178,7 +199,10 @@ body.wall-state-loading:before {
   border-color: #cccccc;
 }
 .wall-container form .token-input-dropdown {
-  z-index: 1010;
+  z-index: 110;
+}
+.wall-container form .token-input-dropdown * {
+  font-size: 12px;
 }
 .wall-container form .token-input-list {
   position: relative;
@@ -315,29 +339,26 @@ body.wall-state-loading:before {
   line-height: 35px;
   color: #bfbfbf;
   font-size: 18px;
-  z-index: 1005;
+  z-index: 105;
   width: 30px;
   text-align: center;
 }
 .wall-container form .wall-bar-controls {
-  margin: 5px;
-  margin: 10px 0;
   text-align: right;
+  margin: 10px;
 }
 .wall-container form .wall-bar-controls > li {
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   margin: 0 5px;
 }
 .wall-container form .wall-bar-controls > li select {
-  margin: 0;
-  line-height: 16px;
-  padding: 4px 8px;
+  margin: auto;
+  line-height: 20px;
 }
 .wall-container form .wall-bar-controls > li label {
-  line-height: 16px;
+  line-height: 20px;
   font-weight: normal;
-  padding: 4px 8px;
 }
 
 .wall-tagged-friends, .wall-tagged-location, .wall-tagged-attachments {
@@ -364,6 +385,30 @@ body.wall-state-loading:before {
 .wall-post-list > li {
   border: none;
 }
+.wall-post-list .wall-post {
+  *zoom: 1;
+  padding-top: 10px;
+}
+.wall-post-list .wall-post:before, .wall-post-list .wall-post:after {
+  content: " ";
+  display: table;
+}
+.wall-post-list .wall-post:after {
+  clear: both;
+}
+.wall-post-list .wall-post > .elgg-image {
+  width: 50px;
+  display: inline-block;
+  float: none;
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+.wall-post-list .wall-post > .elgg-body {
+  margin-left: 50px;
+  width: 90%;
+  float: left;
+}
 .wall-post-list .wall-post > .elgg-body .elgg-content {
   *zoom: 1;
 }
@@ -384,7 +429,8 @@ body.wall-state-loading:before {
   position: relative;
   margin-left: 15px;
   border: 1px solid #cccccc;
-  padding: 5px;
+  margin-left: 5px;
+  padding: 15px;
 }
 .wall-post-list .wall-post > .elgg-body .wall-bubble:before {
   content: " ";
@@ -414,6 +460,30 @@ body.wall-state-loading:before {
   margin-top: 0;
   z-index: 5;
 }
+.wall-post-list .wall-post-alt {
+  *zoom: 1;
+  padding-top: 10px;
+}
+.wall-post-list .wall-post-alt:before, .wall-post-list .wall-post-alt:after {
+  content: " ";
+  display: table;
+}
+.wall-post-list .wall-post-alt:after {
+  clear: both;
+}
+.wall-post-list .wall-post-alt > .elgg-image-alt {
+  width: 50px;
+  display: inline-block;
+  float: none;
+  right: 0;
+  top: 0px;
+  position: absolute;
+}
+.wall-post-list .wall-post-alt > .elgg-body {
+  margin-right: 50px;
+  width: 90%;
+  float: right;
+}
 .wall-post-list .wall-post-alt > .elgg-body .elgg-content {
   *zoom: 1;
 }
@@ -434,7 +504,8 @@ body.wall-state-loading:before {
   position: relative;
   margin-right: 15px;
   border: 1px solid #cccccc;
-  padding: 5px;
+  margin-left: -15px;
+  padding: 15px;
 }
 .wall-post-list .wall-post-alt > .elgg-body .wall-bubble:before {
   content: " ";

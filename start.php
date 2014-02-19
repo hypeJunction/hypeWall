@@ -31,6 +31,7 @@ define('WALL_GEOPOSITIONING', elgg_get_plugin_setting('geopositioning', PLUGIN_I
 define('WALL_TAG_FRIENDS', elgg_get_plugin_setting('tag_friends', PLUGIN_ID));
 
 require_once __DIR__ . '/lib/functions.php';
+require_once __DIR__ . '/lib/events.php';
 require_once __DIR__ . '/lib/hooks.php';
 require_once __DIR__ . '/lib/page_handlers.php';
 
@@ -106,6 +107,14 @@ function init() {
 
 	elgg_register_plugin_hook_handler('view', 'object/thewire', __NAMESPACE__ . '\\hijack_wire');
 	elgg_register_plugin_hook_handler('view', 'river/object/thewire/create', __NAMESPACE__ . '\\hijack_wire_river');
+
+	/**
+	 * Notifications
+	 */
+	register_notification_object('object', 'hjwall', elgg_echo('wall:new:notification:generic'));
+	elgg_register_plugin_hook_handler('object:notifications', 'object', __NAMESPACE__ . '\\ignore_default_notifications');
+	elgg_register_event_handler('publish', 'object', __NAMESPACE__ . '\\send_notifications');
+	elgg_register_plugin_hook_handler('notify:entity:message', 'object', __NAMESPACE__ . '\\prepare_notification_message');
 }
 
 /**

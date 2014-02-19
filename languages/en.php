@@ -26,7 +26,7 @@ $english = array(
 	'wall:usersettings:river_access_id' => 'Visibility of wall tags',
 	'wall:usersettings:river_access_id:help' => 'Who can see that you were tagged in someone else\'s wall post, if the original post was not shared with them?',
 
-	'wall:write' => 'Post to the wall',
+	'wall:write' => 'Post on the wall',
 
 	'wall:tag:friends' => 'Tag friends',
 	'wall:tag:friends:hint' => 'Tag friends: start search by typing their name',
@@ -37,9 +37,9 @@ $english = array(
 	'wall:status:placeholder' => 'What\'s on your mind?',
 	'wall:url:placeholder' => 'Add a link',
 
-	'wall:tagged:notification:subject' => '%s tagged you in a wall post',
+	'wall:tagged:notification:subject' => '%s tagged you in a post',
 	'wall:tagged:notification:message' => '
-		%s tagged you in a wall post: <br />
+		%s tagged you in a post: <br />
 		<blockquote>
 			%s
 		</blockquote>
@@ -47,9 +47,10 @@ $english = array(
 		%s
 	',
 
-	'wall:owner:notification:subject' => '%s posted on your wall',
-	'wall:owner:notification:message' => '
-		%s posted on your wall: <br />
+	'wall:new:notification:generic' => 'New post',
+	'wall:new:notification:subject' => '%s posted %s',
+	'wall:new:notification:message' =>  '
+		%s posted %s: <br />
 		<blockquote>
 			%s
 		</blockquote>
@@ -63,7 +64,7 @@ $english = array(
 	'wall:at' => ' near %s',
 	'wall:attached' => ' [%s attachments]',
 	
-	'wall:new:wall:post' => '%s posted on %s\'s wall: ',
+	'wall:new:wall:post' => '%s posted on %s\'s wall',
 	'wall:status' => 'Update status',
 	'wall:url' => 'Share a link',
 	'wall:content' => 'Share content',
@@ -108,6 +109,16 @@ $english = array(
 	'wall:make_bookmark' => 'Save this link to my bookmarks',
 
 	'wall:numbertodisplay' => 'Number of latest posts to display',
+
+	'wall:target:thewire' => 'wire',
+	'wall:target:hjwall' => 'wall',
+
+	'wall:ownership:own' => 'on their %s',
+	'wall:ownership:your' => 'on your %s',
+	'wall:ownership:owner' => 'on %s\'s %s',
+
+
+	
 );
 
 add_translation("en", $english);

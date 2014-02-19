@@ -40,6 +40,11 @@ $hidden .= elgg_view('input/hidden', array(
 	'value' => 'wall',
 		));
 
+$hidden .= elgg_view('input/hidden', array(
+	'name' => 'container_guid',
+	'value' => elgg_extract('container_guid', $vars, elgg_get_page_owner_guid())
+));
+
 $html = <<<HTML
 	<fieldset class="wall-fieldset-status">$status</fieldset>
 	<fieldset class="wall-fieldset-attachment">

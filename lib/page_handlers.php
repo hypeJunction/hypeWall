@@ -45,21 +45,23 @@ function page_handler($page) {
 			elgg_push_breadcrumb($title, PAGEHANDLER . "/owner/$owner->username");
 
 			if (isset($page[2])) {
-				$guid = get_input('guid');
-				$post = get_entity($guid);
+				$post = get_entity($page[2]);
+				if (elgg_instanceof($post)) {
+					elgg_push_breadcrumb($post->title);
+					$content = elgg_view_entity_list(array($post), array(
+						'list_class' => 'wall-post-list',
+						'full_view' => true
+					));
+					$layout = elgg_view_layout('one_sidebar', array(
+						'title' => $title,
+						'content' => $content,
+					));
+					echo elgg_view_page($title, $layout);
+					return true;
+				}
 			}
 
-			if (elgg_instanceof($post)) {
-				$post_owner = $post->getOwnerentity();
-				$title = elgg_echo('wall:post:owner', array($post_owner->name));
-				elgg_push_breadcrumb($title);
-				$content = elgg_view_entity($post, array(
-					'full_view' => true
-				));
-			} else {
-				$content = elgg_view("framework/wall/owner");
-			}
-
+			$content = elgg_view("framework/wall/owner");
 			$layout = elgg_view_layout('content', array(
 				'title' => $title,
 				'content' => $content,
@@ -73,12 +75,11 @@ function page_handler($page) {
 			$guid = $page[1];
 			$post = get_entity($guid);
 
-			if (!elgg_instanceof($post, 'object', 'hjwall')) {
+			if (!elgg_instanceof($post)) {
 				return false;
 			}
 
-			$owner = $post->getOwnerEntity();
-			forward(PAGEHANDLER . "/owner/$owner->username/$post->guid");
+			forward($post->getURL());
 			break;
 	}
 

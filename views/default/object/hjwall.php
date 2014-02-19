@@ -2,11 +2,13 @@
 
 namespace hypeJunction\Wall;
 
+elgg_load_css('wall');
+
 $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();
 $wall_owner = $entity->getContainerEntity();
 
-if ($wall_owner && $wall_owner->guid != $poster->guid && $wall_owner->guid != elgg_get_page_owner_guid()) {
+if ($wall_owner->guid !== $poster->guid && $poster->guid !== elgg_get_page_owner_guid() && $wall_owner->guid !== elgg_get_page_owner_guid()) {
 	$by = elgg_view('output/url', array(
 		'text' => $poster->name,
 		'href' => $poster->getURL()
@@ -48,10 +50,6 @@ if ($attachments) {
 	}
 }
 
-if ($vars['full_view']) {
-	$body .= elgg_view_comments($entity);
-}
-
 $menu = elgg_view_menu('entity', array(
 	'entity' => $entity,
 	'handler' => 'wall',
@@ -90,3 +88,6 @@ if ($poster->guid == elgg_get_page_owner_guid()) {
 	echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
 }
 
+if (elgg_extract('full_view', $vars, true)) {
+	echo elgg_view_comments($entity);
+}
