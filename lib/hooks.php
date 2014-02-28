@@ -273,7 +273,7 @@ function ignore_default_notifications($hook, $type, $return, $params) {
 	$object = elgg_extract('object', $params);
 
 	// We don't want the default notification handler to send out notifications when a wall post is made
-	if ($event == 'create' && $object_type == 'object' && ($object->origin == 'wall' || $object->method == 'wall')) {
+	if ($object->origin == 'wall' || $object->method == 'wall') {
 		return true;
 	}
 

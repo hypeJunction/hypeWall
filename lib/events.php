@@ -12,7 +12,7 @@ namespace hypeJunction\Wall;
  */
 function send_notifications($event, $entity_type, $entity) {
 
-	if ($event !== 'publish' || $entity_type !== 'object' || !elgg_instanceof($entity) || $entity->origin !== 'wall') {
+	if ($entity->origin !== 'wall') {
 		return true;
 	}
 
@@ -51,7 +51,7 @@ function send_notifications($event, $entity_type, $entity) {
 	$tagged_friends = get_tagged_friends($entity);
 	foreach ($tagged_friends as $tagged_friend) {
 		// user tagged herself or the wall owner
-		if ($tagged_friend->guid == $poster->guid || $tagged_friend->guid == $container->guid) {
+		if ($tagged_friend->guid == $poster->guid || $tagged_friend->guid == $container->guid || in_array($tagged_friend->guid, $sent)) {
 			continue;
 		}
 
