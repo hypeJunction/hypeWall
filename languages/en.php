@@ -32,7 +32,8 @@ $english = array(
 	'wall:tag:friends:hint' => 'Tag friends: start search by typing their name',
 	'wall:tag:location:hint' => 'Add a location: search for previously tagged locations or add a new one',
 	'wall:tag:location:findme' => 'Find me - Your browser might request you to allow this site to use your current location',
-	'wall:tag:river' => '%s tagged %s in a wall post',
+	'wall:tag:river' => '%s tagged %s in a %s',
+	'wall:tag:river:post' => 'post',
 
 	'wall:status:placeholder' => 'What\'s on your mind?',
 	'wall:url:placeholder' => 'Add a link',

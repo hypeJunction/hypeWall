@@ -23,11 +23,14 @@ $poster_link = elgg_view('output/url', array(
 	'text' => $poster->name,
 	'href' => $poster->getURL()
 		));
-$summary = elgg_echo('wall:tag:river', array($poster_link, $tagged_user_link));
+$wall_post_link = elgg_view('output/url', array(
+	'text' => elgg_echo('wall:tag:river:post'),
+	'href' => $wall_post->getURL(),
+));
 
-$attachment = elgg_view_entity($wall_post, array(
-	'full_view' => false,
-		));
+$summary = elgg_echo('wall:tag:river', array($poster_link, $tagged_user_link, $wall_post_link));
+
+$attachment = format_wall_message($wall_post, true);
 
 elgg_set_ignore_access($ia);
 

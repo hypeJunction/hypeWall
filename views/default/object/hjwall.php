@@ -92,7 +92,7 @@ $user_icon = elgg_view_entity_icon($poster, 'small', array(
 		));
 
 if (!elgg_in_context('widgets')) {
-	if ($poster->guid == elgg_get_page_owner_guid()) {
+	if (elgg_in_context('wall') && $poster->guid == elgg_get_page_owner_guid()) {
 		echo elgg_view_image_block('', $content, array(
 			'image_alt' => $user_icon,
 			'class' => 'wall-post-alt'

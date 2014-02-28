@@ -222,7 +222,11 @@ function hijack_wire($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $vars);
 
 	if ($entity->method == 'wall') {
-		return elgg_view('object/hjwall', $vars);
+		if (elgg_in_context('thewire')) {
+			$return .= elgg_view('object/thewire/extras', $vars);
+		} else {
+			$return = elgg_view('object/hjwall', $vars);
+		}
 	}
 
 	return $return;
@@ -299,7 +303,7 @@ function prepare_notification_message($hook, $type, $message, $params) {
 		$wall_owner = $entity->getContainerEntity();
 
 		$target = elgg_echo("wall:target:{$entity->getSubtype()}");
-		
+
 		if ($poster->guid == $wall_owner->guid) {
 			$ownership = elgg_echo('wall:ownership:own', array($target));
 		} else if ($wall_owner->guid == $to_entity->guid) {
