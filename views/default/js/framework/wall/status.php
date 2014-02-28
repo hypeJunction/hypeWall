@@ -95,6 +95,11 @@
 		$('body.wall-state-loading').live('click', function() {
 			$(this).removeClass('wall-state-loading');
 		});
+
+		if (typeof navigator == 'undefined') {
+			$('.wall-find-me').hide();
+		}
+
 		$('.wall-find-me').live('click', framework.wall.findMe);
 		$('.wall-tab').live('click', framework.wall.switchTab);
 		$('textarea[data-limit]').live('keyup keydown', framework.wall.updateCounter);
