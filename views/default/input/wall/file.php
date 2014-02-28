@@ -6,6 +6,7 @@ if (elgg_view_exists('input/dropzone')) {
 		'accept' => "image/*",
 		'max' => 25,
 		'multiple' => true,
+		'action' => elgg_normalize_url('action/dropzone/upload'),
 	));
 } else {
 	echo elgg_view('input/file', array(
