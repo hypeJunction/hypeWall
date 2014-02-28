@@ -215,6 +215,8 @@ body.wall-state-loading:before {
 .wall-container form .token-input-list input[type="text"] {
   height: auto;
   line-height: 20px;
+  border: 0;
+  outline: 0;
 }
 .wall-container form .token-input-list .token-input-token {
   margin: 0;
