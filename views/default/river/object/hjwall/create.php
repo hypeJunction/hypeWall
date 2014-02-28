@@ -6,6 +6,8 @@ $subject = $vars['item']->getSubjectEntity();
 $object = $vars['item']->getObjectEntity();
 $wall_owner = $object->getContainerEntity();
 
+$message = format_wall_message($object);
+
 if ($wall_owner->guid !== $subject->guid && $wall_owner->guid !== elgg_get_page_owner_guid()) {
 	$by = elgg_view('output/url', array(
 		'text' => $subject->name,
@@ -16,9 +18,14 @@ if ($wall_owner->guid !== $subject->guid && $wall_owner->guid !== elgg_get_page_
 		'href' => $wall_owner->getURL()
 	));
 	$summary = elgg_echo('wall:new:wall:post', array($by, $on));
+} else {
+	$author_link = elgg_view('output/url', array(
+		'text' => $subject->name,
+		'href' => $subject->getURL(),
+	));
+	$message = "$author_link: $message";
 }
 
-$message = format_wall_message($object);
 if (!$summary) {
 	$summary = $message;
 	$message = false;

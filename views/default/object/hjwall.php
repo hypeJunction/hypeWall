@@ -8,6 +8,8 @@ $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();
 $wall_owner = $entity->getContainerEntity();
 
+$message = format_wall_message($entity);
+
 if ($wall_owner->guid !== $poster->guid && $poster->guid !== elgg_get_page_owner_guid() && $wall_owner->guid !== elgg_get_page_owner_guid()) {
 	$by = elgg_view('output/url', array(
 		'text' => $poster->name,
@@ -18,9 +20,14 @@ if ($wall_owner->guid !== $poster->guid && $poster->guid !== elgg_get_page_owner
 		'href' => $wall_owner->getURL()
 	));
 	$summary = elgg_echo('wall:new:wall:post', array($by, $on));
+} else {
+	$author_link = elgg_view('output/url', array(
+		'text' => $poster->name,
+		'href' => $poster->getURL(),
+	));
+	$message = "$author_link: $message";
 }
 
-$message = format_wall_message($entity);
 
 if ($entity->address) {
 	$att_str = elgg_view('output/wall/url', array(
