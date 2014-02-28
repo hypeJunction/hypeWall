@@ -163,6 +163,12 @@ function owner_block_menu_setup($hook, $type, $return, $params) {
 					'text' => elgg_echo('wall'),
 					'href' => PAGEHANDLER . "/owner/{$entity->username}"
 		));
+	} else if (elgg_instanceof($entity, 'group') && $entity->wall_enable == 'yes') {
+		$return[] = ElggMenuItem::factory(array(
+					'name' => 'wall',
+					'text' => elgg_echo('wall:groups'),
+					'href' => PAGEHANDLER . "/group/{$entity->guid}"
+		));
 	}
 
 	return $return;

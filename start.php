@@ -115,6 +115,12 @@ function init() {
 	elgg_register_plugin_hook_handler('object:notifications', 'object', __NAMESPACE__ . '\\ignore_default_notifications');
 	elgg_register_event_handler('publish', 'object', __NAMESPACE__ . '\\send_notifications');
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', __NAMESPACE__ . '\\prepare_notification_message');
+
+	/**
+	 * Group tools
+	 */
+	add_group_tool_option('wall', elgg_echo('wall:groups:enable'), false);
+	elgg_extend_view('groups/tool_latest', 'framework/wall/group_module');
 }
 
 /**

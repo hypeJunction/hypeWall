@@ -9,7 +9,12 @@ namespace hypeJunction\Wall;
  * @return string
  */
 function url_handler($entity) {
-	return elgg_normalize_url(PAGEHANDLER . '/owner/' . $entity->getOwnerEntity()->username . '/' . $entity->guid);
+	$container = $entity->getContainerEntity();
+	if (elgg_instanceof($container, 'group')) {
+		return elgg_normalize_url(PAGEHANDLER . '/group/' . $container->guid . '/' . $entity->guid);
+	} else if (elgg_instanceof($container, 'user')) {
+		return elgg_normalize_url(PAGEHANDLER . '/owner/' . $container->username . '/' . $entity->guid);
+	}
 }
 
 /**
@@ -80,6 +85,45 @@ function page_handler($page) {
 			}
 
 			forward($post->getURL());
+			break;
+
+		case 'group' :
+			$guid = elgg_extract(1, $page);
+			$group = get_entity($guid);
+			if (!elgg_instanceof($group, 'group')) {
+				return false;
+			}
+
+			elgg_set_page_owner_guid($group->guid);
+
+			$title = elgg_echo('wall:owner', array($group->name));
+			elgg_push_breadcrumb($title, PAGEHANDLER . "/group/$group->guid");
+
+			if (isset($page[2])) {
+				$post = get_entity($page[2]);
+				if (elgg_instanceof($post)) {
+					elgg_push_breadcrumb($post->title);
+					$content = elgg_view_entity_list(array($post), array(
+						'list_class' => 'wall-post-list',
+						'full_view' => true
+					));
+					$layout = elgg_view_layout('one_sidebar', array(
+						'title' => $title,
+						'content' => $content,
+					));
+					echo elgg_view_page($title, $layout);
+					return true;
+				}
+			}
+
+			$content = elgg_view("framework/wall/group");
+			$layout = elgg_view_layout('content', array(
+				'title' => $title,
+				'content' => $content,
+				'filter' => false,
+			));
+			echo elgg_view_page($title, $layout);
+			return true;
 			break;
 	}
 

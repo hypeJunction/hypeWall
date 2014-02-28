@@ -14,23 +14,33 @@ if (!elgg_in_context('activity') && !elgg_in_context('wall')) {
 	return;
 }
 
+$user = elgg_get_logged_in_user_entity();
+$page_owner = elgg_get_page_owner_entity();
+
+if ($page_owner->guid !== $user->guid) {
+	$subtype = 'hjwall';
+} else {
+	$subtype = WALL_SUBTYPE;
+}
+// Make sure user can write to container before displaying the form
+if (elgg_instanceof($page_owner) && !$page_owner->canWriteToContainer($user->guid, 'object', $subtype)) {
+	return;
+}
+
 elgg_load_js('jquery.form');
 elgg_load_css('wall');
 elgg_load_js('wall.status');
 
-$user = elgg_get_logged_in_user_entity();
-$page_owner = elgg_get_page_owner_entity();
-
 $user_icon = '<div class="wall-poster-avatar-container">' . elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
-	'use_hover' => false,
-	'img_class' => 'wall-poster-avatar'
+			'use_hover' => false,
+			'img_class' => 'wall-poster-avatar'
 		)) . '</div>';
 
 if ($page_owner && $page_owner->guid !== $user->guid) {
 	$page_owner_icon = '<div class="wall-owner-avatar-container">' . elgg_view_entity_icon($page_owner, 'small', array(
-		'use_hover' => false,
-		'img_class' => 'wall-owner-avatar'
-	)) . '</div>';
+				'use_hover' => false,
+				'img_class' => 'wall-owner-avatar'
+			)) . '</div>';
 }
 
 $default = elgg_get_plugin_setting('default_form', PLUGIN_ID);

@@ -119,6 +119,10 @@ $english = array(
 	'wall:ownership:owner' => 'on %s\'s %s',
 
 	'wall:widget:showaddform' => 'Show a form to add new posts',
+
+	'wall:groups:enable' => 'Enable group wall',
+	'wall:groups' => 'Group wall',
+	'wall:groups:post' => 'Post',
 	
 );
 

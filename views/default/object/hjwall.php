@@ -44,9 +44,9 @@ $attachments = elgg_get_entities_from_relationship(array(
 if ($attachments) {
 	if (count($attachments) > 1) {
 		$att_str .= elgg_view_entity_list($attachments, array(
-			'list_type' => 'gallery',
+			'list_type' => elgg_in_context('widgets') ? 'list' : 'gallery',
 			'full_view' => false,
-			'size' => 'medium'
+			'size' => 'small'
 		));
 	} else {
 		foreach ($attachments as $attachment) {
