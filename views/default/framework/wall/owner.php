@@ -7,7 +7,7 @@ if (!$owner) {
 }
 
 $dbprefix = elgg_get_config('dbprefix');
-echo elgg_list_entities(array(
+$content = elgg_list_entities(array(
 	'types' => 'object',
 	'subtypes' => array('hjwall', 'thewire'),
 	'joins' => array(
@@ -19,5 +19,11 @@ echo elgg_list_entities(array(
 	'list_class' => 'wall-post-list',
 	'full_view' => false,
 	'limit' => elgg_extract('limit', $vars, 10),
-));
+		));
+
+if (!$content) {
+	echo '<p>' . elgg_echo('wall:empty') . '</p>';
+} else {
+	echo $content;
+}
 

@@ -132,3 +132,15 @@ echo elgg_view('input/dropdown', array(
 	)
 ));
 echo '</div>';
+
+echo '<div>';
+echo '<label>' . elgg_echo('wall:settings:third_party_wall') . '</label>';
+echo elgg_view('input/dropdown', array(
+	'name' => 'params[third_party_wall]',
+	'value' => $entity->third_party_wall,
+	'options_values' => array(
+		0 => elgg_echo('option:no'),
+		1 => elgg_echo('option:yes'),
+	)
+));
+echo '</div>';

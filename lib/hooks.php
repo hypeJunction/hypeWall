@@ -23,8 +23,17 @@ function container_permissions_check($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	if (elgg_instanceof($container, 'user') && $user) {
-		return true;
+	if (elgg_instanceof($container, 'user') && elgg_instanceof($user, 'user')) {
+		if ($container->isFriend($user)) {
+			return true;
+		} else {
+			$third_party_wall_global = elgg_get_plugin_setting('third_party_wall', PLUGIN_ID);
+			$third_party_wall_user = elgg_get_plugin_user_setting('third_party_wall', $container->guid, PLUGIN_ID);
+
+			if ($third_party_wall_global && $third_party_wall_user) {
+				return true;
+			}
+		}
 	}
 
 	return $return;
@@ -189,7 +198,7 @@ function user_hover_menu_setup($hook, $type, $return, $params) {
 	if (elgg_instanceof($entity, 'user')) {
 		$return[] = ElggMenuItem::factory(array(
 					'name' => 'wall',
-					'text' => elgg_echo('wall:write'),
+					'text' => ($entity->canWriteToContainer(0, 'object', 'hjwall')) ? elgg_echo('wall:write') : elgg_echo('wall:view'),
 					'href' => PAGEHANDLER . "/owner/{$entity->username}",
 		));
 	}

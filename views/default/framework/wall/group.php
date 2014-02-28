@@ -6,7 +6,7 @@ if (!elgg_instanceof($group, 'group')) {
 	return;
 }
 
-echo elgg_list_entities(array(
+$content = elgg_list_entities(array(
 	'types' => 'object',
 	'subtypes' => array('hjwall'),
 	'container_guids' => $group->guid,
@@ -14,4 +14,10 @@ echo elgg_list_entities(array(
 	'full_view' => false,
 	'limit' => elgg_extract('limit', $vars, 10),
 ));
+
+if (!$content) {
+	echo '<p>' . elgg_echo('wall:empty') . '</p>';
+} else {
+	echo $content;
+}
 
