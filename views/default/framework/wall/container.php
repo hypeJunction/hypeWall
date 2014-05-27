@@ -125,7 +125,7 @@ if (elgg_get_plugin_setting('photo', PLUGIN_ID)) {
 //			), $vars);
 //}
 
-if (elgg_get_plugin_setting('content', PLUGIN_ID)) {
+if (elgg_get_plugin_setting('content', PLUGIN_ID) && elgg_is_active_plugin('elgg_tokeninput')) {
 	elgg_register_menu_item('wall-filter', array(
 		'name' => 'content',
 		'text' => '<i class="wall-icon wall-icon-content"></i>',

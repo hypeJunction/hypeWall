@@ -80,18 +80,19 @@ echo '</div>';
 //));
 //echo '</div>';
 
-echo '<div>';
-echo '<label>' . elgg_echo('wall:settings:content') . '</label>';
-echo elgg_view('input/dropdown', array(
-	'name' => 'params[content]',
-	'value' => $entity->content,
-	'options_values' => array(
-		0 => elgg_echo('option:no'),
-		1 => elgg_echo('option:yes'),
-	)
-));
-echo '</div>';
-
+if (elgg_is_active_plugin('elgg_tokeninput')) {
+	echo '<div>';
+	echo '<label>' . elgg_echo('wall:settings:content') . '</label>';
+	echo elgg_view('input/dropdown', array(
+		'name' => 'params[content]',
+		'value' => $entity->content,
+		'options_values' => array(
+			0 => elgg_echo('option:no'),
+			1 => elgg_echo('option:yes'),
+		)
+	));
+	echo '</div>';
+}
 
 echo '<div>';
 echo '<label>' . elgg_echo('wall:settings:default_form') . '</label>';
@@ -102,36 +103,38 @@ echo elgg_view('input/dropdown', array(
 		'status' => elgg_echo('wall:settings:status'),
 		'url' => elgg_echo('wall:settings:url'),
 		'photo' => elgg_echo('wall:settings:photo'),
-		'content' => elgg_echo('wall:settings:content'),
+		'content' => (elgg_is_active_plugin('elgg_tokeninput')) ? elgg_echo('wall:settings:content') : null,
 	)
 ));
 echo '</div>';
 
 echo '<h3>' . elgg_echo('wall:settings:features') . '</h3>';
 
-echo '<div>';
-echo '<label>' . elgg_echo('wall:settings:geopositioning') . '</label>';
-echo elgg_view('input/dropdown', array(
-	'name' => 'params[geopositioning]',
-	'value' => $entity->geopositioning,
-	'options_values' => array(
-		0 => elgg_echo('option:no'),
-		1 => elgg_echo('option:yes'),
-	)
-));
-echo '</div>';
+if (elgg_is_active_plugin('elgg_tokeninput')) {
+	echo '<div>';
+	echo '<label>' . elgg_echo('wall:settings:geopositioning') . '</label>';
+	echo elgg_view('input/dropdown', array(
+		'name' => 'params[geopositioning]',
+		'value' => $entity->geopositioning,
+		'options_values' => array(
+			0 => elgg_echo('option:no'),
+			1 => elgg_echo('option:yes'),
+		)
+	));
+	echo '</div>';
 
-echo '<div>';
-echo '<label>' . elgg_echo('wall:settings:tag_friends') . '</label>';
-echo elgg_view('input/dropdown', array(
-	'name' => 'params[tag_friends]',
-	'value' => $entity->tag_friends,
-	'options_values' => array(
-		0 => elgg_echo('option:no'),
-		1 => elgg_echo('option:yes'),
-	)
-));
-echo '</div>';
+	echo '<div>';
+	echo '<label>' . elgg_echo('wall:settings:tag_friends') . '</label>';
+	echo elgg_view('input/dropdown', array(
+		'name' => 'params[tag_friends]',
+		'value' => $entity->tag_friends,
+		'options_values' => array(
+			0 => elgg_echo('option:no'),
+			1 => elgg_echo('option:yes'),
+		)
+	));
+	echo '</div>';
+}
 
 echo '<div>';
 echo '<label>' . elgg_echo('wall:settings:third_party_wall') . '</label>';
