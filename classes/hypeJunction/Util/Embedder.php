@@ -112,21 +112,21 @@ class Embedder {
 	 * Use 'output:src', 'embed' hook to override the output
 	 * @return string
 	 */
-	private function getSrcView($params) {
+	private function getSrcView($params = array()) {
 
 		$meta = $this->extractMeta('oembed');
 
+		$title = $meta->title;
+		error_log($meta->provider_name);
+		if ($meta->provider_name) {
+			$class = 'embed-' . preg_replace('/[^a-z0-9\-]/i', '-', strtolower($meta->provider_name));
+		}
+		$body = elgg_view('output/url', array(
+			'href' => $this->url
+		));
+
 		switch ($meta->type) {
 
-			default :
-				$title = $meta->title;
-				if ($meta->provider_name) {
-					$class = 'embed-' . preg_replace('/[^a-z0-9\-]/i', '-', strtolower($meta->provider_name));
-				}
-				$body = elgg_view('output/url', array(
-					'href' => $this->url
-				));
-				
 			case 'link' :
 
 				if ($meta->thumbnail_url) {
@@ -149,7 +149,7 @@ class Embedder {
 				break;
 
 			case 'photo' :
-				
+
 				$body = elgg_view('output/url', array(
 					'text' => elgg_view('output/img', array(
 						'src' => $meta->url,

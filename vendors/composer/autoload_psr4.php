@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'hypeJunction\\' => array($baseDir . '/classes/hypeJunction'),
+    'UFCOE\\' => array($baseDir . '/classes/UFCOE'),
 );

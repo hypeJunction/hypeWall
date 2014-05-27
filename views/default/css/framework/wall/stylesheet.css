@@ -574,3 +574,14 @@ body.wall-state-loading:before {
 .wall-url-preview img, .wall-url-preview iframe, .wall-url-preview object, .wall-url-preview embed {
   max-width: 100%;
 }
+
+.elgg-module.elgg-module-embed {
+  font-family: "Open Sans", 'sans-serif';
+  background: #f4f4f4;
+}
+.elgg-module.elgg-module-embed > .elgg-head {
+  padding: 10px;
+}
+.elgg-module.elgg-module-embed > .elgg-foot {
+  padding: 10px;
+}

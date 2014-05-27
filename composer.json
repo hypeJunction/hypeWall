@@ -31,7 +31,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"hypeJunction\\": "classes/hypeJunction/"
+			"hypeJunction\\": "classes/hypeJunction/",
+			"UFCOE\\": "classes/UFCOE/"
 		}
 	}
 }

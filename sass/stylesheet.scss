@@ -280,7 +280,7 @@ body {
 			margin-left: -10px;
 		}
 	}
-	
+
 }
 
 .wall-tagged-friends, .wall-tagged-location, .wall-tagged-attachments {
@@ -390,5 +390,16 @@ body {
 .wall-url-preview {
 	img, iframe, object, embed {
 		max-width: 100%;
+	}
+}
+
+.elgg-module.elgg-module-embed {
+	font-family: "Open Sans", 'sans-serif';
+	background: #f4f4f4;
+	& > .elgg-head {
+		padding: 10px;
+	}
+	& > .elgg-foot {
+		padding: 10px;
 	}
 }
