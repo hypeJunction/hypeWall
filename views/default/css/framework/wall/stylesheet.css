@@ -84,28 +84,13 @@ body.wall-state-loading:before {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.wall-container > .elgg-image {
-  position: relative;
-}
-.wall-container > .elgg-image .wall-poster-avatar, .wall-container > .elgg-image .wall-owner-avatar {
-  -webkit-border-radius: 1000px;
-  -moz-border-radius: 1000px;
-  -ms-border-radius: 1000px;
-  -o-border-radius: 1000px;
-  border-radius: 1000px;
-  border: 1px solid #cccccc;
-}
-.wall-container > .elgg-image .wall-owner-avatar {
-  border: 5px solid white;
-}
-.wall-container > .elgg-image .wall-owner-avatar-container {
-  position: absolute;
-  right: 0;
-  margin: -25px -12px 0 0;
-}
 .wall-container form {
-  padding: 10px;
+  padding: 0;
   background: transparent;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
 }
 .wall-container form fieldset {
   margin: 0;
@@ -113,76 +98,24 @@ body.wall-state-loading:before {
   border: 0;
 }
 .wall-container form fieldset > div {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
-.wall-container form .wall-fieldset-status {
-  background: #ffffff;
-  position: relative;
-  margin-left: 15px;
-  border: 1px solid #cccccc;
-  margin-bottom: 5px;
-}
-.wall-container form .wall-fieldset-status:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  border-width: 0 15px 15px 0;
-  border-color: transparent #cccccc transparent transparent;
-  margin-left: -16px;
-  margin-top: -1px;
-  z-index: 1;
-}
-.wall-container form .wall-fieldset-status:after {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  border-width: 0 15px 15px 0;
-  border-color: transparent #ffffff transparent transparent;
-  margin-left: -14px;
-  margin-top: 0;
-  z-index: 5;
-}
-.elgg-module-widget .wall-container form .wall-fieldset-status:before, .elgg-module-widget .wall-container form .wall-fieldset-status:after {
-  content: "";
-  margin-left: 0;
-}
-.wall-container form .wall-fieldset-attachment {
-  margin-left: 15px;
-}
-.wall-container form .wall-fieldset-tags {
-  margin-left: 15px;
+.wall-container form label {
+  font-weight: normal;
+  font-family: "Open Sans", "sans-serif";
+  display: inline-block;
+  margin-bottom: 7px;
+  float: left;
 }
 .wall-container form textarea {
+  height: 75px;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
   border-radius: 0;
-  border: none;
-  height: 75px;
-  margin: 0;
   padding: 8px;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-.wall-container form textarea:focus {
-  background: white;
-  border: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-.wall-container form textarea[data-limit] {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .wall-container form input[type="text"] {
   -webkit-border-radius: 0;
@@ -190,161 +123,9 @@ body.wall-state-loading:before {
   -ms-border-radius: 0;
   -o-border-radius: 0;
   border-radius: 0;
-  margin: 0;
-  border-color: #cccccc;
-  height: 35px;
 }
-.wall-container form input[type="text"]:focus {
-  background: white;
-  border-color: #cccccc;
-}
-.wall-container form .token-input-dropdown {
-  z-index: 110;
-}
-.wall-container form .token-input-dropdown * {
-  font-size: 12px;
-}
-.wall-container form .token-input-list {
-  position: relative;
-  margin-bottom: 0;
-  border: 1px solid #cccccc;
-  background: transparent;
-  padding: 0;
-  z-index: 100;
-}
-.wall-container form .token-input-list input[type="text"] {
-  height: auto;
-  line-height: 20px;
-  border: 0;
-  outline: 0;
-}
-.wall-container form .token-input-list .token-input-token {
-  margin: 0;
-}
-.wall-container form .token-input-list .token-input-token .elgg-image {
-  margin-right: 5px;
-}
-.wall-container form .token-input-list .token-input-token .elgg-image a {
-  width: 20px;
-  height: 20px;
-  display: block;
-}
-.wall-container form .token-input-list .token-input-token .elgg-image a img {
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-}
-.wall-container form .token-input-list .token-input-token .elgg-body {
-  padding-top: 2px;
-}
-.wall-container form .token-input-list .token-input-delete-token {
-  font-size: 16px;
-  padding: 0 5px;
-}
-.wall-container form .wall-input-url {
-  position: relative;
-}
-.wall-container form .wall-input-url:before {
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\f0c1";
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 0 7px 0 0;
-  line-height: 37px;
-  color: #cccccc;
-  font-size: 18px;
-  z-index: 5;
-  width: 30px;
-  text-align: center;
-}
-.wall-container form .wall-input-attachment {
-  position: relative;
-}
-.wall-container form .wall-input-attachment:before {
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\f0ea";
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 0 7px 0 0;
-  line-height: 37px;
-  color: #cccccc;
-  font-size: 18px;
-  z-index: 5;
-  width: 30px;
-  text-align: center;
-}
-.wall-container form .wall-input-tag-friends {
-  position: relative;
-}
-.wall-container form .wall-input-tag-friends:before {
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\f02c";
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 0 7px 0 0;
-  line-height: 37px;
-  color: #cccccc;
-  font-size: 18px;
-  z-index: 5;
-  width: 30px;
-  text-align: center;
-}
-.wall-container form .wall-input-tag-location {
-  position: relative;
-}
-.wall-container form .wall-input-tag-location:before {
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\f041";
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 0 7px 0 0;
-  line-height: 37px;
-  color: #cccccc;
-  font-size: 18px;
-  z-index: 5;
-  width: 30px;
-  text-align: center;
-}
-.wall-container form .wall-input-tag-location .wall-find-me {
-  position: absolute;
-  position: absolute;
-  right: 25px;
-  top: 0;
-  padding: 0 7px 0 0;
-  line-height: 35px;
-  color: #bfbfbf;
-  font-size: 18px;
-  z-index: 105;
-  width: 30px;
-  text-align: center;
+.wall-container form .wall-find-me {
+  float: right;
 }
 .wall-container form .wall-bar-controls {
   text-align: right;
@@ -384,30 +165,23 @@ body.wall-state-loading:before {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.wall-post-list .wall-poster-avatar, .wall-post-list .wall-owner-avatar {
-  -webkit-border-radius: 1000px;
-  -moz-border-radius: 1000px;
-  -ms-border-radius: 1000px;
-  -o-border-radius: 1000px;
-  border-radius: 1000px;
-  border: 1px solid #cccccc;
-}
 .wall-post-list > li {
   border: none;
   position: relative;
 }
-.wall-post-list .wall-post {
+
+.wall-post {
   *zoom: 1;
   padding-top: 10px;
 }
-.wall-post-list .wall-post:before, .wall-post-list .wall-post:after {
+.wall-post:before, .wall-post:after {
   content: " ";
   display: table;
 }
-.wall-post-list .wall-post:after {
+.wall-post:after {
   clear: both;
 }
-.wall-post-list .wall-post > .elgg-image {
+.wall-post > .elgg-image {
   padding-left: 15px;
   padding-right: 15px;
   width: 16.66667%;
@@ -415,43 +189,43 @@ body.wall-state-loading:before {
   margin: 0;
   padding: 0 3px;
 }
-.wall-post-list .wall-post > .elgg-image .elgg-avatar {
+.wall-post > .elgg-image .elgg-avatar {
   max-width: 100%;
 }
-.wall-post-list .wall-post > .elgg-image .elgg-avatar img {
+.wall-post > .elgg-image .elgg-avatar img {
   max-width: 100%;
   height: auto;
 }
-.wall-post-list .wall-post > .elgg-body {
+.wall-post > .elgg-body {
   padding-left: 15px;
   padding-right: 15px;
   width: 83.33333%;
   float: left;
   padding: 0 3px;
 }
-.wall-post-list .wall-post > .elgg-body .elgg-content {
+.wall-post > .elgg-body .elgg-content {
   *zoom: 1;
 }
-.wall-post-list .wall-post > .elgg-body .elgg-content:before, .wall-post-list .wall-post > .elgg-body .elgg-content:after {
+.wall-post > .elgg-body .elgg-content:before, .wall-post > .elgg-body .elgg-content:after {
   content: " ";
   display: table;
 }
-.wall-post-list .wall-post > .elgg-body .elgg-content:after {
+.wall-post > .elgg-body .elgg-content:after {
   clear: both;
 }
-.wall-post-list .wall-post > .elgg-body .elgg-menu-entity {
+.wall-post > .elgg-body .elgg-menu-entity {
   margin-top: 15px;
   margin-left: 0;
   float: none;
 }
-.wall-post-list .wall-post > .elgg-body .wall-bubble {
+.wall-post > .elgg-body .wall-bubble {
   background: #ffffff;
   position: relative;
   margin-left: 15px;
   border: 1px solid #cccccc;
   padding: 15px;
 }
-.wall-post-list .wall-post > .elgg-body .wall-bubble:before {
+.wall-post > .elgg-body .wall-bubble:before {
   content: " ";
   position: absolute;
   left: 0;
@@ -465,7 +239,7 @@ body.wall-state-loading:before {
   margin-top: -1px;
   z-index: 1;
 }
-.wall-post-list .wall-post > .elgg-body .wall-bubble:after {
+.wall-post > .elgg-body .wall-bubble:after {
   content: " ";
   position: absolute;
   left: 0;
@@ -479,18 +253,19 @@ body.wall-state-loading:before {
   margin-top: 0;
   z-index: 5;
 }
-.wall-post-list .wall-post-alt {
+
+.wall-post-alt {
   *zoom: 1;
   padding-top: 10px;
 }
-.wall-post-list .wall-post-alt:before, .wall-post-list .wall-post-alt:after {
+.wall-post-alt:before, .wall-post-alt:after {
   content: " ";
   display: table;
 }
-.wall-post-list .wall-post-alt:after {
+.wall-post-alt:after {
   clear: both;
 }
-.wall-post-list .wall-post-alt > .elgg-image-alt {
+.wall-post-alt > .elgg-image-alt {
   padding-left: 15px;
   padding-right: 15px;
   width: 16.66667%;
@@ -499,14 +274,14 @@ body.wall-state-loading:before {
   margin: 0;
   padding: 0 3px;
 }
-.wall-post-list .wall-post-alt > .elgg-image-alt .elgg-avatar {
+.wall-post-alt > .elgg-image-alt .elgg-avatar {
   max-width: 100%;
 }
-.wall-post-list .wall-post-alt > .elgg-image-alt .elgg-avatar img {
+.wall-post-alt > .elgg-image-alt .elgg-avatar img {
   max-width: 100%;
   height: auto;
 }
-.wall-post-list .wall-post-alt > .elgg-body {
+.wall-post-alt > .elgg-body {
   padding-left: 15px;
   padding-right: 15px;
   width: 83.33333%;
@@ -514,29 +289,29 @@ body.wall-state-loading:before {
   float: left;
   padding: 0 3px;
 }
-.wall-post-list .wall-post-alt > .elgg-body .elgg-content {
+.wall-post-alt > .elgg-body .elgg-content {
   *zoom: 1;
 }
-.wall-post-list .wall-post-alt > .elgg-body .elgg-content:before, .wall-post-list .wall-post-alt > .elgg-body .elgg-content:after {
+.wall-post-alt > .elgg-body .elgg-content:before, .wall-post-alt > .elgg-body .elgg-content:after {
   content: " ";
   display: table;
 }
-.wall-post-list .wall-post-alt > .elgg-body .elgg-content:after {
+.wall-post-alt > .elgg-body .elgg-content:after {
   clear: both;
 }
-.wall-post-list .wall-post-alt > .elgg-body .elgg-menu-entity {
+.wall-post-alt > .elgg-body .elgg-menu-entity {
   margin-top: 15px;
   margin-left: 0;
   float: none;
 }
-.wall-post-list .wall-post-alt > .elgg-body .wall-bubble {
+.wall-post-alt > .elgg-body .wall-bubble {
   background: #ffffff;
   position: relative;
   margin-right: 15px;
   border: 1px solid #cccccc;
   padding: 15px;
 }
-.wall-post-list .wall-post-alt > .elgg-body .wall-bubble:before {
+.wall-post-alt > .elgg-body .wall-bubble:before {
   content: " ";
   position: absolute;
   right: 0;
@@ -550,7 +325,7 @@ body.wall-state-loading:before {
   margin-top: -1px;
   z-index: 1;
 }
-.wall-post-list .wall-post-alt > .elgg-body .wall-bubble:after {
+.wall-post-alt > .elgg-body .wall-bubble:after {
   content: " ";
   position: absolute;
   right: 0;
@@ -565,14 +340,17 @@ body.wall-state-loading:before {
   z-index: 5;
 }
 
-.wall-item-new {
-  -webkit-box-shadow: 0px 0px 3px #0054a7;
-  -moz-box-shadow: 0px 0px 3px #0054a7;
-  box-shadow: 0px 0px 3px #0054a7;
+.wall-poster-avatar, .wall-owner-avatar {
+  -webkit-border-radius: 1000px;
+  -moz-border-radius: 1000px;
+  -ms-border-radius: 1000px;
+  -o-border-radius: 1000px;
+  border-radius: 1000px;
+  border: 1px solid #cccccc;
 }
 
 .wall-status-counter {
-  position: absolute;
+  text-align: right;
   left: 0;
   bottom: 0;
   padding: 0 8px;

@@ -28,10 +28,12 @@ if (!isset($vars['strict'])) {
 $vars['data-token-delimiter'] = ";";
 $vars['data-allow-tab-out'] = true;
 
-echo elgg_view('input/tokeninput', $vars);
+echo '<label>' . elgg_echo('wall:location') . '</label>';
 echo elgg_view('output/url', array(
 	'href' => '#',
-	'text' => '<i class="wall-icon wall-icon-find-me"></i>',
+	'text' => elgg_echo('wall:find_me'),
 	'title' => elgg_echo('wall:tag:location:findme'),
 	'class' => 'wall-find-me',
 ));
+echo elgg_view('input/tokeninput', $vars);
+

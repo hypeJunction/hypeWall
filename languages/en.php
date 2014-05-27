@@ -74,6 +74,11 @@ $english = array(
 	'wall:status' => 'Update status',
 	'wall:url' => 'Share a link',
 	'wall:content' => 'Share content',
+	'wall:attachment' => 'Make an attachment',
+	'wall:location' => 'Add location',
+	'wall:tag_friends' => 'Tag friends',
+	'wall:upload_file' => 'Select a file',
+	'wall:find_me' => 'Find me',
 	'wall:post' => 'Post',
 	'wall:photo' => 'Share a photo',
 	'wall:file' => 'Share a file',
@@ -84,6 +89,7 @@ $english = array(
 	'wall:photo:placeholder' => 'Tell something about this photo',
 	'wall:file:placeholder' => 'Tell something about this file',
 	'wall:filehasntuploaded' => 'Please wait for the file to upload',
+
 
 	'wall:create:success' => 'Wall post was successfully saved',
 	'wall:create:error' => 'Wall post could not be created',

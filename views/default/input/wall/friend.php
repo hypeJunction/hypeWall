@@ -21,4 +21,5 @@ if (!isset($vars['strict'])) {
 	$vars['strict'] = true;
 }
 
+echo '<label>' . elgg_echo('wall:tag_friends') . '</label>';
 echo elgg_view('input/tokeninput', $vars);

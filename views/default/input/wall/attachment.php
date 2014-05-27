@@ -22,4 +22,5 @@ if (!isset($vars['strict'])) {
 	$vars['strict'] = true;
 }
 
+echo '<label>' . elgg_echo('wall:attachment') . '</label>';
 echo elgg_view('input/tokeninput', $vars);
