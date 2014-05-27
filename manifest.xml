@@ -18,26 +18,15 @@
 		<version>1.8</version>
 	</requires>
 
-	<requires>
+	<suggests>
 		<type>plugin</type>
 		<name>elgg_tokeninput</name>
 		<version>1.0.2</version>
-	</requires>
-	
+	</suggests>
 	<suggests>
 		<type>plugin</type>
 		<name>elgg_dropzone</name>
 	</suggests>
-	<suggests>
-		<type>plugin</type>
-		<name>hypeEmbed</name>
-		<version>1.0.2</version>
-	</suggests>
-	<suggests>
-		<type>plugin</type>
-		<name>ecml</name>
-	</suggests>
-
 
 	<screenshot>
 		<description>URL embed form</description>
