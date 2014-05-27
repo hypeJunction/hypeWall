@@ -22,6 +22,9 @@
 		"vendor-dir": "vendors",
 		"preferred-install": "dist"
 	},
+	"suggest": {
+		"hypejunction/hypeembed" : "@stable"
+	},
 	"require": {
 		"php": ">=5.3.3",
 		"composer/installers": ">=1.0.8"

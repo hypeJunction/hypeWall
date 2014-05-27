@@ -23,6 +23,8 @@ define('WALL_SUBTYPE', (WALL_MODEL == WALL_MODEL_WIRE) ? 'thewire' : 'hjwall');
 define('WALL_GEOPOSITIONING', elgg_get_plugin_setting('geopositioning', PLUGIN_ID));
 define('WALL_TAG_FRIENDS', elgg_get_plugin_setting('tag_friends', PLUGIN_ID));
 
+require_once __DIR__ . '/vendors/autoload.php';
+
 require_once __DIR__ . '/lib/functions.php';
 require_once __DIR__ . '/lib/events.php';
 require_once __DIR__ . '/lib/hooks.php';
