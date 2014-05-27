@@ -14,13 +14,6 @@ namespace hypeJunction\Wall;
 const PLUGIN_ID = 'hypeWall';
 const PAGEHANDLER = 'wall';
 
-if (!class_exists('hypeJunction\\Util\\Extractor')) {
-	elgg_register_class('hypeJunction\\Util\\Extractor', __DIR__ . '/classes/hypeJunction/Util/Extractor.php');
-}
-if (!class_exists('hypeJunction\\Filestore\\UploadHandler')) {
-	elgg_register_class('hypeJunction\\Filestore\\UploadHandler', __DIR__ . '/classes/hypeJunction/Filestore/UploadHandler.php');
-}
-
 define('WALL_MODEL', elgg_get_plugin_setting('model', PLUGIN_ID));
 define('WALL_MODEL_WALL', 1);
 define('WALL_MODEL_WIRE', 2);
@@ -57,15 +50,17 @@ function init() {
 	elgg_register_simplecache_view('css/framework/wall');
 	elgg_register_css('wall', elgg_get_simplecache_url('css', 'framework/wall/css'));
 
+	// Load fonts
+	elgg_register_css('fonts.font-awesome', '/mod/vendors/fonts/font-awesome.css');
+	elgg_load_css('fonts.font-awesome');
+	elgg_register_css('fonts.open-sans', '/mod/vendors/fonts/open-sans.css');
+	elgg_load_css('fonts.open-sans');
+
 	elgg_register_simplecache_view('js/framework/wall/base');
 	elgg_register_js('wall.status', elgg_get_simplecache_url('js', 'framework/wall/status'), 'footer');
 
 	// Display wall form
 	elgg_extend_view('page/layouts/content/filter', 'framework/wall/container', 100);
-
-	// Load fonts
-	elgg_extend_view('page/elements/head', 'framework/fonts/font-awesome');
-	elgg_extend_view('page/elements/head', 'framework/fonts/open-sans');
 
 	// Add User Location to config
 	elgg_extend_view('js/initialize_elgg', 'js/framework/wall/config');
