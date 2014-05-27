@@ -1,0 +1,394 @@
+@import "compass/css3"; // compass css3 helpers
+
+@import "font-awesome/variables";
+@import "font-awesome/mixins";
+
+@import "variables";
+@import "mixins";
+
+
+body {
+	@include loader(wall-state-loading);
+}
+
+.elgg-menu-wall-filter {
+	text-align: right;
+	margin: 10px 10px 0 0;
+	& > li {
+		display: inline-block;
+		a {
+			font-size: 20px;
+			@include border-radius(1000px);
+			margin: 4px;
+			color: $border-color;
+		}
+		&.elgg-state-selected a, a:hover {
+			color: $primary-color;
+		}
+
+	}
+}
+
+.wall-icon {
+	@include icon;
+	&.wall-icon-photo:before {
+		content: $fa-var-camera;
+	}
+	&.wall-icon-status:before {
+		content: $fa-var-pencil;
+	}
+	&.wall-icon-url:before {
+		content: $fa-var-link;
+	}
+	&.wall-icon-file:before {
+		content: $fa-var-cloud-upload;
+	}
+	&.wall-icon-content:before {
+		content: $fa-var-clipboard;
+	}
+	&.wall-icon-find-me:before {
+		content: $fa-var-crosshairs;
+	}
+}
+
+
+.wall-container {
+	font-family: 'Open Sans', 'sans-serif';
+	* {
+		@include box-sizing(border-box);
+	}
+	position: relative;
+	margin: 10px;
+
+	& > .elgg-image {
+		position: relative;
+		.wall-poster-avatar, .wall-owner-avatar {
+			@include border-radius(1000px);
+			border: 1px solid $border-color;
+		}
+		.wall-owner-avatar {
+			border: 5px solid white;
+		}
+		.wall-owner-avatar-container {
+			position: absolute;
+			right: 0;
+			margin: -25px -12px 0 0;
+		}
+	}
+
+	form {
+		padding: 10px;
+		background: transparent;
+		fieldset {
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+		fieldset > div {
+			margin-bottom: 5px;
+		}
+		.wall-fieldset-status {
+			@include speech-bubble;
+			margin-bottom: 5px;
+			.elgg-module-widget & {
+				&:before, &:after {
+					content: "";
+					margin-left: 0;
+				}
+			}
+		}
+		.wall-fieldset-attachment {
+			margin-left: 15px;
+		}
+		.wall-fieldset-tags {
+			margin-left: 15px;
+		}
+		textarea {
+			@include border-radius(0);
+			border: none;
+			height: 75px;
+			margin: 0;
+			padding: 8px;
+			@include box-shadow(none);
+			&:focus {
+				background: white;
+				border: none;
+				@include box-shadow(none);
+			}
+			&[data-limit] {
+				margin-bottom: 20px;
+			}
+		}
+		input[type="text"] {
+			@include border-radius(0);
+			margin: 0;
+			border-color: $border-color;
+			height: 35px;
+			&:focus {
+				background: white;
+				border-color: $border-color;
+			}
+		}
+
+		.token-input-dropdown {
+			* {
+				font-size: 12px;
+			}
+			z-index: 110;
+		}
+		.token-input-list {
+			position: relative;
+			margin-bottom: 0;
+			border: 1px solid $border-color;
+			background: transparent;
+			padding: 0;
+			z-index: 100;
+			input[type="text"] {
+				height: auto;
+				line-height: 20px;
+				border: 0;
+				outline: 0;
+			}
+			.token-input-token {
+				margin: 0;
+				.elgg-image {
+					margin-right: 5px;
+					a {
+						width: 20px;
+						height: 20px;
+						display: block;
+						img {
+							height: 100%;
+							width: 100%;
+							background-size: cover;
+						}
+					}
+				}
+				.elgg-body {
+					padding-top: 2px;
+				}
+			}
+			.token-input-delete-token {
+				font-size: 16px;
+				padding: 0 5px;
+			}
+		}
+		.wall-input-url {
+			position: relative;
+			&:before {
+				@include icon;
+				content: $fa-var-link;
+				position: absolute;
+				right: 0;
+				top: 0;
+				padding: 0 7px 0 0;
+				line-height: 37px;
+				color: $border-color;
+				font-size: 18px;
+				z-index: 5;
+				width: 30px;
+				text-align: center;
+			}
+		}
+		.wall-input-attachment {
+			position: relative;
+			&:before {
+				@include icon;
+				content: $fa-var-clipboard;
+				position: absolute;
+				right: 0;
+				top: 0;
+				padding: 0 7px 0 0;
+				line-height: 37px;
+				color: $border-color;
+				font-size: 18px;
+				z-index: 5;
+				width: 30px;
+				text-align: center;
+			}
+		}
+		.wall-input-tag-friends {
+			position: relative;
+			&:before {
+				@include icon;
+				content: $fa-var-tags;
+				position: absolute;
+				right: 0;
+				top: 0;
+				padding: 0 7px 0 0;
+				line-height: 37px;
+				color: $border-color;
+				font-size: 18px;
+				z-index: 5;
+				width: 30px;
+				text-align: center;
+			}
+		}
+		.wall-input-tag-location {
+			position: relative;
+			&:before {
+				@include icon;
+				content: $fa-var-map-marker;
+				position: absolute;
+				right: 0;
+				top: 0;
+				padding: 0 7px 0 0;
+				line-height: 37px;
+				color: $border-color;
+				font-size: 18px;
+				z-index: 5;
+				width: 30px;
+				text-align: center;
+			}
+			.wall-find-me {
+				position: absolute;
+				position: absolute;
+				right: 25px;
+				top: 0;
+				padding: 0 7px 0 0;
+				line-height: 35px;
+				color: darken($border-color, 5%);
+				font-size: 18px;
+				z-index: 105;
+				width: 30px;
+				text-align: center;
+			}
+		}
+		.wall-bar-controls {
+			text-align: right;
+			margin: 10px;
+			& > li {
+				display: inline-block;
+				vertical-align: top;
+				margin: 0 5px;
+				select {
+					margin: auto;
+					line-height: 20px;
+				}
+				label {
+					line-height: 20px;
+					font-weight: normal;
+				}
+			}
+		}
+	}
+
+	.elgg-widget-content & {
+		margin: 0;
+		form {
+			padding: 10px 0;
+			margin-left: -10px;
+		}
+	}
+	
+}
+
+.wall-tagged-friends, .wall-tagged-location, .wall-tagged-attachments {
+	font-size: 90%;
+	color: #666;
+}
+
+.wall-post-list {
+	* {
+		@include box-sizing(border-box);
+	}
+	.wall-poster-avatar, .wall-owner-avatar {
+		@include border-radius(1000px);
+		border: 1px solid $border-color;
+	}
+	border: none;
+	& > li {
+		border: none;
+	}
+	.wall-post {
+		@include clearfix;
+		padding-top: 10px;
+		& > .elgg-image {
+			width: 50px;
+			display: inline-block;
+			float: none;
+			left: 0;
+			top: 0;
+			position: absolute;
+		}
+		& > .elgg-body {
+			margin-left: 50px;
+			width: 90%;
+			float: left;
+			.elgg-content {
+				@include clearfix;
+			}
+			.elgg-menu-entity {
+				margin-top: 15px;
+				margin-left: 0;
+				float: none;
+			}
+			.wall-bubble {
+				@include speech-bubble;
+				margin-left: 5px;
+				padding: 15px;
+			}
+		}
+	}
+	.wall-post-alt {
+		@include clearfix;
+		padding-top: 10px;
+		& > .elgg-image-alt {
+			width: 50px;
+			display: inline-block;
+			float: none;
+			right: 0;
+			top: 0px;
+			position: absolute;
+		}
+		& > .elgg-body {
+			margin-right: 50px;
+			width: 90%;
+			float: right;
+			.elgg-content {
+				@include clearfix;
+			}
+			.elgg-menu-entity {
+				margin-top: 15px;
+				margin-left: 0;
+				float: none;
+			}
+			.wall-bubble {
+				@include speech-bubble-alt;
+				margin-left: -15px;
+				padding: 15px;
+			}
+		}
+	}
+}
+
+.wall-item-new {
+	@include box-shadow(0px 0px 3px $primary-color);
+}
+
+.wall-status-counter {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 0 8px;
+	font-size: 11px;
+	line-height: 20px;
+	vertical-align: middle;
+	color: #666;
+	.wall-chars-counter {
+		margin: 0 5px 0 0;
+		font-size: 12px;
+	}
+	&.wall-status-counter-overflow {
+		.wall-chars-counter {
+			color: darkred;
+			font-weight: bold;
+		}
+	}
+}
+
+.wall-url-preview {
+	img, iframe, object, embed {
+		max-width: 100%;
+	}
+}
