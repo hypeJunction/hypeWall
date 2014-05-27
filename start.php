@@ -51,9 +51,9 @@ function init() {
 	elgg_register_css('wall', elgg_get_simplecache_url('css', 'framework/wall/css'));
 
 	// Load fonts
-	elgg_register_css('fonts.font-awesome', '/mod/vendors/fonts/font-awesome.css');
+	elgg_register_css('fonts.font-awesome', '/mod/' . PLUGIN_ID . '/vendors/fonts/font-awesome.css');
 	elgg_load_css('fonts.font-awesome');
-	elgg_register_css('fonts.open-sans', '/mod/vendors/fonts/open-sans.css');
+	elgg_register_css('fonts.open-sans', '/mod/' . PLUGIN_ID . '/vendors/fonts/open-sans.css');
 	elgg_load_css('fonts.open-sans');
 
 	elgg_register_simplecache_view('js/framework/wall/base');
