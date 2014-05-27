@@ -394,6 +394,7 @@ body.wall-state-loading:before {
 }
 .wall-post-list > li {
   border: none;
+  position: relative;
 }
 .wall-post-list .wall-post {
   *zoom: 1;
@@ -407,17 +408,26 @@ body.wall-state-loading:before {
   clear: both;
 }
 .wall-post-list .wall-post > .elgg-image {
-  width: 50px;
-  display: inline-block;
-  float: none;
-  left: 0;
-  top: 0;
-  position: absolute;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 16.66667%;
+  float: left;
+  margin: 0;
+  padding: 0 3px;
+}
+.wall-post-list .wall-post > .elgg-image .elgg-avatar {
+  max-width: 100%;
+}
+.wall-post-list .wall-post > .elgg-image .elgg-avatar img {
+  max-width: 100%;
+  height: auto;
 }
 .wall-post-list .wall-post > .elgg-body {
-  margin-left: 50px;
-  width: 90%;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 83.33333%;
   float: left;
+  padding: 0 3px;
 }
 .wall-post-list .wall-post > .elgg-body .elgg-content {
   *zoom: 1;
@@ -439,7 +449,6 @@ body.wall-state-loading:before {
   position: relative;
   margin-left: 15px;
   border: 1px solid #cccccc;
-  margin-left: 5px;
   padding: 15px;
 }
 .wall-post-list .wall-post > .elgg-body .wall-bubble:before {
@@ -482,17 +491,28 @@ body.wall-state-loading:before {
   clear: both;
 }
 .wall-post-list .wall-post-alt > .elgg-image-alt {
-  width: 50px;
-  display: inline-block;
-  float: none;
-  right: 0;
-  top: 0px;
-  position: absolute;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 16.66667%;
+  float: left;
+  float: right;
+  margin: 0;
+  padding: 0 3px;
+}
+.wall-post-list .wall-post-alt > .elgg-image-alt .elgg-avatar {
+  max-width: 100%;
+}
+.wall-post-list .wall-post-alt > .elgg-image-alt .elgg-avatar img {
+  max-width: 100%;
+  height: auto;
 }
 .wall-post-list .wall-post-alt > .elgg-body {
-  margin-right: 50px;
-  width: 90%;
-  float: right;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 83.33333%;
+  float: left;
+  float: left;
+  padding: 0 3px;
 }
 .wall-post-list .wall-post-alt > .elgg-body .elgg-content {
   *zoom: 1;
@@ -514,7 +534,6 @@ body.wall-state-loading:before {
   position: relative;
   margin-right: 15px;
   border: 1px solid #cccccc;
-  margin-left: -15px;
   padding: 15px;
 }
 .wall-post-list .wall-post-alt > .elgg-body .wall-bubble:before {
@@ -578,6 +597,7 @@ body.wall-state-loading:before {
 .elgg-module.elgg-module-embed {
   font-family: "Open Sans", 'sans-serif';
   background: #f4f4f4;
+  margin: 10px 0;
 }
 .elgg-module.elgg-module-embed > .elgg-head {
   padding: 10px;

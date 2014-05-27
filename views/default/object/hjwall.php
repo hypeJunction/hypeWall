@@ -86,7 +86,7 @@ $params = array(
 $params = $params + $vars;
 $content = '<div class="wall-bubble">' . elgg_view('object/elements/summary', $params) . '</div>';
 
-$user_icon = elgg_view_entity_icon($poster, 'small', array(
+$user_icon = elgg_view_entity_icon($poster, 'medium', array(
 	'use_hover' => false,
 	'img_class' => 'wall-poster-avatar'
 		));

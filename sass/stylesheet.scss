@@ -299,22 +299,26 @@ body {
 	border: none;
 	& > li {
 		border: none;
+		position: relative;
 	}
 	.wall-post {
 		@include clearfix;
 		padding-top: 10px;
 		& > .elgg-image {
-			width: 50px;
-			display: inline-block;
-			float: none;
-			left: 0;
-			top: 0;
-			position: absolute;
+			@include elgg-col(2);
+			margin: 0;
+			padding: 0 3px;
+			.elgg-avatar {
+				max-width: 100%;
+				img {
+					max-width: 100%;
+					height: auto;
+				}
+			}
 		}
 		& > .elgg-body {
-			margin-left: 50px;
-			width: 90%;
-			float: left;
+			@include elgg-col(10);
+			padding: 0 3px;
 			.elgg-content {
 				@include clearfix;
 			}
@@ -325,7 +329,6 @@ body {
 			}
 			.wall-bubble {
 				@include speech-bubble;
-				margin-left: 5px;
 				padding: 15px;
 			}
 		}
@@ -334,17 +337,22 @@ body {
 		@include clearfix;
 		padding-top: 10px;
 		& > .elgg-image-alt {
-			width: 50px;
-			display: inline-block;
-			float: none;
-			right: 0;
-			top: 0px;
-			position: absolute;
+			@include elgg-col(2);
+			float: right;
+			margin: 0;
+			padding: 0 3px;
+			.elgg-avatar {
+				max-width: 100%;
+				img {
+					max-width: 100%;
+					height: auto;
+				}
+			}
 		}
 		& > .elgg-body {
-			margin-right: 50px;
-			width: 90%;
-			float: right;
+			@include elgg-col(10);
+			float: left;
+			padding: 0 3px;
 			.elgg-content {
 				@include clearfix;
 			}
@@ -355,7 +363,6 @@ body {
 			}
 			.wall-bubble {
 				@include speech-bubble-alt;
-				margin-left: -15px;
 				padding: 15px;
 			}
 		}
@@ -396,6 +403,7 @@ body {
 .elgg-module.elgg-module-embed {
 	font-family: "Open Sans", 'sans-serif';
 	background: #f4f4f4;
+	margin: 10px 0;
 	& > .elgg-head {
 		padding: 10px;
 	}
