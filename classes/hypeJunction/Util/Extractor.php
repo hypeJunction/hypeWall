@@ -133,8 +133,9 @@ class Extractor {
 		if (!elgg_instanceof($user)) {
 			return "@$username";
 		}
+		$favicon = $user->getIconURL('tiny');
 		return elgg_view('output/url', array(
-			'text' => "@{$user->username}",
+			'text' => "<span class=\"favicon\" style=\"background-image:url($favicon)\"></span><span class=\"link\">@{$user->username}</span>",
 			'title' => $user->name,
 			'href' => $user->getURL(),
 			'class' => 'extractor-username'

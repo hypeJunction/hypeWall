@@ -147,3 +147,16 @@ echo elgg_view('input/dropdown', array(
 	)
 ));
 echo '</div>';
+
+echo '<div>';
+echo '<label>' . elgg_echo('wall:settings:status_input_type') . '</label>';
+echo elgg_view('input/dropdown', array(
+	'name' => 'params[status_input_type]',
+	'value' => $entity->status_input_type,
+	'options_values' => array(
+		'plaintext' => elgg_echo('wall:settings:status_input_type:plaintext'),
+		'text' => elgg_echo('wall:settings:status_input_type:text'),
+		'longtext' => elgg_echo('wall:settings:status_input_type:longtext'),
+	)
+));
+echo '</div>';

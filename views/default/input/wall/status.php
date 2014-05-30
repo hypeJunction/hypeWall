@@ -2,6 +2,11 @@
 
 namespace hypeJunction\Wall;
 
+$input_type = elgg_get_plugin_setting('status_input_type', PLUGIN_ID);
+if (!$input_type) {
+	$input_type = 'plaintext';
+}
+
 if (!$vars['value'] && elgg_instanceof($vars['entity'])) {
 	$vars['value'] = $vars['entity']->description;
 }
@@ -18,4 +23,4 @@ if (!isset($vars['name'])) {
 }
 
 echo $counter;
-echo elgg_view('input/plaintext', $vars);
+echo elgg_view("input/$input_type", $vars);
