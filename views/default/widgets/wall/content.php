@@ -1,7 +1,8 @@
 <?php
 
 elgg_load_css('wall');
-elgg_load_js('wall.status');
+elgg_load_css('fonts.font-awesome');
+elgg_load_css('fonts.open-sans');
 
 elgg_push_context('wall');
 

@@ -80,7 +80,7 @@ function entity_menu_setup($hook, $type, $return, $params) {
 							'priority' => 900,
 							'href' => $action,
 							'is_action' => true,
-							'class' => 'elgg-requires-confirmation'
+							'link_class' => 'elgg-requires-confirmation'
 				));
 			}
 		}
@@ -145,7 +145,7 @@ function river_menu_setup($hook, $type, $return, $params) {
 						'priority' => 900,
 						'href' => $action,
 						'is_action' => true,
-						'class' => 'elgg-requires-confirmation'
+						'link_class' => 'elgg-requires-confirmation'
 			));
 		}
 	}

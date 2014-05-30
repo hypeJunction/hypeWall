@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Wall;
+
 if (elgg_view_exists('input/dropzone')) {
 	echo elgg_view('input/dropzone', array(
 		'name' => 'upload_guids',

@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Wall;
+
 if (isset($vars['class'])) {
 	$vars['class'] = "{$vars['class']} wall-url";
 } else {

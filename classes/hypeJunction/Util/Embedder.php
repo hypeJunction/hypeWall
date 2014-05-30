@@ -122,7 +122,6 @@ class Embedder {
 		$meta = $this->extractMeta('oembed');
 
 		$title = $meta->title;
-		error_log($meta->provider_name);
 		if ($meta->provider_name) {
 			$class = 'embed-' . preg_replace('/[^a-z0-9\-]/i', '-', strtolower($meta->provider_name));
 		}

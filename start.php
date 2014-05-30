@@ -40,32 +40,30 @@ function init() {
 	 */
 	elgg_register_page_handler(PAGEHANDLER, __NAMESPACE__ . '\\page_handler');
 	elgg_register_entity_url_handler('object', 'hjwall', __NAMESPACE__ . '\\url_handler');
-
+	
 	/**
 	 * Add wall posts to search
 	 */
 	elgg_register_entity_type('object', 'hjwall');
-
 	/**
 	 * JS, CSS and Views
 	 */
-	elgg_register_simplecache_view('css/framework/wall');
-	elgg_register_css('wall', elgg_get_simplecache_url('css', 'framework/wall/css'));
+	elgg_extend_view('css/elgg', 'css/framework/wall/stylesheet.css');
+
+	elgg_extend_view('page/layouts/widgets', 'framework/wall/requirejs');
 
 	// Load fonts
 	elgg_register_css('fonts.font-awesome', '/mod/' . PLUGIN_ID . '/vendors/fonts/font-awesome.css');
-	elgg_load_css('fonts.font-awesome');
 	elgg_register_css('fonts.open-sans', '/mod/' . PLUGIN_ID . '/vendors/fonts/open-sans.css');
-	elgg_load_css('fonts.open-sans');
-
-	elgg_register_simplecache_view('js/framework/wall/base');
-	elgg_register_js('wall.status', elgg_get_simplecache_url('js', 'framework/wall/status'), 'footer');
-
-	// Display wall form
-	elgg_extend_view('page/layouts/content/filter', 'framework/wall/container', 100);
 
 	// Add User Location to config
 	elgg_extend_view('js/initialize_elgg', 'js/framework/wall/config');
+
+	/**
+	 * Views
+	 */
+	// Display wall form
+	elgg_extend_view('page/layouts/elements/filter', 'framework/wall/container', 100);
 
 	// AJAX view to load URL previews
 	elgg_register_ajax_view('output/wall/url');
@@ -90,7 +88,7 @@ function init() {
 	/**
 	 * Register hooks
 	 */
-	elgg_register_plugin_hook_handler('permissions_check', 'object', __NAMESPACE__ . '\\permissions_check');
+	//elgg_register_plugin_hook_handler('permissions_check', 'object', __NAMESPACE__ . '\\permissions_check');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', __NAMESPACE__ . '\\container_permissions_check');
 
 	elgg_register_plugin_hook_handler('register', 'menu:river', __NAMESPACE__ . '\\river_menu_setup');
