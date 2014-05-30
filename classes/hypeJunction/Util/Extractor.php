@@ -60,6 +60,7 @@ class Extractor {
 		return elgg_view('output/url', array(
 			'text' => "#{$hashtag}",
 			'href' => $url,
+			'class' => 'extractor-hashtag',
 		));
 	}
 
@@ -70,12 +71,14 @@ class Extractor {
 	}
 
 	public static function renderURLHTML($url) {
-		$text = $url;
+
+		$favicon = "http://g.etfv.co/{$url}";
 
 		if (class_exists('UFCOE\\Elgg\\Url')) {
 			$sniffer = new Url();
 			$guid = $sniffer->getGuid($url);
 			if ($entity = get_entity($guid)) {
+				$favicon = $entity->getIconURL('tiny');
 				if (elgg_instanceof($entity->user)) {
 					$text = "@{$entity->username}";
 				} else {
@@ -84,9 +87,20 @@ class Extractor {
 			}
 		}
 
+		if (!$text) {
+			$embedder = new Embedder($url);
+			$meta = $embedder->extractMeta('oembed');
+			if ($meta->title) {
+				$text = $meta->title;
+			} else {
+				$text = elgg_get_excerpt($url, 35);
+			}
+		}
+
 		return elgg_view('output/url', array(
-			'text' => $text,
+			'text' => "<span class=\"favicon\" style=\"background-image:url($favicon)\"></span><span class=\"link\">$text</span>",
 			'href' => $url,
+			'class' => 'extractor-link',
 		));
 	}
 
@@ -104,6 +118,7 @@ class Extractor {
 		return elgg_view('output/url', array(
 			'text' => $email,
 			'href' => $url,
+			'class' => 'extractor-email'
 		));
 	}
 
@@ -121,7 +136,8 @@ class Extractor {
 		return elgg_view('output/url', array(
 			'text' => "@{$user->username}",
 			'title' => $user->name,
-			'href' => $user->getURL()
+			'href' => $user->getURL(),
+			'class' => 'extractor-username'
 		));
 	}
 
