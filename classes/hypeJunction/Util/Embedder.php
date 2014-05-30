@@ -6,6 +6,8 @@
 
 namespace hypeJunction\Util;
 
+use ElggFile;
+use Exception;
 use UFCOE\Elgg\Url;
 
 class Embedder {
@@ -16,6 +18,8 @@ class Embedder {
 	protected $guid;
 	protected $entity;
 	protected $view;
+
+	static $cache;
 
 	function __construct($url = '') {
 
@@ -95,10 +99,9 @@ class Embedder {
 			if (!isset($params['full_view'])) {
 				$params['full_view'] = false;
 			}
-			$body = elgg_view_entity($entity, $params);
+			$output = elgg_view_entity($entity, $params);
 			elgg_pop_context();
 
-			$output = elgg_view_module('embed', '', $body);
 		}
 
 		$params['entity'] = $this->entity;
@@ -192,7 +195,11 @@ class Embedder {
 	 * @param string $endpoint
 	 * @return array
 	 */
-	private function extractMeta($endpoint = '') {
+	public function extractMeta($endpoint = '') {
+
+		if (isset(self::$cache[$this->url][$endpoint])) {
+			return self::$cache[$this->url][$endpoint];
+		}
 
 		switch ($endpoint) {
 			case 'oembed' :
@@ -211,7 +218,9 @@ class Embedder {
 		$json = curl_exec($ch);
 		curl_close($ch);
 
-		return json_decode($json);
+		$meta = json_decode($json);
+		self::$cache[$this->url][$endpoint] = $meta;
+		return $meta;
 	}
 
 	/**
