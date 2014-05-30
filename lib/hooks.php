@@ -6,6 +6,31 @@ use ElggMenuItem;
 use ElggRiverItem;
 
 /**
+ * Give wall posts their own URL
+ *
+ * @param string $hook		Equals 'entity:url'
+ * @param string $type		Equals 'object'
+ * @param string $return	Current URL
+ * @param array $params		Additional params
+ * @return string			Filtered URL
+ */
+function url_handler($hook, $type, $return, $params) {
+
+	$entity = elgg_extract('entity', $params);
+
+	if (elgg_instanceof($entity, 'object', 'hjwall')) {
+		$container = $entity->getContainerEntity();
+		if (elgg_instanceof($container, 'group')) {
+			return elgg_normalize_url(PAGEHANDLER . '/group/' . $container->guid . '/' . $entity->guid);
+		} else if (elgg_instanceof($container, 'user')) {
+			return elgg_normalize_url(PAGEHANDLER . '/owner/' . $container->username . '/' . $entity->guid);
+		}
+	}
+	
+	return $return;
+}
+
+/**
  * Allow users to post on each other's walls
  * Container here is the wall, and can be a user or group
  * @param type $hook

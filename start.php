@@ -39,7 +39,7 @@ function init() {
 	 * Handle pages and URLs
 	 */
 	elgg_register_page_handler(PAGEHANDLER, __NAMESPACE__ . '\\page_handler');
-	elgg_register_entity_url_handler('object', 'hjwall', __NAMESPACE__ . '\\url_handler');
+	elgg_register_plugin_hook_handler('entity:url', 'object', __NAMESPACE__ . '\\url_handler');
 	
 	/**
 	 * Add wall posts to search
