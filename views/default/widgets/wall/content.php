@@ -1,5 +1,8 @@
 <?php
 
+elgg_load_css('wall');
+elgg_load_js('wall.status');
+
 elgg_push_context('wall');
 
 if ($vars['entity']->show_add_form) {

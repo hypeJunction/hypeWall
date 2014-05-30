@@ -209,7 +209,8 @@
 			data: {
 				'X-Requested-With': 'XMLHttpRequest', // simulate XHR
 				container_guid: elgg.get_page_owner_guid(),
-				river: $form.closest('.wall-container').is('.wall-river')
+				river: $form.closest('.wall-container').is('.wall-river'),
+				widget: $form.closest('.elgg-widgets').length
 			},
 			beforeSend: function() {
 				$form.find('[type="submit"]').addClass('elgg-state-disabled').text(elgg.echo('wall:process:posting')).prop('disabled', true);

@@ -3,6 +3,7 @@
 namespace hypeJunction\Wall;
 
 elgg_load_css('wall');
+elgg_load_js('wall.status');
 
 $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();
@@ -76,13 +77,17 @@ if (elgg_in_context('widgets')) {
 	$subtitle = elgg_echo('byline', array($poster->name)) . ' ' . elgg_view_friendly_time($entity->time_created);
 }
 
+if (elgg_extract('full_view', $vars, false)) {
+	$comments = elgg_view_comments($entity);
+}
+
 $params = array(
 	'entity' => $entity,
 	'title' => (!empty($summary)) ? $summary : false,
 	'metadata' => $metadata,
 	'tags' => false,
 	'subtitle' => $subtitle,
-	'content' => $message . $att_str . $menu,
+	'content' => $message . $att_str . $menu . $comments,
 );
 
 $params = $params + $vars;
@@ -101,10 +106,6 @@ if (!elgg_in_context('widgets')) {
 		));
 	} else {
 		echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
-	}
-
-	if (elgg_extract('full_view', $vars, false)) {
-		echo elgg_view_comments($entity);
 	}
 } else {
 	echo $content;

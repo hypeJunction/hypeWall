@@ -11,7 +11,7 @@ $content = elgg_list_entities(array(
 	'subtypes' => array('hjwall'),
 	'container_guids' => $group->guid,
 	'list_class' => 'wall-post-list',
-	'full_view' => false,
+	'full_view' => true,
 	'limit' => elgg_extract('limit', $vars, 10),
 ));
 

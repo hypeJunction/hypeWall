@@ -13,7 +13,7 @@ body {
 
 .elgg-menu-wall-filter {
 	text-align: right;
-	margin: 10px 10px 0 0;
+	margin: 10px;
 	& > li {
 		display: inline-block;
 		a {
@@ -160,7 +160,7 @@ body {
 			float: none;
 		}
 		.wall-bubble {
-			@include speech-bubble;
+			@include speech-bubble(lighten($border-color, 10%));
 			padding: 15px;
 		}
 	}
@@ -201,7 +201,7 @@ body {
 			float: none;
 		}
 		.wall-bubble {
-			@include speech-bubble-alt;
+			@include speech-bubble-alt(lighten($border-color, 10%));
 			padding: 15px;
 		}
 	}
@@ -249,14 +249,29 @@ body {
 	}
 }
 
+.wall-widget-list {
+	& > li {
+		padding: 10px;
+		@include box-sizing(border-box);
+	}
+}
+
 .elgg-module.elgg-module-embed {
 	font-family: "Open Sans", 'sans-serif';
 	background: #f4f4f4;
 	margin: 10px 0;
 	& > .elgg-head {
 		padding: 10px;
+		border-bottom: 1px solid #fff;
+	}
+	& > .elgg-body {
+		padding: 0;
+		.elgg-image-block {
+			padding: 10px;
+		}
 	}
 	& > .elgg-foot {
+		border-top: 1px solid #fff;
 		padding: 10px;
 	}
 }

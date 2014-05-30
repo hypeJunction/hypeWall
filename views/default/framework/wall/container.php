@@ -156,7 +156,7 @@ $tabs = elgg_view_menu('wall-filter', array(
 $class = (elgg_in_context('activity')) ? 'wall-river' : 'wall-to-wall';
 
 if (elgg_in_context('widgets')) {
-	$user_icon = '';
+	$user_icon = $page_owner_icon = '';
 	$forms = $tabs . $forms;
 	echo elgg_view_image_block($user_icon . $page_owner_icon, $forms, array(
 		'class' => "wall-container $class"

@@ -218,6 +218,10 @@ if ($guid && $wall_post) {
 		// Trigger a publish event, so that we can send out notifications
 		elgg_trigger_event('publish', 'object', $wall_post);
 
+		if (get_input('widget')) {
+			elgg_push_context('widgets');
+		}
+		
 		if (elgg_is_xhr()) {
 			if (get_input('river') && get_input('river') != 'false') {
 				echo elgg_list_river(array('object_guids' => $wall_post->guid));

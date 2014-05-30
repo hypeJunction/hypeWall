@@ -17,7 +17,7 @@ $content = elgg_list_entities(array(
 		"(e.owner_guid = $owner->guid OR e.container_guid = $owner->guid OR (r.guid_two = e.guid AND r.relationship = 'tagged_in'))"
 	),
 	'list_class' => 'wall-post-list',
-	'full_view' => false,
+	'full_view' => true,
 	'limit' => elgg_extract('limit', $vars, 10),
 		));
 
