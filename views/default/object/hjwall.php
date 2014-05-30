@@ -57,6 +57,8 @@ if ($attachments) {
 	}
 }
 
+$att_str = '<div class="wall-attachments">' . $att_str . '</div>';
+
 $menu = elgg_view_menu('entity', array(
 	'entity' => $entity,
 	'handler' => 'wall',

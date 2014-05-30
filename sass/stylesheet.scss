@@ -233,9 +233,19 @@ body {
 	}
 }
 
-.wall-url-preview {
+.wall-attachments, .wall-url-preview {
+	margin: 10px 0;
 	img, iframe, object, embed {
 		max-width: 100%;
+	}
+	.elgg-gallery {
+		& > li {
+			display: inline-block;
+			float: none;
+			padding: 10px;
+			@include box-sizing(border-box);
+			width: 33%;
+		}
 	}
 }
 

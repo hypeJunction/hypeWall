@@ -6,6 +6,7 @@
 
 namespace hypeJunction\Util;
 
+use ElggEntity;
 use ElggFile;
 use Exception;
 use UFCOE\Elgg\Url;
@@ -18,7 +19,6 @@ class Embedder {
 	protected $guid;
 	protected $entity;
 	protected $view;
-
 	static $cache;
 
 	function __construct($url = '') {
@@ -58,6 +58,9 @@ class Embedder {
 	public static function getEmbedView($url = '', $params = array()) {
 
 		try {
+			if ($url instanceof ElggEntity) {
+				$url = $url->getURL();
+			}
 			$embedder = new Embedder($url);
 			return $embedder->getView($params);
 		} catch (Exception $ex) {
@@ -101,7 +104,6 @@ class Embedder {
 			}
 			$output = elgg_view_entity($entity, $params);
 			elgg_pop_context();
-
 		}
 
 		$params['entity'] = $this->entity;
