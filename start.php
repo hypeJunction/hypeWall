@@ -106,10 +106,13 @@ function init() {
 	/**
 	 * Notifications
 	 */
-	register_notification_object('object', 'hjwall', elgg_echo('wall:new:notification:generic'));
-	elgg_register_plugin_hook_handler('object:notifications', 'object', __NAMESPACE__ . '\\ignore_default_notifications');
-	elgg_register_event_handler('publish', 'object', __NAMESPACE__ . '\\send_notifications');
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', __NAMESPACE__ . '\\prepare_notification_message');
+	elgg_register_event_handler('publish', 'object', __NAMESPACE__ . '\\send_custom_notifications');
+
+	elgg_register_notification_event('object', 'hjwall', array('publish'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:hjwall', __NAMESPACE__ . '\\prepare_notification_message');
+
+	elgg_register_notification_event('object', 'thewire', array('publish'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:thewire', __NAMESPACE__ . '\\prepare_notification_message');
 
 	/**
 	 * Group tools

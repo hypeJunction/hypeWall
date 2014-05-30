@@ -238,7 +238,7 @@ define(function(require) {
 						$form.find('textarea:first').trigger('click');
 						if (data.output) {
 							if ($form.closest('.wall-container').is('.wall-river')) {
-								if (elgg.trigger_hook('refresh', 'river', {data: data, method: 'formSubmit'}, false) !== false) {
+								if (elgg.trigger_hook('refresh', 'river', {data: data, method: 'formSubmit'}, false) === false) {
 									var items = $(data.output).html();
 									$(items).children('li').addClass('wall-item-new').bind('refresh.before', function(e) {
 										$(this).remove();
