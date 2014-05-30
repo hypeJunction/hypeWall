@@ -2,7 +2,6 @@
 
 namespace hypeJunction\Wall;
 
-use Elgg_Notifications_Event;
 use Elgg_Notifications_Notification;
 use ElggMenuItem;
 use ElggRiverItem;
@@ -312,18 +311,10 @@ function hijack_wire_river($hook, $type, $return, $params) {
 function prepare_notification_message($hook, $type, $notification, $params) {
 
 	$event = elgg_extract('event', $params);
-
-	if (!$event instanceof Elgg_Notifications_Event) {
-		return $notification;
-	}
-
 	$entity = $event->getObject();
 	$recipient = elgg_extract('recipient', $params);
 	$language = elgg_extract('language', $params);
 	$method = elgg_extract('method', $params);
-
-	$entity = elgg_extract('entity', $params);
-	$recipient = elgg_extract('to_entity', $params);
 
 	if (elgg_instanceof($entity, 'object', 'hjwall') || (elgg_instanceof($entity, 'object', 'thewire') && $entity->origin == 'wall')) {
 
@@ -333,22 +324,24 @@ function prepare_notification_message($hook, $type, $notification, $params) {
 		$target = elgg_echo("wall:target:{$entity->getSubtype()}");
 
 		if ($poster->guid == $wall_owner->guid) {
-			$ownership = elgg_echo('wall:ownership:own', array($target));
+			$ownership = elgg_echo('wall:ownership:own', array($target), $language);
 		} else if ($wall_owner->guid == $recipient->guid) {
-			$ownership = elgg_echo('wall:ownership:your', array($target));
+			$ownership = elgg_echo('wall:ownership:your', array($target), $language);
 		} else {
-			$ownership = elgg_echo('wall:ownership:owner', array($wall_owner->name, $target));
+			$ownership = elgg_echo('wall:ownership:owner', array($wall_owner->name, $target), $language);
 		}
 
-		$notification->subject = elgg_echo('wall:new:notification:subject', array($poster->name, $ownership));
-		$notification->summary = elgg_echo('wall:new:notification:summary', array($ownership));
-
+		$notification->subject = elgg_echo('wall:new:notification:subject', array($poster->name, $ownership), $language);
+		$notification->summary = elgg_view('output/url', array(
+			'text' => elgg_echo('wall:new:notification:summary', array($ownership), $language),
+			'href' => $entity->getURL(),
+		));
 		$notification->body = elgg_echo('wall:new:notification:message', array(
 			$poster->name,
 			$ownership,
 			format_wall_message($entity, true),
 			$entity->getURL()
-		));
+				), $language);
 	}
 
 	return $notification;

@@ -37,6 +37,10 @@ function send_custom_notifications($event, $entity_type, $entity) {
 		$ownership = elgg_echo('wall:ownership:your', array($target));
 
 		$subject = elgg_echo('wall:new:notification:subject', array($poster->name, $ownership));
+		$summary = elgg_view('output/url', array(
+			'text' => $subject,
+			'href' => $entity->getURL(),
+		));
 		$body = elgg_echo('wall:new:notification:message', array(
 			$poster->name,
 			$ownership,
@@ -44,7 +48,11 @@ function send_custom_notifications($event, $entity_type, $entity) {
 			$entity->getURL()
 		));
 
-		notify_user($to, $from, $subject, $body);
+		notify_user($to, $from, $subject, $body, array(
+			'summary' => $summary,
+			'object' => $entity,
+			'action' => 'received',
+		));
 	}
 
 	// Notify tagged users
@@ -60,13 +68,21 @@ function send_custom_notifications($event, $entity_type, $entity) {
 		$to = $tagged_friend->guid;
 		$from = $poster->guid;
 		$subject = elgg_echo('wall:tagged:notification:subject', array($poster->name));
+		$summary = elgg_view('output/url', array(
+			'text' => $subject,
+			'href' => $entity->getURL(),
+		));
 		$body = elgg_echo('wall:tagged:notification:message', array(
 			$poster->name,
 			$message,
 			$entity->getURL()
 		));
 
-		notify_user($to, $from, $subject, $body);
+		notify_user($to, $from, $subject, $body, array(
+			'summary' => $summary,
+			'object' => $entity,
+			'action' => 'tagged',
+		));
 	}
 
 	return true;
