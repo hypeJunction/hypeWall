@@ -181,6 +181,7 @@ body.wall-state-loading:before {
   float: left;
   margin: 0;
   padding: 0 3px;
+  position: relative;
 }
 .wall-post > .elgg-image .elgg-avatar {
   max-width: 100%;
@@ -188,6 +189,11 @@ body.wall-state-loading:before {
 .wall-post > .elgg-image .elgg-avatar img {
   max-width: 100%;
   height: auto;
+}
+.wall-post > .elgg-image .wall-owner-icon-block {
+  margin: -20px 0 0 30px;
+  position: absolute;
+  display: block;
 }
 .wall-post > .elgg-body {
   padding-left: 15px;
@@ -266,6 +272,7 @@ body.wall-state-loading:before {
   float: right;
   margin: 0;
   padding: 0 3px;
+  position: relative;
 }
 .wall-post-alt > .elgg-image-alt .elgg-avatar {
   max-width: 100%;
@@ -273,6 +280,11 @@ body.wall-state-loading:before {
 .wall-post-alt > .elgg-image-alt .elgg-avatar img {
   max-width: 100%;
   height: auto;
+}
+.wall-post-alt > .elgg-image-alt .wall-owner-icon-block {
+  margin: -20px 0 0 30px;
+  position: absolute;
+  display: block;
 }
 .wall-post-alt > .elgg-body {
   padding-left: 15px;

@@ -108,7 +108,6 @@ body {
 				}
 			}
 		}
-
 	}
 }
 
@@ -135,12 +134,18 @@ body {
 		@include elgg-col(2);
 		margin: 0;
 		padding: 0 3px;
+		position: relative;
 		.elgg-avatar {
 			max-width: 100%;
 			img {
 				max-width: 100%;
 				height: auto;
 			}
+		}
+		.wall-owner-icon-block {
+			margin: -20px 0 0 30px;
+			position: absolute;
+			display: block;
 		}
 	}
 	& > .elgg-body {
@@ -169,12 +174,18 @@ body {
 		float: right;
 		margin: 0;
 		padding: 0 3px;
+		position: relative;
 		.elgg-avatar {
 			max-width: 100%;
 			img {
 				max-width: 100%;
 				height: auto;
 			}
+		}
+		.wall-owner-icon-block {
+			margin: -20px 0 0 30px;
+			position: absolute;
+			display: block;
 		}
 	}
 	& > .elgg-body {

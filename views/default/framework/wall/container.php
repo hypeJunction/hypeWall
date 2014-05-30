@@ -33,12 +33,14 @@ elgg_load_js('wall.status');
 
 $user_icon = elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
 	'use_hover' => false,
+	'link_class' => 'wall-poster-icon-block',
 	'img_class' => 'wall-poster-avatar'
 		));
 
 if ($page_owner && $page_owner->guid !== $user->guid) {
 	$page_owner_icon = elgg_view_entity_icon($page_owner, 'small', array(
 		'use_hover' => false,
+		'link_class' => 'wall-owner-icon-block',
 		'img_class' => 'wall-owner-avatar'
 	));
 }
