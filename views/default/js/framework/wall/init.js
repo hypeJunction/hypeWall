@@ -1,8 +1,6 @@
 define(function() {
 
 	var $ = require('jquery');
-
-	console.log($('.wall-container'));
 	
 	if ($('.wall-container').length) {
 		require(['framework/wall/lib'], function(wall) {
