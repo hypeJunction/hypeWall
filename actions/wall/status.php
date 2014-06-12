@@ -4,6 +4,7 @@ namespace hypeJunction\Wall;
 
 use ElggObject;
 use hypeJunction\Filestore\UploadHandler;
+use hypeJunction\Util\Embedder;
 use hypeJunction\Util\Extractor;
 
 $poster = elgg_get_logged_in_user_entity();
@@ -180,9 +181,8 @@ if ($guid && $wall_post) {
 
 	if ($wall_post->address && get_input('make_bookmark', false)) {
 
-		if (is_callable('hypeJunction\\Embed\\get_iframely_metatags_from_url')) {
-			$document = call_user_func_array('hypeJunction\Embed\get_iframely_metatags_from_url', array($wall_post->address, 'iframely'));
-		}
+		$embedder = new Embedder($wall_post->address);
+		$document = $embedder->extractMeta('iframely');
 
 		$bookmark = new ElggObject;
 		$bookmark->subtype = "bookmarks";
@@ -191,7 +191,7 @@ if ($guid && $wall_post) {
 		$bookmark->access_id = $access_id;
 		$bookmark->origin = 'wall';
 
-		if (empty($document)) {
+		if (!$document) {
 			$bookmark->title = $wall_post->title;
 			$bookmark->description = $wall_post->description;
 			$bookmark->tags = $wall_post->tags;
