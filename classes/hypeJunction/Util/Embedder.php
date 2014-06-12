@@ -129,7 +129,7 @@ class Embedder {
 		$body = elgg_view('output/url', array(
 			'href' => $this->url
 		));
-
+		
 		switch ($meta->type) {
 
 			case 'link' :
@@ -171,7 +171,8 @@ class Embedder {
 				break;
 
 			case 'rich' :
-
+			case 'video' :
+				
 				$title = $meta->title;
 				$footer = elgg_view('output/url', array(
 					'href' => ($meta->canonical) ? $meta->canonical : $meta->url,
