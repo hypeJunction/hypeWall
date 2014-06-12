@@ -222,10 +222,15 @@ class Embedder {
 	 */
 	public function getImageView($params = array()) {
 
-		$output = elgg_view('output/img', array(
+		$body = elgg_view('output/img', array(
 			'src' => $this->url,
 		));
 
+		$output = elgg_view_module('embed', false, $body, array(
+			'footer' => elgg_view('output/url', array(
+				'href' => $this->url,
+			))
+		));
 		return elgg_trigger_plugin_hook('output:image', 'embed', $params, $output);
 	}
 
