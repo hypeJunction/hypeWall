@@ -50,6 +50,21 @@ class Embedder {
 	}
 
 	/**
+	 * Checks URL headers to determine whether the content type is image
+	 * @param string $url
+	 */
+	public static function isImage($url = '') {
+		if (!self::isValidURL($url)) {
+			return false;
+		}
+
+		$headers = get_headers($url, 1);
+		if (is_string($headers['Content-Type']) && substr($headers['Content-Type'], 0, 6) == 'image/') {
+			return true;
+		}
+	}
+
+	/**
 	 * Get an embeddable representation of a URL
 	 * @param string $url	URL to embed
 	 * @param array $params	Additional params
@@ -64,8 +79,8 @@ class Embedder {
 			$embedder = new Embedder($url);
 			return $embedder->getView($params);
 		} catch (Exception $ex) {
-			return elgg_view('output/url', array(
-				'href' => $url,
+			return elgg_view('output/longtext', array(
+				'value' => $url
 			));
 		}
 	}
@@ -78,6 +93,8 @@ class Embedder {
 
 		if (elgg_instanceof($this->entity)) {
 			return $this->getEntityView($params = array());
+		} else if (self::isImage($this->url)) {
+			return $this->getImageView($params = array());
 		}
 
 		return $this->getSrcView($params = array());
@@ -122,15 +139,21 @@ class Embedder {
 		$meta = $this->extractMeta('oembed');
 
 		$title = $meta->title;
-		
+
 		if ($meta->provider_name) {
 			$class = 'embed-' . preg_replace('/[^a-z0-9\-]/i', '-', strtolower($meta->provider_name));
 		}
-		$body = elgg_view('output/url', array(
-			'href' => $this->url
-		));
-		
+
 		switch ($meta->type) {
+
+			default :
+				$link = elgg_view('output/url', array(
+					'href' => $this->url
+				));
+				$body = elgg_view('output/longtext', array(
+					'value' => $link,
+				));
+				break;
 
 			case 'link' :
 
@@ -172,7 +195,7 @@ class Embedder {
 
 			case 'rich' :
 			case 'video' :
-				
+
 				$title = $meta->title;
 				$footer = elgg_view('output/url', array(
 					'href' => ($meta->canonical) ? $meta->canonical : $meta->url,
@@ -191,6 +214,19 @@ class Embedder {
 		$params['meta'] = $meta;
 
 		return elgg_trigger_plugin_hook('output:src', 'embed', $params, $output);
+	}
+
+	/**
+	 * Wrap an image url into a params tag
+	 * @param type $params
+	 */
+	public function getImageView($params = array()) {
+
+		$output = elgg_view('output/img', array(
+			'src' => $this->url,
+		));
+
+		return elgg_trigger_plugin_hook('output:image', 'embed', $params, $output);
 	}
 
 	/**
