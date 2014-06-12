@@ -54,7 +54,8 @@ $english = array(
 	',
 
 	'wall:new:notification:generic' => 'New post',
-	'wall:new:notification:subject' => '%s posted %s',
+	'wall:new:notification:summary' => 'New post %s', // New post on X's wall
+	'wall:new:notification:subject' => '%s posted %s',	// X posted on Y's wall
 	'wall:new:notification:message' =>  '
 		%s posted %s: <br />
 		<blockquote>

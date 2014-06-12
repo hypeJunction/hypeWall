@@ -3,21 +3,6 @@
 namespace hypeJunction\Wall;
 
 /**
- * Give wall posts their own URL
- *
- * @param ElggObject $entity
- * @return string
- */
-function url_handler($entity) {
-	$container = $entity->getContainerEntity();
-	if (elgg_instanceof($container, 'group')) {
-		return elgg_normalize_url(PAGEHANDLER . '/group/' . $container->guid . '/' . $entity->guid);
-	} else if (elgg_instanceof($container, 'user')) {
-		return elgg_normalize_url(PAGEHANDLER . '/owner/' . $container->username . '/' . $entity->guid);
-	}
-}
-
-/**
  * Handler walls and posts
  *
  * User wall:	wall/owner/<username>

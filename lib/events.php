@@ -10,7 +10,7 @@ namespace hypeJunction\Wall;
  * @param string $entity_type	Equals 'object'
  * @param ElggEntity $entity	Published entity
  */
-function send_notifications($event, $entity_type, $entity) {
+function send_custom_notifications($event, $entity_type, $entity) {
 
 	if ($entity->origin !== 'wall') {
 		return true;
@@ -37,6 +37,10 @@ function send_notifications($event, $entity_type, $entity) {
 		$ownership = elgg_echo('wall:ownership:your', array($target));
 
 		$subject = elgg_echo('wall:new:notification:subject', array($poster->name, $ownership));
+		$summary = elgg_view('output/url', array(
+			'text' => $subject,
+			'href' => $entity->getURL(),
+		));
 		$body = elgg_echo('wall:new:notification:message', array(
 			$poster->name,
 			$ownership,
@@ -44,7 +48,11 @@ function send_notifications($event, $entity_type, $entity) {
 			$entity->getURL()
 		));
 
-		notify_user($to, $from, $subject, $body);
+		notify_user($to, $from, $subject, $body, array(
+			'summary' => $summary,
+			'object' => $entity,
+			'action' => 'received',
+		));
 	}
 
 	// Notify tagged users
@@ -60,49 +68,21 @@ function send_notifications($event, $entity_type, $entity) {
 		$to = $tagged_friend->guid;
 		$from = $poster->guid;
 		$subject = elgg_echo('wall:tagged:notification:subject', array($poster->name));
+		$summary = elgg_view('output/url', array(
+			'text' => $subject,
+			'href' => $entity->getURL(),
+		));
 		$body = elgg_echo('wall:tagged:notification:message', array(
 			$poster->name,
 			$message,
 			$entity->getURL()
 		));
 
-		notify_user($to, $from, $subject, $body);
-	}
-
-	elgg_push_context('widgets');
-	$default_msg_body = elgg_view_entity($entity, array('full_view' => false));
-	elgg_pop_context();
-
-	global $NOTIFICATION_HANDLERS;
-
-	// Get users interested in content from this person and notify them
-	// (Person defined by container_guid so we can also subscribe to groups if we want)
-	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-		$interested_users = elgg_get_entities_from_relationship(array(
-			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
-			'relationship' => 'notify' . $method,
-			'relationship_guid' => $entity->container_guid,
-			'inverse_relationship' => true,
-			'type' => 'user',
-			'limit' => false
+		notify_user($to, $from, $subject, $body, array(
+			'summary' => $summary,
+			'object' => $entity,
+			'action' => 'tagged',
 		));
-
-		if ($interested_users && is_array($interested_users)) {
-			foreach ($interested_users as $user) {
-				if ($user instanceof ElggUser && !$user->isBanned() && !in_array($user->guid, $sent)) {
-					if (has_access_to_entity($entity, $user) && $entity->access_id != ACCESS_PRIVATE) {
-						$body = elgg_trigger_plugin_hook('notify:entity:message', 'object', array(
-							'entity' => $entity,
-							'to_entity' => $user,
-							'method' => $method), $default_msg_body);
-
-						if ($body !== false) {
-							notify_user($user->guid, $entity->container_guid, $subject, $body, null, array($method));
-						}
-					}
-				}
-			}
-		}
 	}
 
 	return true;

@@ -15,7 +15,7 @@
 
 	<requires>
 		<type>elgg_release</type>
-		<version>1.8</version>
+		<version>1.9</version>
 	</requires>
 
 	<suggests>
@@ -27,22 +27,5 @@
 		<type>plugin</type>
 		<name>elgg_dropzone</name>
 	</suggests>
-
-	<screenshot>
-		<description>URL embed form</description>
-		<path>screenshots/form-url.png</path>
-	</screenshot>
-	<screenshot>
-		<description>Photo upload form</description>
-		<path>screenshots/form-photos.png</path>
-	</screenshot>
-	<screenshot>
-		<description>Content attachment form</description>
-		<path>screenshots/form-content.png</path>
-	</screenshot>
-	<screenshot>
-		<description>River view</description>
-		<path>screenshots/river.png</path>
-	</screenshot>
-
+	
 </plugin_manifest>

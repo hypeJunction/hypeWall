@@ -3,7 +3,8 @@
 namespace hypeJunction\Wall;
 
 elgg_load_css('wall');
-elgg_load_js('wall.status');
+elgg_load_css('fonts.font-awesome');
+elgg_load_css('fonts.open-sans');
 
 $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();

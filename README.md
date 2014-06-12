@@ -13,6 +13,13 @@ Rich user interface for sharing status updates, links and content via user walls
 - Friend tagging
 - Content attachments
 
+## Versioning
+
+- Use 2.3.x for Elgg 1.9
+- Use 2.2.x for Elgg 1.8
+
+Master branch is 1.9-compatible
+
 
 ## Acknowledgements / Credits
 

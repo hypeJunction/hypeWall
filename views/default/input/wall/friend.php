@@ -1,5 +1,11 @@
 <?php
 
+namespace hypeJunction\Wall;
+
+if (!elgg_view_exists('input/tokeninput')) {
+	return;
+}
+
 if (!$vars['value'] && elgg_instanceof($vars['entity'])) {
 	$vars['value'] = elgg_get_entities_from_relationship(array(
 		'relationship' => 'tagged_in',

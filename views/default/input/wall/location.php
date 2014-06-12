@@ -2,6 +2,10 @@
 
 namespace hypeJunction\Wall;
 
+if (!elgg_view_exists('input/tokeninput')) {
+	return;
+}
+
 if (!$vars['value']) {
 	$geopositioning = get_geopositioning();
 	if ($geopositioning['location']) {

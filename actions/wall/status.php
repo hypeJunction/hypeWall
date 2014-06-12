@@ -84,7 +84,13 @@ if ($subtype == 'thewire' && is_callable('thewire_save_post')) {
 	$wall_post->description = $status;
 	if ($guid = $wall_post->save()) {
 		// Create a river entry for this wall post
-		$river_id = add_to_river('river/object/hjwall/create', 'create', $poster->guid, $wall_post->guid);
+		$river_id = elgg_create_river_item(array(
+			'view' => 'river/object/hjwall/create',
+			'action_type' => 'create',
+			'subject_guid' => $wall_post->getOwnerGUID(),
+			'object_guid' => $wall_post->getGUID(),
+			'target_guid' => $wall_post->getContainerGUID(),
+		));
 	}
 }
 
@@ -138,7 +144,14 @@ if ($guid && $wall_post) {
 				if (!in_array($access_id, array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC))) {
 					$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend_guid, PLUGIN_ID);
 					if (!is_null($river_access_id) && $river_access_id !== ACCESS_PRIVATE) {
-						add_to_river('river/relationship/tagged/create', 'tagged', $friend_guid, $wall_post->guid, $river_access_id);
+						$river_id = elgg_create_river_item(array(
+							'view' => 'river/relationship/tagged/create',
+							'action_type' => 'tagged',
+							'subject_guid' => $friend_guid,
+							'object_guid' => $wall_post->getGUID(),
+							'target_guid' => $wall_post->getContainerGUID(),
+							'access_id' => $river_access_id,
+						));
 					}
 				}
 			}
@@ -221,7 +234,7 @@ if ($guid && $wall_post) {
 		if (get_input('widget')) {
 			elgg_push_context('widgets');
 		}
-		
+
 		if (elgg_is_xhr()) {
 			if (get_input('river') && get_input('river') != 'false') {
 				echo elgg_list_river(array('object_guids' => $wall_post->guid));
@@ -230,7 +243,7 @@ if ($guid && $wall_post) {
 				echo elgg_view_entity($wall_post, array('full_view' => false));
 			}
 		}
-
+		
 		system_message(elgg_echo('wall:create:success'));
 		forward($wall_post->getURL());
 	}

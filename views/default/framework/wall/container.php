@@ -27,9 +27,11 @@ if (elgg_instanceof($page_owner) && !$page_owner->canWriteToContainer($user->gui
 	return;
 }
 
-elgg_load_js('jquery.form');
 elgg_load_css('wall');
-elgg_load_js('wall.status');
+elgg_load_css('fonts.font-awesome');
+elgg_load_css('fonts.open-sans');
+
+elgg_require_js('framework/wall/init');
 
 $user_icon = elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
 	'use_hover' => false,
@@ -56,7 +58,7 @@ if (elgg_get_plugin_setting('status', PLUGIN_ID)) {
 		'text' => '<i class="wall-icon wall-icon-status"></i>',
 		'title' => elgg_echo('wall:status'),
 		'href' => '#wall-form-status',
-		'class' => 'wall-tab',
+		'link_class' => 'wall-tab',
 		'selected' => ($default == 'status'),
 		'priority' => 100
 	));
@@ -77,7 +79,7 @@ if (elgg_get_plugin_setting('url', PLUGIN_ID)) {
 		'title' => elgg_echo('wall:url'),
 		'href' => '#wall-form-url',
 		'selected' => ($default == 'url'),
-		'class' => 'wall-tab',
+		'link_class' => 'wall-tab',
 		'priority' => 150
 	));
 	$class = 'wall-form';
@@ -97,7 +99,7 @@ if (elgg_get_plugin_setting('photo', PLUGIN_ID)) {
 		'title' => elgg_echo('wall:photo'),
 		'href' => '#wall-form-photo',
 		'selected' => ($default == 'photo'),
-		'class' => 'wall-tab',
+		'link_class' => 'wall-tab',
 		'priority' => 200
 	));
 	$class = 'wall-form';
@@ -134,7 +136,7 @@ if (elgg_get_plugin_setting('content', PLUGIN_ID) && elgg_is_active_plugin('elgg
 		'title' => elgg_echo('wall:content'),
 		'href' => '#wall-form-content',
 		'selected' => ($default == 'content'),
-		'class' => 'wall-tab',
+		'link_class' => 'wall-tab',
 		'priority' => 300
 	));
 	$class = 'wall-form';
