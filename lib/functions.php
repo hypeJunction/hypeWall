@@ -102,7 +102,8 @@ function format_wall_message($object, $include_address = false) {
 
 	$attachments = get_attachments($object, 'links');
 	if ($attachments) {
-		$message[4] = '<span class="wall-tagged-attachments">' . elgg_echo('wall:attached', array(count($attachments))) . '</span>';
+		$attachments_str = (count($attachments) == 1) ? elgg_echo('wall:attached:single') : elgg_echo('wall:attached', array(count($attachments)));
+		$message[4] = '<span class="wall-tagged-attachments">' . $attachments_str . '</span>';
 	}
 
 	if (!$status || $include_address) {
@@ -210,4 +211,3 @@ function get_hashtags($text) {
 	preg_match_all('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', $text, $tags);
 	return $tags[2];
 }
-

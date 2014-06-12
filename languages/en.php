@@ -68,6 +68,7 @@ $english = array(
 	'wall:byline' => ' by %s',
 	'wall:with' => '- with %s',
 	'wall:at' => ' near %s',
+	'wall:attached:single' => '[1 attachment]',
 	'wall:attached' => ' [%s attachments]',
 	
 	'wall:new:wall:post' => '%s posted on %s\'s wall',
