@@ -4,7 +4,6 @@
 	"repository": "hypeJunction/hypeWall",
 	"description": "Rich status updates",
 	"homepage": "http://hypejunction.com",
-	"minimum-stability": "stable",
 	"keywords": [
 		"elgg", "plugin", "wall", "posts", "embed", "link", "images"
 	],
@@ -27,7 +26,9 @@
 	},
 	"require": {
 		"php": ">=5.3.3",
-		"composer/installers": ">=1.0.8"
+		"composer/installers": ">=1.0.8",
+		"hypejunction/cmp-util": "1.0.*",
+		"hypejunction/cmp-filestore": "1.0.*"
 	},
 	"autoload": {
 		"psr-4": {
