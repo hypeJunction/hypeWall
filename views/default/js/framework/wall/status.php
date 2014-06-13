@@ -234,13 +234,11 @@
 
 					if (data.output) {
 						if ($form.closest('.wall-container').is('.wall-river')) {
-							if (elgg.trigger_hook('refresh', 'river', {data: data, method: 'framework.wall.formSubmit'}, false) === false) {
-								var items = $(data.output).html();
-								$(items).children('li').addClass('wall-item-new').bind('refresh.before', function(e) {
-									$(this).remove();
-								})
-								$('.elgg-list-river').prepend($(items));
-							}
+							var items = $(data.output).html();
+							$(items).children('li').addClass('wall-item-new').bind('refresh.before', function(e) {
+								$(this).remove();
+							});
+							$('.elgg-list-river').prepend($(items));
 						} else {
 							$('.wall-post-list,.wall-widget-list').prepend($('<li>').addClass('elgg-item').html(data.output));
 						}
