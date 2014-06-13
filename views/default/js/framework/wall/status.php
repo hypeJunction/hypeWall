@@ -227,7 +227,7 @@
 						}).trigger('clear');
 
 					}
-					$('.elgg-dropzone-preview', $form).html('');
+					$('.elgg-dropzone-preview', $form).remove();
 					$('.token-input-dropdown').hide();
 					$form.find('.wall-url').trigger('clear');
 					$form.find('textarea:first').trigger('click');
