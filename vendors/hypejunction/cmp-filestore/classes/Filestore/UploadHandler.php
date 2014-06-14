@@ -82,90 +82,6 @@ class UploadHandler {
 	}
 
 	/**
-	 * Create icons for an entity
-	 *
-	 * @param ElggFile $entity			An entity that will use the icons
-	 * @param mixed $source_file		ElggFile, or remote path, or temp storage from where the source for the icons should be taken from
-	 * @param array $config				Additional parameters, such as 'icon_sizes', 'icon_filestore_prefix', 'coords'
-	 * @return array|boolean			An array of filehandlers for created icons or false on error
-	 */
-	public static function makeIcons($entity, $source_file = null, array $config = array()) {
-
-		if (!elgg_instanceof($entity)) {
-			return false;
-		}
-
-		if ($source_file instanceof ElggFile) {
-			$source = $source_file->getFilenameOnFilestore();
-		} else if ($source_file) {
-			$source = $source_file;
-		} else if ($entity instanceof ElggFile) {
-			$source = $entity->getFilenameOnFilestore();
-		}
-
-		if (!$source) {
-			return false;
-		}
-
-		if (!isset($config['icon_sizes'])) {
-			$icon_sizes = self::getIconSizes($entity);
-		}
-
-		if (!isset($config['icon_prefix'])) {
-			$prefix = "icons/";
-		}
-		$prefix .= $entity->guid;
-
-		$coords = elgg_extract('coords', $config, null);
-
-		$time = time();
-		$thumbs = array();
-		$metadata_name_bak = array();
-
-		foreach ($icon_sizes as $size => $values) {
-
-			if (is_array($coords) && in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large'))) {
-				$thumb_resized = get_resized_image_from_existing_file($source, $values['w'], $values['h'], $values['square'], $coords['x1'], $coords['y1'], $coords['x2'], $coords['y2'], $values['upscale']);
-			} else if (!is_array($coords)) {
-				$thumb_resized = get_resized_image_from_existing_file($source, $values['w'], $values['h'], $values['square'], 0, 0, 0, 0, $values['upscale']);
-			} else {
-				$thumb_resized = false;
-			}
-
-			if ($thumb_resized) {
-				$thumb = new ElggFile();
-				$thumb->owner_guid = $entity->owner_guid;
-				$thumb->setMimeType('image/jpeg');
-				$thumb->setFilename("{$prefix}{$time}{$size}.jpg");
-				$thumb->open("write");
-				$thumb->write($thumb_resized);
-				$thumb->close();
-				if (isset($values['metadata_name'])) {
-					$metadata_name = $values['metadata_name'];
-					$metadata_name_bak[$metadata_name] = $entity->$metadata_name;
-					$entity->$metadata_name = $thumb->getFilename();
-				}
-				$thumbs[$size] = $thumb;
-			} else {
-				$fail = true;
-			}
-		}
-
-		if (!$fail) {
-			$entity->icontime = $time;
-			return $thumbs;
-		} else {
-			foreach ($thumbs as $thumb) {
-				$thumb->delete();
-			}
-			foreach ($metadata_name_bak as $key => $value) {
-				$entity->$key = $value;
-			}
-			return false;
-		}
-	}
-
-	/**
 	 * Convert file uploads into an object and get any errors
 	 * @param array $_files Normalized $_FILES global
 	 * @return array
@@ -173,7 +89,7 @@ class UploadHandler {
 	protected static function uploadFactory($_files = array()) {
 
 		$_files = self::normalize($_files);
-		
+
 		foreach ($_files as $input => $uploads) {
 			foreach ($uploads as $upload) {
 				$object = new stdClass();
@@ -203,7 +119,9 @@ class UploadHandler {
 	 */
 	protected static function entityFactory($input) {
 
-		$prefix = 'file/';
+		if (!isset(self::$config['filestore_prefix'])) {
+			$prefix = "file/";
+		}
 
 		$uploads = self::$uploads[$input];
 		$handled_uploads = array();
@@ -242,7 +160,7 @@ class UploadHandler {
 				$upload->file = $filehandler;
 
 				if ($filehandler->simpletype == "image") {
-					self::makeIcons($filehandler);
+					IconHandler::makeIcons($filehandler);
 				}
 
 				$entities[] = $filehandler;
@@ -301,17 +219,13 @@ class UploadHandler {
 		switch ($code) {
 			case UPLOAD_ERR_OK:
 				return false;
-				break;
 			case UPLOAD_ERR_NO_FILE:
 				return elgg_echo('upload:error:no_file');
-				break;
 			case UPLOAD_ERR_INI_SIZE:
 			case UPLOAD_ERR_FORM_SIZE:
 				return elgg_echo('upload:error:file_size');
-				break;
 			default:
 				return elgg_echo('upload:error:unknown');
-				break;
 		}
 	}
 
@@ -359,13 +273,10 @@ class UploadHandler {
 			case "application/msword":
 			case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
 				return "document";
-				break;
 			case "application/pdf":
 				return "document";
-				break;
 			case "application/ogg":
 				return "audio";
-				break;
 		}
 
 		if (substr_count($mimetype, 'text/')) {
@@ -389,42 +300,6 @@ class UploadHandler {
 		}
 
 		return "general";
-	}
-
-	/**
-	 * Get icon size config
-	 * @param ElggEntity $entity
-	 * @return type
-	 */
-	protected static function getIconSizes($entity = null) {
-
-		if (!elgg_instanceof($entity) || $entity->getSubtype() !== 'file') {
-			return elgg_get_config('icon_sizes');
-		}
-
-		return array(
-			'thumb' => array(
-				'w' => 60,
-				'h' => 60,
-				'square' => true,
-				'upscale' => true,
-				'metadata_name' => 'thumbnail',
-			),
-			'smallthumb' => array(
-				'w' => 153,
-				'h' => 153,
-				'square' => true,
-				'upscale' => true,
-				'metadata_name' => 'smallthumb',
-			),
-			'largethumb' => array(
-				'w' => 600,
-				'h' => 600,
-				'square' => true,
-				'upscacle' => true,
-				'metadata_name' => 'largethumb',
-			)
-		);
 	}
 
 }
