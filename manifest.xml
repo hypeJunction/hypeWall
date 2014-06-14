@@ -26,23 +26,7 @@
 	<suggests>
 		<type>plugin</type>
 		<name>elgg_dropzone</name>
+		<version>1.0.1</version>
 	</suggests>
-
-	<screenshot>
-		<description>URL embed form</description>
-		<path>screenshots/form-url.png</path>
-	</screenshot>
-	<screenshot>
-		<description>Photo upload form</description>
-		<path>screenshots/form-photos.png</path>
-	</screenshot>
-	<screenshot>
-		<description>Content attachment form</description>
-		<path>screenshots/form-content.png</path>
-	</screenshot>
-	<screenshot>
-		<description>River view</description>
-		<path>screenshots/river.png</path>
-	</screenshot>
 
 </plugin_manifest>
