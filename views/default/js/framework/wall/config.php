@@ -6,13 +6,6 @@
 namespace hypeJunction\Wall;
 
 if (!WALL_GEOPOSITIONING) {
-	return;
+	$geopositioning = get_geopositioning();
+	echo 'elgg.session.geopositioning = ' . json_encode($geopositioning) . ';';
 }
-
-$geopositioning = get_geopositioning();
-?>
-
-elgg.session.geopositioning = <?php echo json_encode($geopositioning) ?>;
-
-
-

@@ -40,6 +40,7 @@ define(function(require) {
 		 *
 		 * @link http://nominatim.openstreetmap.org/reverse Uses nominatim reverse geocoding service
 		 * @see seCurrentPosition for caching logic
+		 * @todo Implement JSONP for this AMD mod
 		 * @param object position
 		 * @returns void
 		 */
@@ -56,7 +57,7 @@ define(function(require) {
 					elgg.session.geopositioning.longitude = position.coords.longitude;
 					$.ajax({
 						crossDomain: true,
-						dataType: "jsonp",
+						dataType: "json",
 						url: 'http://nominatim.openstreetmap.org/reverse',
 						data: {
 							format: 'json',
@@ -64,11 +65,12 @@ define(function(require) {
 							lon: position.coords.longitude,
 							addressdetails: 1,
 							zoom: 10,
-							json_callback: 'setGeopositioning'
+							//json_callback: 'define'
 						},
+						success: wall.setGeopositioning(data),
 					});
 				} else {
-					setGeopositioning();
+					wall.setGeopositioning();
 				}
 			});
 		},
@@ -232,7 +234,7 @@ define(function(require) {
 								$(this).tokenInput("clear");
 							}).trigger('clear');
 						}
-						$('.elgg-dropzone-preview', $form).html('');
+						$('.elgg-dropzone-preview', $form).remove();
 						$('.token-input-dropdown').hide();
 						$form.find('.wall-url').trigger('clear');
 						$form.find('textarea:first').trigger('click');
@@ -284,6 +286,5 @@ define(function(require) {
 			}
 		}
 	};
-
 	return wall;
 });

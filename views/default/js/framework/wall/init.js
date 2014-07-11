@@ -1,7 +1,7 @@
-define(function() {
+define(function(require) {
 
 	var $ = require('jquery');
-	
+
 	if ($('.wall-container').length) {
 		require(['framework/wall/lib'], function(wall) {
 			wall.init();
