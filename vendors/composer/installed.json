@@ -122,47 +122,6 @@
         ]
     },
     {
-        "name": "hypejunction/cmp-util",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hypeJunction/cmp-util.git",
-            "reference": "1a3c5e53a761a2a35a2dda82dc4dd5c10d48ad0d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hypeJunction/cmp-util/zipball/1a3c5e53a761a2a35a2dda82dc4dd5c10d48ad0d",
-            "reference": "1a3c5e53a761a2a35a2dda82dc4dd5c10d48ad0d",
-            "shasum": ""
-        },
-        "time": "2014-07-19 06:56:49",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "hypeJunction\\": "classes/hypeJunction/",
-                "UFCOE\\": "classes/UFCOE/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Ismayil Khayredinov",
-                "email": "ismayil.khayredinov@gmail.com"
-            }
-        ],
-        "description": "Util classes",
-        "homepage": "http://hypejunction.com",
-        "keywords": [
-            "classes",
-            "util"
-        ]
-    },
-    {
         "name": "hypejunction/cmp-filestore",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -203,6 +162,51 @@
         "keywords": [
             "classes",
             "filestore"
+        ]
+    },
+    {
+        "name": "hypejunction/cmp-util",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hypeJunction/cmp-util.git",
+            "reference": "8fb83fb83732154542bcefe14c2abf7226a9a771"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hypeJunction/cmp-util/zipball/8fb83fb83732154542bcefe14c2abf7226a9a771",
+            "reference": "8fb83fb83732154542bcefe14c2abf7226a9a771",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-xml": "*",
+            "php": ">=5.3.3"
+        },
+        "time": "2014-08-07 12:15:51",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "hypeJunction\\": "classes/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Ismayil Khayredinov",
+                "email": "ismayil.khayredinov@gmail.com"
+            }
+        ],
+        "description": "Util classes for working with embeds",
+        "homepage": "http://hypejunction.com",
+        "keywords": [
+            "classes",
+            "util"
         ]
     }
 ]
