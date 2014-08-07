@@ -1,6 +1,5 @@
 {
 	"name": "hypejunction/cmp-util",
-	"repository": "hypeJunction/cmp-util",
 	"description": "Util classes",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
@@ -14,6 +13,9 @@
 		}
 	],
 	"autoload": {
-        "psr-4": {"hypeJunction\\": "classes/"}
+        "psr-4": {
+			"hypeJunction\\": "classes/hypeJunction/",
+			"UFCOE\\": "classes/UFCOE/"
+		}
     }
 }
