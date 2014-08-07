@@ -1,45 +1,5 @@
 [
     {
-        "name": "hypejunction/cmp-util",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hypeJunction/cmp-util.git",
-            "reference": "b264166ecf39e3b74ddc88956b7c9b6419e8fe4d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hypeJunction/cmp-util/zipball/b264166ecf39e3b74ddc88956b7c9b6419e8fe4d",
-            "reference": "b264166ecf39e3b74ddc88956b7c9b6419e8fe4d",
-            "shasum": ""
-        },
-        "time": "2014-06-13 09:13:41",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "hypeJunction\\": "classes/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Ismayil Khayredinov",
-                "email": "ismayil.khayredinov@gmail.com"
-            }
-        ],
-        "description": "Util classes",
-        "homepage": "http://hypejunction.com",
-        "keywords": [
-            "classes",
-            "util"
-        ]
-    },
-    {
         "name": "smottt/wideimage",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -71,9 +31,100 @@
         "homepage": "http://wideimage.sourceforge.net"
     },
     {
+        "name": "composer/installers",
+        "version": "v1.0.16",
+        "version_normalized": "1.0.16.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/composer/installers.git",
+            "reference": "033679ad3cfc5ab759f9ed2a58881aeef13c342b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/composer/installers/zipball/033679ad3cfc5ab759f9ed2a58881aeef13c342b",
+            "reference": "033679ad3cfc5ab759f9ed2a58881aeef13c342b",
+            "shasum": ""
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2014-07-21 15:54:34",
+        "type": "composer-installer",
+        "extra": {
+            "class": "Composer\\Installers\\Installer",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Composer\\Installers\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
+            }
+        ],
+        "description": "A multi-framework Composer library installer",
+        "homepage": "http://composer.github.com/installers/",
+        "keywords": [
+            "Craft",
+            "Dolibarr",
+            "Hurad",
+            "MODX Evo",
+            "OXID",
+            "WolfCMS",
+            "agl",
+            "annotatecms",
+            "bitrix",
+            "cakephp",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "drupal",
+            "elgg",
+            "fuelphp",
+            "installer",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lithium",
+            "magento",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "moodle",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "zend",
+            "zikula"
+        ]
+    },
+    {
         "name": "hypejunction/cmp-filestore",
-        "version": "1.0.3",
-        "version_normalized": "1.0.3.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/hypeJunction/cmp-filestore.git",
@@ -114,94 +165,48 @@
         ]
     },
     {
-        "name": "composer/installers",
-        "version": "v1.0.15",
-        "version_normalized": "1.0.15.0",
+        "name": "hypejunction/cmp-util",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/composer/installers.git",
-            "reference": "8e6a72a78f6cfd537fde3350720dfdc9ae3c5621"
+            "url": "https://github.com/hypeJunction/cmp-util.git",
+            "reference": "8fb83fb83732154542bcefe14c2abf7226a9a771"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/8e6a72a78f6cfd537fde3350720dfdc9ae3c5621",
-            "reference": "8e6a72a78f6cfd537fde3350720dfdc9ae3c5621",
+            "url": "https://api.github.com/repos/hypeJunction/cmp-util/zipball/8fb83fb83732154542bcefe14c2abf7226a9a771",
+            "reference": "8fb83fb83732154542bcefe14c2abf7226a9a771",
             "shasum": ""
         },
-        "replace": {
-            "roundcube/plugin-installer": "*",
-            "shama/baton": "*"
+        "require": {
+            "ext-curl": "*",
+            "ext-xml": "*",
+            "php": ">=5.3.3"
         },
-        "require-dev": {
-            "composer/composer": "1.0.*@dev",
-            "phpunit/phpunit": "4.1.*"
-        },
-        "time": "2014-06-23 16:25:28",
-        "type": "composer-installer",
-        "extra": {
-            "class": "Composer\\Installers\\Installer",
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
+        "time": "2014-08-07 12:15:51",
+        "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "psr-0": {
-                "Composer\\Installers\\": "src/"
+            "psr-4": {
+                "hypeJunction\\": "classes/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "MIT"
+            "GPL-2.0"
         ],
         "authors": [
             {
-                "name": "Kyle Robinson Young",
-                "email": "kyle@dontkry.com",
-                "homepage": "https://github.com/shama",
-                "role": "Developer"
+                "name": "Ismayil Khayredinov",
+                "email": "ismayil.khayredinov@gmail.com"
             }
         ],
-        "description": "A multi-framework Composer library installer",
-        "homepage": "http://composer.github.com/installers/",
+        "description": "Util classes for working with embeds",
+        "homepage": "http://hypejunction.com",
         "keywords": [
-            "Craft",
-            "Dolibarr",
-            "Hurad",
-            "MODX Evo",
-            "OXID",
-            "WolfCMS",
-            "agl",
-            "annotatecms",
-            "bitrix",
-            "cakephp",
-            "codeigniter",
-            "concrete5",
-            "croogo",
-            "drupal",
-            "elgg",
-            "fuelphp",
-            "installer",
-            "joomla",
-            "kohana",
-            "laravel",
-            "lithium",
-            "magento",
-            "mako",
-            "mediawiki",
-            "modulework",
-            "moodle",
-            "phpbb",
-            "piwik",
-            "ppi",
-            "roundcube",
-            "shopware",
-            "silverstripe",
-            "symfony",
-            "typo3",
-            "wordpress",
-            "zend",
-            "zikula"
+            "classes",
+            "util"
         ]
     }
 ]
