@@ -259,8 +259,8 @@ class Embedder {
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
-//		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-//		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 		$response = curl_exec($ch);
 		curl_close($ch);
@@ -352,6 +352,11 @@ class Embedder {
 				if (!$name) {
 					$name = $node->getAttribute('property');
 				}
+				if (!$name) {
+					continue;
+				}
+				$name = strtolower($name);
+
 				$content = $node->getAttribute('content');
 
 				switch ($name) {
@@ -409,10 +414,24 @@ class Embedder {
 			// Display an icon parsed from <link> tags
 			$this->meta->thumbnail_url = $this->meta->icons[0];
 		} else {
-			// Display a favicon
-			$this->meta->thumbnail_url = $favicon = "http://g.etfv.co/{$this->url}";
+			$max_width = 0;
+			$nodes = $doc->getElementsByTagName('img');
+			foreach ($nodes as $node) {
+				$src = $node->getAttribute('src');
+				$width = $node->getAttribute('width');
+				if (!$this->meta->thumbnail_url || $width > $max_width) {
+					$this->meta->thumbnail_url = $src;
+					$max_width = $width;
+				}
+			}
 		}
 
+		/**
+		 * @todo: figure out what to do with relative URLs in DOM
+		 */
+		if (!self::isImage($this->meta->thumbnail_url)) {
+			unset($this->meta->thumbnail_url);
+		}
 	}
 
 }
