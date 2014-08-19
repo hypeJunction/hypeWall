@@ -19,6 +19,9 @@
 		"ext-xml": "*"
 	},
 	"autoload": {
-        "psr-4": {"hypeJunction\\": "classes/"}
+        "psr-4": {
+			"hypeJunction\\": "classes/hypeJunction/",
+			"UFCOE\\": "classes/UFCOE/"
+		}
     }
 }
