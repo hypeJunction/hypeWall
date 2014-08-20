@@ -4,8 +4,6 @@ namespace hypeJunction\Wall;
 
 use ElggObject;
 use hypeJunction\Filestore\UploadHandler;
-use hypeJunction\Util\Embedder;
-use hypeJunction\Util\Extractor;
 
 $poster = elgg_get_logged_in_user_entity();
 
@@ -121,14 +119,14 @@ if ($guid && $wall_post) {
 		$wall_post->save();
 	}
 
-	$extractor = Extractor::extract($status);
+	$qualifiers = elgg_trigger_plugin_hook('extract:qualifiers', 'all', array('source' => $wall_post->description), array());
 
-	if (count($extractor->hashtags)) {
-		$wall_post->tags = $extractor->hashtags;
+	if (count($qualifiers['hashtags'])) {
+		$wall_post->tags = $qualifiers['hashtags'];
 	}
 
-	if (count($extractor->usernames)) {
-		foreach ($extractor->usernames as $username) {
+	if (count($qualifiers['usernames'])) {
+		foreach ($qualifiers['usernames'] as $username) {
 			$user = get_user_by_username($username);
 			if (elgg_instanceof($user) && !in_array($user->guid, $friend_guids)) {
 				$friend_guids[] = $user->guid;
@@ -194,8 +192,7 @@ if ($guid && $wall_post) {
 
 	if ($wall_post->address && get_input('make_bookmark', false)) {
 
-		$embedder = new Embedder($wall_post->address);
-		$document = $embedder->extractMeta('iframely');
+		$document = elgg_trigger_plugin_hook('extract:meta', 'all', array('src' => $wall_post->address));
 
 		$bookmark = new ElggObject;
 		$bookmark->subtype = "bookmarks";

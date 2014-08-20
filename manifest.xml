@@ -17,7 +17,10 @@
 		<type>elgg_release</type>
 		<version>1.9</version>
 	</requires>
-
+	<suggests>
+		<type>plugin</type>
+		<name>hypeScraper</name>
+	</suggests>
 	<suggests>
 		<type>plugin</type>
 		<name>elgg_tokeninput</name>

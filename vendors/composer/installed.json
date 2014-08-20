@@ -164,51 +164,5 @@
             "classes",
             "filestore"
         ]
-    },
-    {
-        "name": "hypejunction/cmp-util",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hypeJunction/cmp-util.git",
-            "reference": "2c54f0e09a600fa654bb19065904d144cb72f693"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hypeJunction/cmp-util/zipball/2c54f0e09a600fa654bb19065904d144cb72f693",
-            "reference": "2c54f0e09a600fa654bb19065904d144cb72f693",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-xml": "*",
-            "php": ">=5.3.3"
-        },
-        "time": "2014-08-09 08:14:54",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "hypeJunction\\": "classes/hypeJunction/",
-                "UFCOE\\": "classes/UFCOE/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Ismayil Khayredinov",
-                "email": "ismayil.khayredinov@gmail.com"
-            }
-        ],
-        "description": "Util classes for working with embeds",
-        "homepage": "http://hypejunction.com",
-        "keywords": [
-            "classes",
-            "util"
-        ]
     }
 ]
