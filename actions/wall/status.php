@@ -113,7 +113,7 @@ if ($guid && $wall_post) {
 		$wall_post->save();
 	}
 
-	$qualifiers = elgg_trigger_plugin_hook('extract:qualifiers', 'all', array('source' => $wall_post->description), array());
+	$qualifiers = elgg_trigger_plugin_hook('extract:qualifiers', 'wall', array('source' => $wall_post->description), array());
 
 	if (count($qualifiers['hashtags'])) {
 		$wall_post->tags = $qualifiers['hashtags'];
@@ -179,7 +179,7 @@ if ($guid && $wall_post) {
 
 	if ($wall_post->address && get_input('make_bookmark', false)) {
 
-		$document = elgg_trigger_plugin_hook('extract:meta', 'all', array('src' => $wall_post->address));
+		$document = elgg_trigger_plugin_hook('extract:meta', 'wall', array('src' => $wall_post->address));
 
 		$bookmark = new ElggObject;
 		$bookmark->subtype = "bookmarks";
