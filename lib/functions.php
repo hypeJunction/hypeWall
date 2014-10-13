@@ -55,23 +55,18 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 	$lat = (float) $latitude;
 	$long = (float) $longitude;
 
-	$latlong = elgg_geocode_location($location);
-	if ($latlong) {
-		$latitude = elgg_extract('lat', $latlong);
-		$longitude = elgg_extract('long', $latlong);
-	} else if ($location && $latitude && $longitude) {
-		$dbprefix = elgg_get_config('dbprefix');
-		$query = "INSERT INTO {$dbprefix}geocode_cache
-				(location, lat, `long`) VALUES ('$location', '{$lat}', '{$long}')
-				ON DUPLICATE KEY UPDATE lat='{$lat}', `long`='{$long}'";
-
-		insert_data($query);
+	if (!$lat || !$long) {
+		$latlong = elgg_trigger_plugin_hook('geocode', 'location', array('location' => $location));
+		if ($latlong) {
+			$lat = elgg_extract('lat', $latlong);
+			$long = elgg_extract('long', $latlong);
+		}
 	}
 
 	$_SESSION['geopositioning'] = array(
 		'location' => $location,
-		'latitude' => (float) $latitude,
-		'longitude' => (float) $longitude
+		'latitude' => $lat,
+		'longitude' => $long
 	);
 }
 
@@ -85,7 +80,7 @@ function format_wall_message($object, $include_address = false) {
 
 	$status = $object->description;
 	$status = elgg_trigger_plugin_hook('link:qualifiers', 'wall', array('source' => $status), $status);
-	
+
 	$message = array(0 => $status);
 
 	$tagged_friends = get_tagged_friends($object, 'links');
