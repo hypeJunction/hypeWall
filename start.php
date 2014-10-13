@@ -40,7 +40,7 @@ function init() {
 	 */
 	elgg_register_page_handler(PAGEHANDLER, __NAMESPACE__ . '\\page_handler');
 	elgg_register_plugin_hook_handler('entity:url', 'object', __NAMESPACE__ . '\\url_handler');
-	
+
 	/**
 	 * Add wall posts to search
 	 */
@@ -123,7 +123,11 @@ function init() {
 
 /**
  * Run upgrade scripts
+ *
+ * @return void
  */
 function upgrade() {
-	include_once __DIR__ . '/lib/upgrades.php';
+	if (elgg_is_admin_logged_in()) {
+		include_once __DIR__ . '/lib/upgrades.php';
+	}
 }
