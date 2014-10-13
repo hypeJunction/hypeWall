@@ -32,8 +32,9 @@ http://fontawesome.io/
 
 ## Dependencies
 
-* For best results, install hypeEmbed, ECML and configure Iframely
+* For best results, install hypeEmbed, hypeScraper and ECML
 https://github.com/hypeJunction/hypeEmbed
+https://github.com/hypeJunction/hypeScraper
 https://github.com/Elgg/ecml
 
 * For drag&drop uploads, install elgg_dropzone

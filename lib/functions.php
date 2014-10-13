@@ -4,7 +4,6 @@ namespace hypeJunction\Wall;
 
 use ElggBatch;
 use ElggObject;
-use hypeJunction\Util\Extractor;
 
 /**
  * Callback function for token input search
@@ -85,8 +84,8 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 function format_wall_message($object, $include_address = false) {
 
 	$status = $object->description;
-	$status = Extractor::render($status);
-
+	$status = elgg_trigger_plugin_hook('link:qualifiers', 'wall', array('source' => $status), $status);
+	
 	$message = array(0 => $status);
 
 	$tagged_friends = get_tagged_friends($object, 'links');
