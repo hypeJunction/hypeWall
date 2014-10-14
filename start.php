@@ -124,6 +124,11 @@ function init() {
 	 */
 	add_group_tool_option('wall', elgg_echo('wall:groups:enable'), false);
 	elgg_extend_view('groups/tool_latest', 'framework/wall/group_module');
+
+	/**
+	 * Tests
+	 */
+	elgg_register_plugin_hook_handler('unit_test', 'system', __NAMESPACE__ . '\\unit_test');
 }
 
 /**
@@ -135,4 +140,21 @@ function upgrade() {
 	if (elgg_is_admin_logged_in()) {
 		include_once __DIR__ . '/lib/upgrades.php';
 	}
+}
+
+/**
+ * Run unit tests
+ *
+ * @param string $hook   Equals 'unit_test'
+ * @param string $type   Equals 'system'
+ * @param array  $value  An array of unit test locations
+ * @param array  $params Additional params
+ * @return array Updated array of unit test locations
+ */
+function unit_test($hook, $type, $value, $params) {
+
+	$path = elgg_get_plugins_path();
+	//$value[] = $path . PLUGIN_ID . '/tests/permissions.php';
+
+	return $value;
 }

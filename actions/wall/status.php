@@ -197,7 +197,8 @@ if ($guid && $wall_post) {
 
 		$bookmark = new ElggObject;
 		$bookmark->subtype = "bookmarks";
-		$bookmark->container_guid = ($container->canWriteToContainer($poster->guid, 'object', 'bookmarks')) ? $container->guid : ELGG_ENTITIES_ANY_VALUE;
+		$bookmark->container_guid = ($container->canWriteToContainer($poster->guid, 'object', 'bookmarks')) ?
+				$container->guid : ELGG_ENTITIES_ANY_VALUE;
 		$bookmark->address = $wall_post->address;
 		$bookmark->access_id = $access_id;
 		$bookmark->origin = 'wall';
