@@ -254,7 +254,7 @@ function get_ecml_views($hook, $type, $views, $params) {
  * @param string $hook   Equals 'view'
  * @param string $type   Equals 'object/thewire'
  * @param string $return HTML
- * @param array $params  Additional params
+ * @param array  $params Additional params
  * @uses $params['vars']
  * @return string
  */
