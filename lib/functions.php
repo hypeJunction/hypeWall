@@ -72,7 +72,8 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 
 /**
  * Get a wall post message suitable for notifications and status updates
- * @param ElggObject $object
+ * 
+ * @param ElggObject $object    Wall or wire post
  * @param bool $include_address Include URL address in the message body
  * @return string
  */
@@ -94,12 +95,6 @@ function format_wall_message($object, $include_address = false) {
 		$message[3] = '<span class="wall-tagged-location">' . elgg_echo('wall:at', array($location)) . '</span>';
 	}
 
-	$attachments = get_attachments($object, 'links');
-	if ($attachments) {
-		$attachments_str = (count($attachments) == 1) ? elgg_echo('wall:attached:single') : elgg_echo('wall:attached', array(count($attachments)));
-		$message[4] = '<span class="wall-tagged-attachments">' . $attachments_str . '</span>';
-	}
-
 	if (!$status || $include_address) {
 		$address = $object->address;
 		if ($address && (strpos($status, $address) === false)) {
@@ -114,6 +109,107 @@ function format_wall_message($object, $include_address = false) {
 
 	$output = implode(' ', $message);
 	return elgg_trigger_plugin_hook('message:format', 'wall', array('entity' => $object), $output);
+}
+
+/**
+ * Prepare wall post attachments
+ *
+ * @param ElggObject $object Wall post
+ * @return string|false
+ */
+function format_wall_attachments($object) {
+
+	$attachments = array();
+
+	if ($object->address) {
+		$attachments[] = elgg_view('output/wall/url', array(
+			'value' => $object->address,
+		));
+	}
+
+	$attachments[] = $object->html;
+
+	$attachments[] = elgg_list_entities_from_relationship(array(
+		'list_type' => 'gallery',
+		'gallery_class' => 'wall-attachments-gallery',
+		'full_view' => false,
+		'limit' => 0,
+		'relationship' => 'attached',
+		'relationship_guid' => $object->guid,
+		'inverse_relationship' => true,
+	));
+
+	return (count($attachments)) ? implode('', $attachments) : false;
+}
+
+/**
+ * Prepare wall river summary
+ *
+ * @param ElggObject $object  Wall or wire post
+ * @return string
+ */
+function format_wall_summary($object) {
+
+	$subject = $object->getOwnerEntity();
+	$wall_owner = $object->getContainerEntity();
+
+	if ($wall_owner->guid == $subject->guid || $wall_owner->guid == elgg_get_page_owner_guid()) {
+		$owned = true;
+	}
+
+	if (elgg_instanceof($wall_owner, 'group')) {
+		$group_wall = true;
+	}
+
+	$summary[] = elgg_view('output/url', array(
+		'text' => $subject->name,
+		'href' => $subject->getURL(),
+		'class' => 'elgg-river-subject',
+	));
+
+	if ($object->address) {
+		$summary[] = elgg_echo('wall:new:address');
+	} else {
+		$files = elgg_get_entities_from_relationship(array(
+			'relationship' => 'attached',
+			'relationship_guid' => $object->guid,
+			'inverse_relationship' => true,
+			'count' => true,
+		));
+		if ($files) {
+			$images = elgg_get_entities_from_relationship(array(
+				'types' => 'object',
+				'subtypes' => 'file',
+				'metadata_name_value_pairs' => array(
+					'name' => 'simpletype', 'value' => 'image',
+				),
+				'relationship' => 'attached',
+				'relationship_guid' => $object->guid,
+				'inverse_relationship' => true,
+				'count' => true,
+			));
+			if ($files == $images) {
+				$summary[] = elgg_echo('wall:new:images', array($images));
+			} else if (!$images) {
+				$summary[] = elgg_echo('wall:new:items', array($files));
+			} else {
+				$summary[] = elgg_echo('wall:new:attachments', array($images, $files - $images));
+			}
+		} else if (!$owned && !$group_wall) {
+			$summary[] = elgg_echo('wall:new:status');
+		}
+	}
+
+	if (!$owned && !$group_wall) {
+		$on = elgg_view('output/url', array(
+			'text' => $wall_owner->name,
+			'href' => $wall_owner->getURL(),
+			'class' => 'elgg-river-object',
+		));
+		$summary[] = elgg_echo('wall:owner:suffix', array($on));
+	}
+
+	return implode(' ', $summary);
 }
 
 /**
@@ -197,11 +293,20 @@ function get_attachments($object, $format = null, $size = 'small') {
 
 /**
  * Extract hashtags from a text
- * @param string $text
+ *
+ * @param string $text Source text
  * @return array
  */
 function get_hashtags($text) {
 	$tags = array();
 	preg_match_all('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', $text, $tags);
 	return $tags[2];
+}
+
+/**
+ * Get an array of wall subtypes
+ * @return array
+ */
+function get_wall_subtypes() {
+	return array_unique(array(WALL_SUBTYPE, 'hjwall'));
 }

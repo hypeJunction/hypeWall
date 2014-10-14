@@ -117,14 +117,6 @@ body {
 }
 
 .wall-post-list {
-	* {
-		@include box-sizing(border-box);
-	}
-	border: none;
-	& > li {
-		border: none;
-		position: relative;
-	}
 }
 
 .wall-post {

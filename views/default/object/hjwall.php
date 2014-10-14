@@ -10,56 +10,13 @@ $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();
 $wall_owner = $entity->getContainerEntity();
 
-$message = format_wall_message($entity);
+$message = elgg_format_message($entity);
+$content = '<div class="wall-message">' . $message . '</div>';
 
-if ($wall_owner->guid !== $poster->guid && $poster->guid !== elgg_get_page_owner_guid() && $wall_owner->guid !== elgg_get_page_owner_guid()) {
-	$by = elgg_view('output/url', array(
-		'text' => $poster->name,
-		'href' => $poster->getURL()
-	));
-	$on = elgg_view('output/url', array(
-		'text' => $wall_owner->name,
-		'href' => $wall_owner->getURL()
-	));
-	$summary = elgg_echo('wall:new:wall:post', array($by, $on));
-} else {
-	$author_link = elgg_view('output/url', array(
-		'text' => $poster->name,
-		'href' => $poster->getURL(),
-	));
-	$message = "$author_link: $message";
-}
-
-
-if ($entity->address) {
-	$att_str = elgg_view('output/wall/url', array(
-		'value' => $entity->address,
-	));
-}
-$att_str .= $entity->html;
-$attachments = elgg_get_entities_from_relationship(array(
-	'relationship' => 'attached',
-	'relationship_guid' => $entity->guid,
-	'inverse_relationship' => true,
-	'limit' => false,
-		));
+$attachments = elgg_format_attachments($entity);
 if ($attachments) {
-	if (count($attachments) > 1) {
-		$att_str .= elgg_view_entity_list($attachments, array(
-			'list_type' => elgg_in_context('widgets') ? 'list' : 'gallery',
-			'full_view' => false,
-			'size' => 'small'
-		));
-	} else {
-		foreach ($attachments as $attachment) {
-			$att_str .= elgg_view('output/wall/attachment', array(
-				'entity' => $attachment
-			));
-		}
-	}
+	$content .= '<div class="wall-attachments">' . $attachments . '</div>';
 }
-
-$att_str = '<div class="wall-attachments">' . $att_str . '</div>';
 
 $menu = elgg_view_menu('entity', array(
 	'entity' => $entity,
@@ -75,20 +32,21 @@ if (elgg_in_context('thewire')) {
 
 if (elgg_in_context('widgets')) {
 	$menu = $metadata = '';
-	$subtitle = elgg_echo('byline', array($poster->name)) . ' ' . elgg_view_friendly_time($entity->time_created);
 }
 
+$content .= $menu;
+
 if (elgg_extract('full_view', $vars, false)) {
-	$comments = elgg_view_comments($entity);
+	$content .= elgg_view_comments($entity);
 }
 
 $params = array(
 	'entity' => $entity,
-	'title' => (!empty($summary)) ? $summary : false,
+	'title' => false,
 	'metadata' => $metadata,
 	'tags' => false,
-	'subtitle' => $subtitle,
-	'content' => $message . $att_str . $menu . $comments,
+	'subtitle' => format_wall_summary($entity),
+	'content' => $content,
 );
 
 $params = $params + $vars;
@@ -99,15 +57,4 @@ $user_icon = elgg_view_entity_icon($poster, 'medium', array(
 	'img_class' => 'wall-poster-avatar'
 		));
 
-if (!elgg_in_context('widgets')) {
-	if (elgg_in_context('wall') && $poster->guid == elgg_get_page_owner_guid()) {
-		echo elgg_view_image_block('', $content, array(
-			'image_alt' => $user_icon,
-			'class' => 'wall-post-alt'
-		));
-	} else {
-		echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
-	}
-} else {
-	echo $content;
-}
+echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));

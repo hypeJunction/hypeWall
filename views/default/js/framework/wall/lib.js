@@ -1,4 +1,4 @@
-define(function(require) {
+define(function (require) {
 
 	var elgg = require('elgg');
 	var $ = require('jquery');
@@ -11,13 +11,13 @@ define(function(require) {
 		 * Bind events to DOM elements
 		 * @returns void
 		 */
-		init: function() {
+		init: function () {
 
 			if (wall.initialized) {
 				return;
 			}
 
-			$('body.wall-state-loading').on('click', function() {
+			$('body.wall-state-loading').on('click', function () {
 				$(this).removeClass('wall-state-loading');
 			});
 
@@ -44,8 +44,8 @@ define(function(require) {
 		 * @param object position
 		 * @returns void
 		 */
-		findMe: function(e) {
-			navigator.geolocation.getCurrentPosition(function(position) {
+		findMe: function (e) {
+			navigator.geolocation.getCurrentPosition(function (position) {
 				if (typeof elgg.session.geopositioning == 'undefined') {
 					elgg.session.geopositioning = {};
 				}
@@ -77,7 +77,7 @@ define(function(require) {
 		/**
 		 * Calculate distance in metres between two geographicsl points
 		 */
-		calculateDistance: function(lat1, lon1, lat2, lon2) {
+		calculateDistance: function (lat1, lon1, lat2, lon2) {
 			var radlat1 = Math.PI * lat1 / 180;
 			var radlat2 = Math.PI * lat2 / 180;
 			var radlon1 = Math.PI * lon1 / 180;
@@ -96,7 +96,7 @@ define(function(require) {
 		 * @param object data
 		 * @returns void
 		 */
-		setGeopositioning: function(data) {
+		setGeopositioning: function (data) {
 			if (typeof elgg.session.geopositioning == 'undefined') {
 				elgg.session.geopositioning = {};
 			}
@@ -106,7 +106,7 @@ define(function(require) {
 			}
 
 			if ($('.wall-location-tokeninput').length) {
-				$('.wall-location-tokeninput').bind('update', function(e) {
+				$('.wall-location-tokeninput').bind('update', function (e) {
 					$(this).tokenInput("add", {
 						label: elgg.session.geopositioning.location,
 						value: elgg.session.geopositioning.location
@@ -122,7 +122,7 @@ define(function(require) {
 		 * @param object e
 		 * @returns void
 		 */
-		switchTab: function(e) {
+		switchTab: function (e) {
 			e.preventDefault();
 			var $tab = $(this);
 			$tab.closest('li').toggleClass('elgg-state-selected').siblings().removeClass('elgg-state-selected');
@@ -135,7 +135,7 @@ define(function(require) {
 		 * @param object e
 		 * @returns void
 		 */
-		parseUrl: function(e) {
+		parseUrl: function (e) {
 
 			var $form = $(this).closest('form');
 			var $url = $form.find('.wall-url');
@@ -164,7 +164,7 @@ define(function(require) {
 		 * @param object e
 		 * @returns void
 		 */
-		loadUrlPreview: function(e) {
+		loadUrlPreview: function (e) {
 			var $elem = $(this);
 			var $form = $elem.closest('form');
 			var $preview = $form.find('.wall-url-preview');
@@ -177,10 +177,10 @@ define(function(require) {
 					data: {
 						value: url
 					},
-					beforeSend: function() {
+					beforeSend: function () {
 						$preview.addClass('elgg-state-loading');
 					},
-					success: function(data) {
+					success: function (data) {
 						$preview.html(data);
 						if (typeof oembed !== 'undefined') {
 							$preview.find('a[title^=oembed]').oembed(null, {
@@ -208,7 +208,7 @@ define(function(require) {
 		 * @param object event
 		 * @returns void
 		 */
-		formSubmit: function(event) {
+		formSubmit: function (event) {
 
 			event.preventDefault();
 			var $form = $(this);
@@ -221,16 +221,16 @@ define(function(require) {
 					river: $form.closest('.wall-container').is('.wall-river'),
 					widget: $form.closest('.elgg-widgets').length
 				},
-				beforeSend: function() {
+				beforeSend: function () {
 					$form.find('[type="submit"]').addClass('elgg-state-disabled').text(elgg.echo('wall:process:posting')).prop('disabled', true);
 					$('body').addClass('wall-state-loading');
 				},
-				success: function(data) {
+				success: function (data) {
 					if (data.status >= 0) {
 
 						$form.resetForm();
 						if ($('.elgg-input-tokeninput', $form).length) {
-							$('.elgg-input-tokeninput', $form).bind('clear', function(e) {
+							$('.elgg-input-tokeninput', $form).bind('clear', function (e) {
 								$(this).tokenInput("clear");
 							}).trigger('clear');
 						}
@@ -239,15 +239,11 @@ define(function(require) {
 						$form.find('.wall-url').trigger('clear');
 						$form.find('textarea:first').trigger('click');
 						if (data.output) {
-							if ($form.closest('.wall-container').is('.wall-river')) {
-								var items = $(data.output).html();
-								$(items).children('li').addClass('wall-item-new').bind('refresh.before', function(e) {
-									$(this).remove();
-								});
-								$('.elgg-list-river').prepend($(items));
-							} else {
-								$('.wall-post-list,.wall-widget-list').prepend($('<li>').addClass('elgg-item').html(data.output));
-							}
+							var items = $(data.output).html();
+							$(items).children('li').addClass('wall-item-new').bind('refresh.before', function (e) {
+								$(this).remove();
+							});
+							$('.elgg-list-river,.wall-post-list').prepend($(items));
 						}
 					}
 					if (data.system_messages) {
@@ -255,10 +251,10 @@ define(function(require) {
 						elgg.system_message(data.system_messages.success);
 					}
 				},
-				error: function() {
+				error: function () {
 					elgg.register_error(elgg.echo('wall:error:ajax'));
 				},
-				complete: function() {
+				complete: function () {
 					$('body').removeClass('wall-state-loading');
 					$form.find('[type="submit"]').removeClass('elgg-state-disabled').text(elgg.echo('wall:post')).prop('disabled', false);
 				}
@@ -269,7 +265,7 @@ define(function(require) {
 		 * @param {object} e
 		 * @returns {void}
 		 */
-		updateCounter: function(e) {
+		updateCounter: function (e) {
 
 			var $textarea = $(this);
 			var limit = $textarea.data('limit');

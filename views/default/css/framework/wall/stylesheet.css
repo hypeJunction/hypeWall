@@ -29,10 +29,6 @@ body.wall-state-loading:before { display: block; width: 50px; height: 50px; posi
 
 .wall-tagged-friends, .wall-tagged-location, .wall-tagged-attachments { font-size: 90%; color: #666; }
 
-.wall-post-list { border: none; }
-.wall-post-list * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-.wall-post-list > li { border: none; position: relative; }
-
 .wall-post { *zoom: 1; padding-top: 10px; }
 .wall-post:before, .wall-post:after { content: " "; display: table; }
 .wall-post:after { clear: both; }

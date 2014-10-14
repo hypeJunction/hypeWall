@@ -32,7 +32,8 @@ $english = array(
 	'wall:view' => 'View wall',
 
 	'wall:empty' => 'This wall is empty',
-	
+	'wall:notfound' => 'The post could not be found',
+
 	'wall:tag:friends' => 'Tag friends',
 	'wall:tag:friends:hint' => 'Tag friends: start search by typing their name',
 	'wall:tag:location:hint' => 'Add a location: search for previously tagged locations or add a new one',
@@ -73,6 +74,13 @@ $english = array(
 	'wall:attached' => ' [%s attachments]',
 	
 	'wall:new:wall:post' => '%s posted on %s\'s wall',
+	'wall:new:address' => 'shared a link',
+	'wall:new:images' => 'posted %s images',
+	'wall:new:items' => 'posted %s items',
+	'wall:new:attachments' => 'posted %s images and %s other items',
+	'wall:new:status' => 'posted',
+	'wall:new:onwall' => 'on %s\'s wall',
+
 	'wall:status' => 'Update status',
 	'wall:url' => 'Share a link',
 	'wall:content' => 'Share content',
