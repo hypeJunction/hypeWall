@@ -6,9 +6,9 @@ namespace hypeJunction\Wall;
  * Listen to the 'publish','object' event and send out notifications
  * to interested users, as well as anyone tagged
  *
- * @param string     $event        Equals 'publish'
- * @param string     $entity_type  Equals 'object'
- * @param ElggEntity $entity       Published entity
+ * @param string     $event       Equals 'publish'
+ * @param string     $entity_type Equals 'object'
+ * @param ElggEntity $entity      Published entity
  * @return boolean
  */
 function send_custom_notifications($event, $entity_type, $entity) {
