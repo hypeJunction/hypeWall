@@ -135,7 +135,8 @@ if ($guid && $wall_post) {
 	}
 
 	// Add 'tagged_in' relationships
-	// If the access level for the post is not set to private, also create a river item with the access level specified in their settings by the tagged user
+	// If the access level for the post is not set to private, also create a river item
+	// with the access level specified in their settings by the tagged user
 	if (count($friend_guids)) {
 		foreach ($friend_guids as $friend_guid) {
 			if (add_entity_relationship($friend_guid, 'tagged_in', $wall_post->guid)) {

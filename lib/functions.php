@@ -8,19 +8,19 @@ use ElggObject;
 /**
  * Callback function for token input search
  *
- * @param string $term
- * @param array $options
+ * @param string $term    Search term
+ * @param array  $options Options
  * @return array
  */
 function search_locations($term, $options = array()) {
 
 	$term = sanitize_string($term);
 
-	$q = str_replace(array('_', '%'), array('\_', '\%'), $term);
+	$query = str_replace(array('_', '%'), array('\_', '\%'), $term);
 
 	$options['metadata_names'] = array('location', 'temp_location');
 	$options['group_by'] = "v.string";
-	$options['wheres'] = array("v.string LIKE '%$q%'");
+	$options['wheres'] = array("v.string LIKE '%$query%'");
 
 	return elgg_get_metadata($options);
 }
@@ -44,9 +44,9 @@ function get_geopositioning() {
  * Set session geopositioning
  * Cache geocode along the way
  * 
- * @param string $location
- * @param float $latitude
- * @param float $longitude
+ * @param string $location  Location
+ * @param float  $latitude  Latitude
+ * @param float  $longitude Longitude
  * @return void
  */
 function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
@@ -73,8 +73,8 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
 /**
  * Get a wall post message suitable for notifications and status updates
  * 
- * @param ElggObject $object    Wall or wire post
- * @param bool $include_address Include URL address in the message body
+ * @param ElggObject $object          Wall or wire post
+ * @param bool       $include_address Include URL address in the message body
  * @return string
  */
 function format_wall_message($object, $include_address = false) {
@@ -145,7 +145,7 @@ function format_wall_attachments($object) {
 /**
  * Prepare wall river summary
  *
- * @param ElggObject $object  Wall or wire post
+ * @param ElggObject $object Wall or wire post
  * @return string
  */
 function format_wall_summary($object) {
@@ -201,12 +201,12 @@ function format_wall_summary($object) {
 	}
 
 	if (!$owned && !$group_wall) {
-		$on = elgg_view('output/url', array(
+		$wall_owner_link = elgg_view('output/url', array(
 			'text' => $wall_owner->name,
 			'href' => $wall_owner->getURL(),
 			'class' => 'elgg-river-object',
 		));
-		$summary[] = elgg_echo('wall:owner:suffix', array($on));
+		$summary[] = elgg_echo('wall:owner:suffix', array($wall_owner_link));
 	}
 
 	return implode(' ', $summary);
@@ -215,9 +215,9 @@ function format_wall_summary($object) {
 /**
  * Get tagged friends
  *
- * @param ElggObject $object
- * @param string $format	links|icons or null for an array of entities
- * @param size $size  Icon size
+ * @param ElggObject $object Wall or wire post
+ * @param string     $format links|icons or null for an array of entities
+ * @param size       $size   Icon size
  * @return string
  */
 function get_tagged_friends($object, $format = null, $size = 'small') {
@@ -255,9 +255,9 @@ function get_tagged_friends($object, $format = null, $size = 'small') {
 /**
  * Get attachments
  *
- * @param ElggObject $object
- * @param string $format	links|icons or null for an array of entities
- * @param size $size  Icon size
+ * @param ElggObject $object Wall or wire post
+ * @param string     $format links|icons or null for an array of entities
+ * @param size       $size   Icon size
  * @return string
  */
 function get_attachments($object, $format = null, $size = 'small') {

@@ -6,9 +6,10 @@ namespace hypeJunction\Wall;
  * Listen to the 'publish','object' event and send out notifications
  * to interested users, as well as anyone tagged
  *
- * @param string $event			Equals 'publish'
- * @param string $entity_type	Equals 'object'
- * @param ElggEntity $entity	Published entity
+ * @param string     $event        Equals 'publish'
+ * @param string     $entity_type  Equals 'object'
+ * @param ElggEntity $entity       Published entity
+ * @return boolean
  */
 function send_custom_notifications($event, $entity_type, $entity) {
 
@@ -30,8 +31,8 @@ function send_custom_notifications($event, $entity_type, $entity) {
 
 	// Notify wall owner
 	if ($poster->guid !== $container->guid && elgg_instanceof($container, 'user')) {
-		$to = $container->guid;
-		$from = $poster->guid;
+		$to_guid = $container->guid;
+		$from_guid = $poster->guid;
 
 		$target = elgg_echo("wall:target:{$entity->getSubtype()}");
 		$ownership = elgg_echo('wall:ownership:your', array($target));
@@ -48,7 +49,7 @@ function send_custom_notifications($event, $entity_type, $entity) {
 			$entity->getURL()
 		));
 
-		notify_user($to, $from, $subject, $body, array(
+		notify_user($to_guid, $from_guid, $subject, $body, array(
 			'summary' => $summary,
 			'object' => $entity,
 			'action' => 'received',
@@ -65,8 +66,8 @@ function send_custom_notifications($event, $entity_type, $entity) {
 
 		$sent[] = $tagged_friend->guid;
 
-		$to = $tagged_friend->guid;
-		$from = $poster->guid;
+		$to_guid = $tagged_friend->guid;
+		$from_guid = $poster->guid;
 		$subject = elgg_echo('wall:tagged:notification:subject', array($poster->name));
 		$summary = elgg_view('output/url', array(
 			'text' => $subject,
@@ -78,7 +79,7 @@ function send_custom_notifications($event, $entity_type, $entity) {
 			$entity->getURL()
 		));
 
-		notify_user($to, $from, $subject, $body, array(
+		notify_user($to_guid, $from_guid, $subject, $body, array(
 			'summary' => $summary,
 			'object' => $entity,
 			'action' => 'tagged',

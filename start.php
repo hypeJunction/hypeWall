@@ -33,6 +33,11 @@ require_once __DIR__ . '/lib/page_handlers.php';
 elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
 elgg_register_event_handler('upgrade', 'system', __NAMESPACE__ . '\\upgrade');
 
+/**
+ * Initialize the plugin
+ *
+ * @return void
+ */
 function init() {
 
 	/**

@@ -22,10 +22,11 @@ $english = array(
 	'wall:settings:content' => 'Share content',
 	'wall:settings:geopositioning' => 'Enable geopositioning',
 	'wall:settings:tag_friends' => 'Enable tagging of friends',
-	'wall:settings:third_party_wall' => 'Allow users to post on walls of other users that are not friends (each user will have to opt in to receive wall posts from non friends)',
-
+	'wall:settings:third_party_wall' => 'Allow users to post on walls of other users that are not friends '
+	. '(each user will have to opt in to receive wall posts from non friends)',
 	'wall:usersettings:river_access_id' => 'Visibility of wall tags',
-	'wall:usersettings:river_access_id:help' => 'Who can see that you were tagged in someone else\'s wall post, if the original post was not shared with them?',
+	'wall:usersettings:river_access_id:help' => 'Who can see that you were tagged in someone else\'s wall post, '
+	. 'if the original post was not shared with them?',
 	'wall:usersettings:third_party_wall' => 'Allow people who are not your friends to post on your wall',
 
 	'wall:write' => 'Post on the wall',
@@ -56,8 +57,8 @@ $english = array(
 
 	'wall:new:notification:generic' => 'New post',
 	'wall:new:notification:summary' => 'New post %s', // New post on X's wall
-	'wall:new:notification:subject' => '%s posted %s',	// X posted on Y's wall
-	'wall:new:notification:message' =>  '
+	'wall:new:notification:subject' => '%s posted %s', // X posted on Y's wall
+	'wall:new:notification:message' => '
 		%s posted %s: <br />
 		<blockquote>
 			%s

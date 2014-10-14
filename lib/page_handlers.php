@@ -8,7 +8,7 @@ namespace hypeJunction\Wall;
  * User wall:	wall/owner/<username>
  * Post:		wall/post/<guid>
  *
- * @param array $page
+ * @param array $page URL segments
  * @return boolean
  */
 function page_handler($page) {
