@@ -1,5 +1,6 @@
 hypeWall
 =========
+[![Build Status](https://travis-ci.org/hypeJunction/hypeWall.svg?branch=master)](https://travis-ci.org/hypeJunction/hypeWall)
 
 Rich user interface for sharing status updates, links and content via user walls.
 
