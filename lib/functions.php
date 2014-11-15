@@ -129,14 +129,8 @@ function format_wall_attachments($object) {
 
 	$attachments[] = $object->html;
 
-	$attachments[] = elgg_list_entities_from_relationship(array(
-		'list_type' => 'gallery',
-		'gallery_class' => 'wall-attachments-gallery',
-		'full_view' => false,
-		'limit' => 0,
-		'relationship' => 'attached',
-		'relationship_guid' => $object->guid,
-		'inverse_relationship' => true,
+	$attachments[] = elgg_view('output/wall/attachments', array(
+		'entitiy' => $object,
 	));
 
 	return (count($attachments)) ? implode('', $attachments) : false;
