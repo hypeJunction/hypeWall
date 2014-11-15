@@ -130,7 +130,7 @@ function format_wall_attachments($object) {
 	$attachments[] = $object->html;
 
 	$attachments[] = elgg_view('output/wall/attachments', array(
-		'entitiy' => $object,
+		'entity' => $object,
 	));
 
 	return (count($attachments)) ? implode('', $attachments) : false;

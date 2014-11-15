@@ -72,3 +72,15 @@ body.wall-state-loading:before { display: block; width: 50px; height: 50px; posi
 .wall-attachments .elgg-gallery > li, .wall-url-preview .elgg-gallery > li { display: inline-block; float: none; padding: 10px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; width: 33%; }
 
 .wall-widget-list > li { padding: 10px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.wall-attachments-gallery { margin: 0; }
+.wall-attachments-gallery > li { width: 100%; float: none; padding: 5px; margin: 0; }
+@media only screen and (min-width: 1280px) { .wall-attachments-gallery.wall-block-grid-2 > li { float: left; width: 50%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+  .wall-attachments-gallery.wall-block-grid-2 > li:nth-of-type(1n) { clear: none; }
+  .wall-attachments-gallery.wall-block-grid-2 > li:nth-of-type(2n+1) { clear: both; } }
+@media only screen and (min-width: 1280px) { .wall-attachments-gallery.wall-block-grid-3 > li { float: left; width: 33.33333%; padding: 5px; margin: 0; }
+  .wall-attachments-gallery.wall-block-grid-3 > li:nth-of-type(1n) { clear: none; }
+  .wall-attachments-gallery.wall-block-grid-3 > li:nth-of-type(3n+1) { clear: both; } }
+@media only screen and (min-width: 1280px) { .wall-attachments-gallery.wall-block-grid-4 > li { float: left; width: 25%; padding: 5px; margin: 0; }
+  .wall-attachments-gallery.wall-block-grid-4 > li:nth-of-type(1n) { clear: none; }
+  .wall-attachments-gallery.wall-block-grid-4 > li:nth-of-type(4n+1) { clear: both; } }
