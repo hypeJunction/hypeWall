@@ -10,7 +10,7 @@ $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();
 $wall_owner = $entity->getContainerEntity();
 
-$message = elgg_format_message($entity);
+$message = format_wall_message($entity);
 $content = '<div class="wall-message">' . $message . '</div>';
 
 $attachments = elgg_format_attachments($entity);
