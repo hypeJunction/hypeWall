@@ -13,7 +13,7 @@ $wall_owner = $entity->getContainerEntity();
 $message = format_wall_message($entity);
 $content = '<div class="wall-message">' . $message . '</div>';
 
-$attachments = elgg_format_attachments($entity);
+$attachments = format_wall_attachments($entity);
 if ($attachments) {
 	$content .= '<div class="wall-attachments">' . $attachments . '</div>';
 }
