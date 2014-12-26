@@ -55,8 +55,8 @@ function init() {
 	 */
 	elgg_extend_view('css/elgg', 'css/framework/wall/stylesheet.css');
 
-	elgg_extend_view('page/layouts/widgets', 'framework/wall/requirejs');
-
+	elgg_extend_view('js/elgg', 'js/framework/wall/elgg.js');
+	
 	// Load fonts
 	elgg_register_css('fonts.font-awesome', '/mod/' . PLUGIN_ID . '/vendors/fonts/font-awesome.css');
 	elgg_register_css('fonts.open-sans', '/mod/' . PLUGIN_ID . '/vendors/fonts/open-sans.css');

@@ -1,8 +1,4 @@
-define(function (require) {
-
-	var elgg = require('elgg');
-	var $ = require('jquery');
-	require('jquery.form');
+define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 
 	var wall = {
 		distanceIncrement: 500, // 500 m

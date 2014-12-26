@@ -31,8 +31,6 @@ elgg_load_css('wall');
 elgg_load_css('fonts.font-awesome');
 elgg_load_css('fonts.open-sans');
 
-elgg_require_js('framework/wall/init');
-
 $user_icon = elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
 	'use_hover' => false,
 	'link_class' => 'wall-poster-icon-block',
