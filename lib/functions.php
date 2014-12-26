@@ -74,40 +74,16 @@ function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
  * Get a wall post message suitable for notifications and status updates
  * 
  * @param ElggObject $object          Wall or wire post
- * @param bool       $include_address Include URL address in the message body
+ * @param bool       $include_address Include attached URL address in the message body
  * @return string
  */
 function format_wall_message($object, $include_address = false) {
 
-	$status = $object->description;
-	$status = elgg_trigger_plugin_hook('link:qualifiers', 'wall', array('source' => $status), $status);
-
-	$message = array(0 => $status);
-
-	$tagged_friends = get_tagged_friends($object, 'links');
-	if ($tagged_friends) {
-		$message[2] = '<span class="wall-tagged-friends">' . elgg_echo('wall:with', array(implode(', ', $tagged_friends))) . '</span>';
-	}
-
-	$location = $object->getLocation();
-	if ($location) {
-		$location = elgg_view('output/wall/location', array('value' => $location));
-		$message[3] = '<span class="wall-tagged-location">' . elgg_echo('wall:at', array($location)) . '</span>';
-	}
-
-	if (!$status || $include_address) {
-		$address = $object->address;
-		if ($address && (strpos($status, $address) === false)) {
-			$message[1] = elgg_view('output/url', array(
-				'href' => $address,
-				'class' => 'wall-attached-url',
-			));
-		}
-	}
-
-	ksort($message);
-
-	$output = implode(' ', $message);
+	$output = elgg_view('object/hjwall/elements/message', array(
+		'entity' => $object,
+		'include_address' => $include_address,
+	));
+	
 	return elgg_trigger_plugin_hook('message:format', 'wall', array('entity' => $object), $output);
 }
 
