@@ -4,8 +4,8 @@ require(['jquery', 'elgg'], function ($) {
 			wall.init();
 		});
 	}
-	$(document).ajaxSuccess(function (data) {
-		if ($(data).has('.wall-container')) {
+	$(document).ajaxSuccess(function (event, response, settings) {
+		if ($(response.responseText).has('.wall-container')) {
 			require(['framework/wall/lib'], function (wall) {
 				wall.init();
 			});
