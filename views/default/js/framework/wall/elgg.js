@@ -5,7 +5,13 @@ require(['jquery', 'elgg'], function ($) {
 		});
 	}
 	$(document).ajaxSuccess(function (event, response, settings) {
-		if ($(response.responseText).has('.wall-container')) {
+		var data = '';
+		if (settings.dataType === 'json') {
+			data = $.parseJSON(response.responseText);
+		} else if (settings.dataType === 'html') {
+			data = response.resopnseText;
+		}
+		if ($(data).has('.wall-container')) {
 			require(['framework/wall/lib'], function (wall) {
 				wall.init();
 			});
