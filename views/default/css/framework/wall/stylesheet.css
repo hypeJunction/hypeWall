@@ -1,9 +1,7 @@
-body.wall-state-loading:before { display: block; width: 50px; height: 50px; position: fixed; top: 50%; left: 0; right: 0; margin: -25px auto 0; z-index: 10000; content: "\f110"; color: #0054a7; font-size: 50px; line-height: 50px; -webkit-animation: spin 2s infinite linear; -moz-animation: spin 2s infinite linear; -o-animation: spin 2s infinite linear; animation: spin 2s infinite linear; display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
 .elgg-menu-wall-filter { text-align: right; margin: 10px; }
 .elgg-menu-wall-filter > li { display: inline-block; }
 .elgg-menu-wall-filter > li a { font-size: 20px; -moz-border-radius: 1000px; -webkit-border-radius: 1000px; border-radius: 1000px; margin: 4px; color: #cccccc; }
-.elgg-menu-wall-filter > li.elgg-state-selected a, .elgg-menu-wall-filter > li a:hover { color: #0054a7; }
+.elgg-menu-wall-filter > li.elgg-state-selected a, .elgg-menu-wall-filter > li a:hover { color: #4690d6; }
 
 .wall-icon { display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 .wall-icon.wall-icon-photo:before { content: "\f030"; }
@@ -75,12 +73,12 @@ body.wall-state-loading:before { display: block; width: 50px; height: 50px; posi
 
 .wall-attachments-gallery { margin: 0; }
 .wall-attachments-gallery > li { width: 100%; float: none; padding: 5px; margin: 0; }
-@media only screen and (min-width: 1280px) { .wall-attachments-gallery.wall-block-grid-2 > li { float: left; width: 50%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+@media only screen and (min-width: 40.063em) { .wall-attachments-gallery.wall-block-grid-2 > li { float: left; width: 50%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
   .wall-attachments-gallery.wall-block-grid-2 > li:nth-of-type(1n) { clear: none; }
   .wall-attachments-gallery.wall-block-grid-2 > li:nth-of-type(2n+1) { clear: both; } }
-@media only screen and (min-width: 1280px) { .wall-attachments-gallery.wall-block-grid-3 > li { float: left; width: 33.33333%; padding: 5px; margin: 0; }
+@media only screen and (min-width: 40.063em) { .wall-attachments-gallery.wall-block-grid-3 > li { float: left; width: 33.33333%; padding: 5px; margin: 0; }
   .wall-attachments-gallery.wall-block-grid-3 > li:nth-of-type(1n) { clear: none; }
   .wall-attachments-gallery.wall-block-grid-3 > li:nth-of-type(3n+1) { clear: both; } }
-@media only screen and (min-width: 1280px) { .wall-attachments-gallery.wall-block-grid-4 > li { float: left; width: 25%; padding: 5px; margin: 0; }
+@media only screen and (min-width: 40.063em) { .wall-attachments-gallery.wall-block-grid-4 > li { float: left; width: 25%; padding: 5px; margin: 0; }
   .wall-attachments-gallery.wall-block-grid-4 > li:nth-of-type(1n) { clear: none; }
   .wall-attachments-gallery.wall-block-grid-4 > li:nth-of-type(4n+1) { clear: both; } }
