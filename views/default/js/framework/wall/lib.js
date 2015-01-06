@@ -9,7 +9,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 		 */
 		init: function () {
 
-			if (wall.initialized) {
+			if (elgg.config.wall) {
 				return;
 			}
 
@@ -26,7 +26,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 			$(document).on('blur.wall focusout.wall preview.wall clear.wall', wall.loadUrlPreview);
 			$(document).on('submit.wall', '.wall-form', wall.formSubmit);
 
-			wall.initialized = true;
+			elgg.config.wall = true;
 		},
 		/**
 		 * If the geopositioning of the session is not set, try to obtain it
