@@ -1,5 +1,5 @@
 @import "compass/css3"; // compass css3 helpers
-@import "../../../../../sass/global/variables";
+@import "../../../../../../sass/global/variables";
 @import "variables";
 
 .elgg-menu-wall-filter {
@@ -83,19 +83,16 @@
 			float: right;
 		}
 		.wall-bar-controls {
-			text-align: right;
-			margin: 10px;
 			& > li {
 				display: inline-block;
-				vertical-align: top;
-				margin: 0 5px;
-				select {
-					margin: auto;
-					line-height: 20px;
+				&:after {
+					content: "|";
+					color: $lighter-border-color;
+					display: inline-block;
+					padding: 0 5px;
 				}
-				label {
-					line-height: 20px;
-					font-weight: normal;
+				&:last-child:after {
+					display: none;
 				}
 			}
 		}

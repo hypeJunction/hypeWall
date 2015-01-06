@@ -17,23 +17,40 @@ $url = elgg_view('input/wall/url', array(
 	'placeholder' => elgg_echo('wall:url:placeholder'),
 		));
 
-$access = elgg_view('input/access', array(
-	'class' => 'wall-access',
-	'name' => 'access_id'
-		));
+$footer_controls = array();
 
 if (elgg_is_active_plugin('bookmarks')) {
-	$bookmark = '<label>' . elgg_view('input/checkbox', array(
+	$footer_controls['bookmark'] = '<label>' . elgg_view('input/checkbox', array(
 				'checked' => true,
 				'name' => 'make_bookmark',
 				'value' => 1
 			)) . elgg_echo('wall:make_bookmark') . '</label>';
 }
 
-$button = elgg_view('input/submit', array(
+$footer_controls['access'] = elgg_view('input/access', array(
+	'class' => 'wall-access',
+	'name' => 'access_id'
+		));
+
+$footer_controls['submit'] = elgg_view('input/submit', array(
 	'value' => elgg_echo('wall:post'),
 	'class' => 'elgg-button elgg-button-submit',
 		));
+
+$controls = '';
+foreach ($footer_controls as $name => $footer_control) {
+	$controls .= elgg_format_element('li', array(
+		'class' => "wall-bar-control-$name",
+			), $footer_control);
+}
+
+$footer .= elgg_format_element('ul', array(
+	'class' => 'wall-bar-controls',
+		), $controls);
+
+$footer = elgg_format_element('fieldset', array(
+	'class' => 'elgg-foot text-right',
+		), $footer);
 
 $hidden .= elgg_view('input/hidden', array(
 	'name' => 'origin',
@@ -51,13 +68,7 @@ $html = <<<HTML
 		<div class="wall-input-url">$url</div>
 		<div class="wall-url-preview"></div>
 	</fieldset>
-	<fieldset class="elgg-foot">
-		<ul class="wall-bar-controls">
-			<li>$bookmark</li>
-			<li>$access</li>
-			<li>$button</li>
-		</ul>
-	</fieldset>
+	$footer
 	$hidden
 HTML;
 
