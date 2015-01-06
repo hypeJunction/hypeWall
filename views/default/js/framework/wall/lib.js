@@ -13,20 +13,18 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 				return;
 			}
 
-			$('body.wall-state-loading').on('click', function () {
-				$(this).removeClass('wall-state-loading');
-			});
-
-			if (typeof navigator == 'undefined') {
+			if (typeof navigator === 'undefined') {
 				$('.wall-find-me').hide();
 			}
 
-			$('.wall-find-me').on('click', wall.findMe);
-			$('.wall-tab').on('click', wall.switchTab);
-			$('textarea[data-limit]').on('keyup keydown', wall.updateCounter);
-			$('.wall-input-status').on('keyup', wall.parseUrl);
-			$('.wall-url').on('blur focusout preview clear', wall.loadUrlPreview);
-			$('.wall-form').removeAttr('onsubmit').on('submit', wall.formSubmit);
+			$('.wall-form').removeAttr('onsubmit')
+
+			$(document).on('click.wall', '.wall-find-me', wall.findMe);
+			$(document).on('click.wall', '.wall-tab', wall.switchTab);
+			$(document).on('keyup.wall keydown.wall', 'textarea[data-limit]', wall.updateCounter);
+			$(document).on('keyup.wall', '.wall-input-status', wall.parseUrl);
+			$(document).on('blur.wall focusout.wall preview.wall clear.wall', wall.loadUrlPreview);
+			$(document).on('submit.wall', '.wall-form', wall.formSubmit);
 
 			wall.initialized = true;
 		},
@@ -42,7 +40,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 		 */
 		findMe: function (e) {
 			navigator.geolocation.getCurrentPosition(function (position) {
-				if (typeof elgg.session.geopositioning == 'undefined') {
+				if (typeof elgg.session.geopositioning === 'undefined') {
 					elgg.session.geopositioning = {};
 				}
 
@@ -93,7 +91,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 		 * @returns void
 		 */
 		setGeopositioning: function (data) {
-			if (typeof elgg.session.geopositioning == 'undefined') {
+			if (typeof elgg.session.geopositioning === 'undefined') {
 				elgg.session.geopositioning = {};
 			}
 
@@ -226,7 +224,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 				},
 				beforeSend: function () {
 					$form.find('[type="submit"]').addClass('elgg-state-disabled').text(elgg.echo('wall:process:posting')).prop('disabled', true);
-					$('body').addClass('wall-state-loading');
+					$('body').addClass('elgg-state-loading');
 				},
 				success: function (data) {
 					if (data.status >= 0) {
@@ -254,7 +252,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 					elgg.register_error(elgg.echo('wall:error:ajax'));
 				},
 				complete: function () {
-					$('body').removeClass('wall-state-loading');
+					$('body').removeClass('elgg-state-loading');
 					$form.find('[type="submit"]').removeClass('elgg-state-disabled').text(elgg.echo('wall:post')).prop('disabled', false);
 				}
 			});
