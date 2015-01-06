@@ -29,6 +29,10 @@
 	</suggests>
 	<suggests>
 		<type>plugin</type>
+		<name>hypeLists</name>
+	</suggests>
+	<suggests>
+		<type>plugin</type>
 		<name>elgg_tokeninput</name>
 		<version>3.0.0</version>
 	</suggests>

@@ -206,8 +206,15 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 		 */
 		formSubmit: function (event) {
 
+			if (!require.defined('hypeList')) {
+				return true;
+			}
+
 			event.preventDefault();
+			require('hypeList');
+			
 			var $form = $(this);
+			
 			$form.ajaxSubmit({
 				iframe: $form.is('[enctype^="multipart"]'),
 				dataType: 'json',
@@ -235,11 +242,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 						$form.find('.wall-url').trigger('clear');
 						$form.find('textarea:first').trigger('click');
 						if (data.output) {
-							var items = $(data.output).html();
-							$(items).children('li').addClass('wall-item-new').bind('refresh.before', function (e) {
-								$(this).remove();
-							});
-							$('.elgg-list-river,.wall-post-list').prepend($(items));
+							$('.elgg-list-river,.wall-post-list').hypeList('fetchNewItems', null, true);
 						}
 					}
 					if (data.system_messages) {
