@@ -15,6 +15,7 @@ $content = elgg_list_river(array(
 	'types' => 'object',
 	'subtypes' => get_wall_subtypes(),
 	'object_guids' => ($post) ? $post->guid : ELGG_ENTITIES_ANY_VALUE,
+	'action_types' => array('create'),
 	'joins' => array(
 		"LEFT JOIN {$dbprefix}entity_relationships er ON er.guid_two = rv.object_guid",
 	),
