@@ -83,6 +83,7 @@
 			float: right;
 		}
 		.wall-bar-controls {
+			text-align: right;
 			& > li {
 				display: inline-block;
 				&:after {
@@ -93,6 +94,13 @@
 				}
 				&:last-child:after {
 					display: none;
+				}
+				.wall-access {
+					float: none;
+					margin: 0;
+				}
+				label {
+					font-size: 90%;
 				}
 			}
 		}
