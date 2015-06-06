@@ -1,10 +1,11 @@
 hypeWall
 =========
-[![Build Status](https://travis-ci.org/hypeJunction/hypeWall.svg?branch=master)](https://travis-ci.org/hypeJunction/hypeWall)
+![Elgg 1.8](https://img.shields.io/badge/Elgg-1.8.x-orange.svg?style=flat-square)
+![Elgg 1.9](https://img.shields.io/badge/Elgg-1.9.x-orange.svg?style=flat-square)
+![Elgg 1.10](https://img.shields.io/badge/Elgg-1.10.x-orange.svg?style=flat-square)
+![Elgg 1.11](https://img.shields.io/badge/Elgg-1.11.x-orange.svg?style=flat-square)
 
 Rich user interface for sharing status updates, links and content via user walls.
-
-[Help me maintain my hardware!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P7QA9CFMENBKA)
 
 ## Features
 
@@ -13,13 +14,6 @@ Rich user interface for sharing status updates, links and content via user walls
 - Inline multi-file upload
 - Friend tagging
 - Content attachments
-
-## Versioning
-
-- Use 2.3.x for Elgg 1.9
-- Use 2.2.x for Elgg 1.8
-
-Master branch is 1.9-compatible
 
 
 ## Acknowledgements / Credits
@@ -33,10 +27,8 @@ http://fontawesome.io/
 
 ## Dependencies
 
-* For best results, install hypeEmbed, hypeScraper and ECML
-https://github.com/hypeJunction/hypeEmbed
+* For URL previews and cards, install
 https://github.com/hypeJunction/hypeScraper
-https://github.com/Elgg/ecml
 
 * For drag&drop uploads, install elgg_dropzone
 https://github.com/hypeJunction/elgg_dropzone

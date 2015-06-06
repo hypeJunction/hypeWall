@@ -4,8 +4,6 @@
  * Displays status and upload forms
  */
 
-namespace hypeJunction\Wall;
-
 if (!elgg_is_logged_in()) {
 	return;
 }
@@ -20,16 +18,13 @@ $page_owner = elgg_get_page_owner_entity();
 if ($page_owner->guid !== $user->guid) {
 	$subtype = 'hjwall';
 } else {
-	$subtype = WALL_SUBTYPE;
+	$subtype = hypeWall()->config->getPostSubtype();
 }
+
 // Make sure user can write to container before displaying the form
 if (elgg_instanceof($page_owner) && !$page_owner->canWriteToContainer($user->guid, 'object', $subtype)) {
 	return;
 }
-
-elgg_load_css('wall');
-elgg_load_css('fonts.font-awesome');
-elgg_load_css('fonts.open-sans');
 
 $user_icon = elgg_view_entity_icon($user, elgg_extract('size', $vars, 'medium'), array(
 	'use_hover' => false,
@@ -45,12 +40,12 @@ if ($page_owner && $page_owner->guid !== $user->guid) {
 	));
 }
 
-$default = elgg_get_plugin_setting('default_form', PLUGIN_ID);
+$default = hypeWall()->config->get('default_form');
 if (!$default) {
 	$default = 'status';
 }
 
-if (elgg_get_plugin_setting('status', PLUGIN_ID)) {
+if (hypeWall()->config->get('status')) {
 	elgg_register_menu_item('wall-filter', array(
 		'name' => 'status',
 		'text' => '<i class="wall-icon wall-icon-status"></i>',
@@ -70,7 +65,7 @@ if (elgg_get_plugin_setting('status', PLUGIN_ID)) {
 			), $vars);
 }
 
-if (elgg_get_plugin_setting('url', PLUGIN_ID)) {
+if (hypeWall()->config->get('url')) {
 	elgg_register_menu_item('wall-filter', array(
 		'name' => 'url',
 		'text' => '<i class="wall-icon wall-icon-url"></i>',
@@ -90,7 +85,7 @@ if (elgg_get_plugin_setting('url', PLUGIN_ID)) {
 			), $vars);
 }
 
-if (elgg_get_plugin_setting('photo', PLUGIN_ID)) {
+if (hypeWall()->config->get('photo')) {
 	elgg_register_menu_item('wall-filter', array(
 		'name' => 'photo',
 		'text' => '<i class="wall-icon wall-icon-photo"></i>',
@@ -127,7 +122,7 @@ if (elgg_get_plugin_setting('photo', PLUGIN_ID)) {
 //			), $vars);
 //}
 
-if (elgg_get_plugin_setting('content', PLUGIN_ID) && elgg_is_active_plugin('elgg_tokeninput')) {
+if (hypeWall()->config->get('content') && elgg_is_active_plugin('elgg_tokeninput')) {
 	elgg_register_menu_item('wall-filter', array(
 		'name' => 'content',
 		'text' => '<i class="wall-icon wall-icon-content"></i>',

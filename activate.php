@@ -1,24 +1,13 @@
 <?php
 
-namespace hypeJunction\Wall;
+require_once __DIR__ . '/lib/autoloader.php';
 
-$plugin_id = basename(__DIR__);
-
-$settings = array(
-	'model' => 'hjwall',
-	'status' => true,
-	'url' => true,
-	'photo' => true,
-	'content' => true,
-	'default_form' => 'status',
-	'geopositioning' => true,
-	'tag_friends' => true,
-	'third_party_wall' => false,
-	'status_input_type' => 'plaintext',
+$subtypes = array(
+	hypeJunction\Wall\Post::SUBTYPE => hypeJunction\Wall\Post::CLASSNAME
 );
 
-foreach ($settings as $name => $default_value) {
-	if (is_null(elgg_get_plugin_setting($name, $plugin_id))) {
-		elgg_set_plugin_setting($name, $default_value, $plugin_id);
+foreach ($subtypes as $subtype => $class) {
+	if (!update_subtype('object', $subtype, $class)) {
+		add_subtype('object', $subtype, $class);
 	}
 }

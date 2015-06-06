@@ -3,7 +3,7 @@
 
 	<name>hypeWall</name>
 	<id>hypeWall</id>
-	<version>3.2.3</version>
+	<version>4.0.0</version>
 
 	<description>User walls</description>
 	<category>content</category>
@@ -16,12 +16,12 @@
 
 	<requires>
 		<type>elgg_release</type>
-		<version>1.9</version>
+		<version>1.8</version>
 	</requires>
 
 	<requires>
 		<type>plugin</type>
-		<name>hypeFilestore</name>
+		<name>hypeApps</name>
 	</requires>
 	<suggests>
 		<type>plugin</type>
@@ -29,17 +29,12 @@
 	</suggests>
 	<suggests>
 		<type>plugin</type>
-		<name>hypeLists</name>
-	</suggests>
-	<suggests>
-		<type>plugin</type>
 		<name>elgg_tokeninput</name>
-		<version>3.0.0</version>
 	</suggests>
 	<suggests>
 		<type>plugin</type>
-		<name>elgg_dropzone</name>
-		<version>3.0.0</version>
+		<name>hypeDropzone</name>
+		<version>4.0.0</version>
 	</suggests>
 	
 </plugin_manifest>

@@ -2,9 +2,6 @@
 
 namespace hypeJunction\Wall;
 
-use ElggBatch;
-use ElggObject;
-
 /**
  * Callback function for token input search
  *
@@ -25,240 +22,103 @@ function search_locations($term, $options = array()) {
 	return elgg_get_metadata($options);
 }
 
+
 /**
  * Get coordinates and location name of the current session
  * @return array
  */
 function get_geopositioning() {
-	if (isset($_SESSION['geopositioning'])) {
-		return $_SESSION['geopositioning'];
-	}
-	return array(
-		'location' => '',
-		'latitude' => 0,
-		'longitude' => 0
-	);
+	return hypeWall()->geo->get();
 }
 
 /**
  * Set session geopositioning
  * Cache geocode along the way
- * 
- * @param string $location  Location
- * @param float  $latitude  Latitude
- * @param float  $longitude Longitude
+ *
+ * @param string $location
+ * @param float $latitude
+ * @param float $longitude
  * @return void
  */
 function set_geopositioning($location = '', $latitude = 0, $longitude = 0) {
-
-	$location = sanitize_string($location);
-	$lat = (float) $latitude;
-	$long = (float) $longitude;
-
-	if (!$lat || !$long) {
-		$latlong = elgg_trigger_plugin_hook('geocode', 'location', array('location' => $location));
-		if ($latlong) {
-			$lat = elgg_extract('lat', $latlong);
-			$long = elgg_extract('long', $latlong);
-		}
-	}
-
-	$_SESSION['geopositioning'] = array(
-		'location' => $location,
-		'latitude' => $lat,
-		'longitude' => $long
-	);
+	hypeWall()->geo->set($location, $latitude, $longitude);
 }
 
 /**
  * Get a wall post message suitable for notifications and status updates
  * 
- * @param ElggObject $object          Wall or wire post
- * @param bool       $include_address Include attached URL address in the message body
+ * @param \ElggObject $object          Wall or wire post
+ * @param bool        $include_address Include attached URL address in the message body
  * @return string
  */
 function format_wall_message($object, $include_address = false) {
-
-	$output = elgg_view('object/hjwall/elements/message', array(
-		'entity' => $object,
-		'include_address' => $include_address,
-	));
-	
-	return elgg_trigger_plugin_hook('message:format', 'wall', array('entity' => $object), $output);
+	if ($object instanceof Post) {
+		return $object->formatMessage($include_address);
+	}
+	return $object->description;
 }
 
 /**
  * Prepare wall post attachments
  *
- * @param ElggObject $object Wall post
+ * @param \ElggObject $object Wall post
  * @return string|false
  */
 function format_wall_attachments($object) {
 
-	$attachments = array();
-
-	if ($object->address) {
-		$attachments[] = elgg_view('output/wall/url', array(
-			'value' => $object->address,
-		));
+	if ($object instanceof Post) {
+		return $object->formatAttachments();
 	}
-
-	$attachments[] = $object->html;
-
-	$attachments[] = elgg_view('output/wall/attachments', array(
-		'entity' => $object,
-	));
-
-	return (count($attachments)) ? implode('', $attachments) : false;
+	return '';
 }
 
 /**
  * Prepare wall river summary
  *
- * @param ElggObject $object Wall or wire post
+ * @param \ElggObject $object Wall or wire post
  * @return string
  */
 function format_wall_summary($object) {
 
-	$subject = $object->getOwnerEntity();
-	$wall_owner = $object->getContainerEntity();
-
-	if ($wall_owner->guid == $subject->guid || $wall_owner->guid == elgg_get_page_owner_guid()) {
-		$owned = true;
+	if ($object instanceof Post) {
+		return $object->formatSummary();
 	}
 
-	if (elgg_instanceof($wall_owner, 'group')) {
-		$group_wall = true;
-	}
-
-	$summary[] = elgg_view('output/url', array(
-		'text' => $subject->name,
-		'href' => $subject->getURL(),
-		'class' => 'elgg-river-subject',
-	));
-
-	if ($object->address) {
-		$summary[] = elgg_echo('wall:new:address');
-	} else {
-		$files = elgg_get_entities_from_relationship(array(
-			'relationship' => 'attached',
-			'relationship_guid' => $object->guid,
-			'inverse_relationship' => true,
-			'count' => true,
-		));
-		if ($files) {
-			$images = elgg_get_entities_from_relationship(array(
-				'types' => 'object',
-				'subtypes' => 'file',
-				'metadata_name_value_pairs' => array(
-					'name' => 'simpletype', 'value' => 'image',
-				),
-				'relationship' => 'attached',
-				'relationship_guid' => $object->guid,
-				'inverse_relationship' => true,
-				'count' => true,
-			));
-			if ($files == $images) {
-				$summary[] = elgg_echo('wall:new:images', array($images));
-			} else if (!$images) {
-				$summary[] = elgg_echo('wall:new:items', array($files));
-			} else {
-				$summary[] = elgg_echo('wall:new:attachments', array($images, $files - $images));
-			}
-		} else if (!$owned && !$group_wall) {
-			$summary[] = elgg_echo('wall:new:status');
-		}
-	}
-
-	if (!$owned && !$group_wall) {
-		$wall_owner_link = elgg_view('output/url', array(
-			'text' => $wall_owner->name,
-			'href' => $wall_owner->getURL(),
-			'class' => 'elgg-river-object',
-		));
-		$summary[] = elgg_echo('wall:owner:suffix', array($wall_owner_link));
-	}
-
-	return implode(' ', $summary);
+	return '';
 }
 
 /**
  * Get tagged friends
  *
- * @param ElggObject $object Wall or wire post
- * @param string     $format links|icons or null for an array of entities
- * @param size       $size   Icon size
+ * @param \ElggObject $object Wall or wire post
+ * @param string      $format links|icons or null for an array of entities
+ * @param size        $size   Icon size
  * @return string
  */
 function get_tagged_friends($object, $format = null, $size = 'small') {
 
-	$tagged_friends = array();
-
-	$tags = new ElggBatch('elgg_get_entities_from_relationship', array(
-		'types' => 'user',
-		'relationship' => 'tagged_in',
-		'relationship_guid' => $object->guid,
-		'inverse_relationship' => true,
-		'limit' => false
-	));
-
-	foreach ($tags as $tag) {
-		if ($format == 'links') {
-			$tagged_friends[] = elgg_view('output/url', array(
-				'text' => (isset($tag->name)) ? $tag->name : $tag->title,
-				'href' => $tag->getURL(),
-				'is_trusted' => true
-			));
-		} else if ($format == 'icons') {
-			$tagged_friends[] = elgg_view_entity_icon($tag, $size, array(
-				'class' => 'wall-post-tag-icon',
-				'use_hover' => false
-			));
-		} else {
-			$tagged_friends[] = $tag;
-		}
+	if ($object instanceof Post) {
+		return $object->getTaggedFriends($format, $size);
 	}
 
-	return $tagged_friends;
+	return '';
 }
 
 /**
  * Get attachments
  *
- * @param ElggObject $object Wall or wire post
- * @param string     $format links|icons or null for an array of entities
- * @param size       $size   Icon size
+ * @param \ElggObject $object Wall or wire post
+ * @param string      $format links|icons or null for an array of entities
+ * @param size        $size   Icon size
  * @return string
  */
 function get_attachments($object, $format = null, $size = 'small') {
 
-	$attachment_tags = array();
-
-	$attachments = new ElggBatch('elgg_get_entities_from_relationship', array(
-		'relationship' => 'attached',
-		'relationship_guid' => $object->guid,
-		'inverse_relationship' => true,
-		'limit' => false
-	));
-
-	foreach ($attachments as $attachment) {
-		if ($format == 'links') {
-			$attachment_tags[] = elgg_view('output/url', array(
-				'text' => (isset($attachment->name)) ? $attachment->name : $attachment->title,
-				'href' => $attachment->getURL(),
-				'is_trusted' => true
-			));
-		} else if ($format == 'icons') {
-			$attachment_tags[] = elgg_view_entity_icon($attachment, $size, array(
-				'class' => 'wall-post-tag-icon',
-				'use_hover' => false
-			));
-		} else {
-			$attachment_tags[] = $attachment;
-		}
+	if ($object instanceof Post) {
+		return $object->getAttachments($format, $size);
 	}
 
-	return $attachment_tags;
+	return '';
 }
 
 /**
@@ -278,5 +138,5 @@ function get_hashtags($text) {
  * @return array
  */
 function get_wall_subtypes() {
-	return array_unique(array(WALL_SUBTYPE, 'hjwall'));
+	return array_unique(array(hypeWall()->config->getPostSubtype(), 'hjwall'));
 }

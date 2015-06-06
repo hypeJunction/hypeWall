@@ -4,8 +4,6 @@
  * Form that allows users to update their status
  */
 
-namespace hypeJunction\Wall;
-
 $status = elgg_view('input/wall/status', array(
 	'name' => 'status',
 	'class' => 'wall-input-status',

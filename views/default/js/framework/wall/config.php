@@ -1,11 +1,13 @@
 <?php
-
 /**
  * Add session geopositioning data to the config
  */
-namespace hypeJunction\Wall;
-
-if (!WALL_GEOPOSITIONING) {
-	$geopositioning = get_geopositioning();
-	echo 'elgg.session.geopositioning = ' . json_encode($geopositioning) . ';';
+if (!hypeWall()->config->get('geopositioning')) {
+	return;
 }
+
+$geopositioning = json_encode(hypeWall()->geo->get());
+?>
+
+//<script>
+	elgg.session.geopositioning = <?php echo $geopositioning ?>;
