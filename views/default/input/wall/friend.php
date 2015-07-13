@@ -1,8 +1,6 @@
 <?php
 
-namespace hypeJunction\Wall;
-
-if (!elgg_view_exists('input/tokeninput')) {
+if (!elgg_view_exists('input/tokeninput') || !hypeWall()->config->get('tag_friends')) {
 	return;
 }
 

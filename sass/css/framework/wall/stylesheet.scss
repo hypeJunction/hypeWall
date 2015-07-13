@@ -44,7 +44,6 @@
 
 
 .wall-container {
-	font-family: 'Open Sans', 'sans-serif';
 	* {
 		@include box-sizing(border-box);
 	}
@@ -65,7 +64,6 @@
 		}
 		label {
 			font-weight: normal;
-			font-family: "Open Sans", "sans-serif";
 			display: inline-block;
 			margin-bottom: 7px;
 			float: left;
@@ -84,6 +82,7 @@
 		}
 		.wall-bar-controls {
 			text-align: right;
+			margin: 0;
 			& > li {
 				display: inline-block;
 				&:after {
@@ -97,10 +96,13 @@
 				}
 				.wall-access {
 					float: none;
-					margin: 0;
+					width: auto;
 				}
 				label {
 					font-size: 90%;
+				}
+				input, select {
+					margin: 0;
 				}
 			}
 		}
