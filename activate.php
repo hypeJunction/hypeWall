@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/lib/autoloader.php';
+require_once __DIR__ . '/autoloader.php';
 
 $subtypes = array(
 	hypeJunction\Wall\Post::SUBTYPE => hypeJunction\Wall\Post::CLASSNAME

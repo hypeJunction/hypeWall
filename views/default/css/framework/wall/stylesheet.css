@@ -1,25 +1,24 @@
-@charset "UTF-8";
 .elgg-menu-wall-filter { text-align: right; margin: 10px; }
 .elgg-menu-wall-filter > li { display: inline-block; }
-.elgg-menu-wall-filter > li a { font-size: 20px; -moz-border-radius: 1000px; -webkit-border-radius: 1000px; border-radius: 1000px; margin: 4px; color: #c3c3c3; }
+.elgg-menu-wall-filter > li a { font-size: 20px; -webkit-border-radius: 1000px; -moz-border-radius: 1000px; -ms-border-radius: 1000px; -o-border-radius: 1000px; border-radius: 1000px; margin: 4px; color: #c3c3c3; }
 .elgg-menu-wall-filter > li.elgg-state-selected a, .elgg-menu-wall-filter > li a:hover { color: #306eb4; }
 
 .wall-icon { display: inline-block; font-family: 'ambercal'; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-.wall-icon.wall-icon-photo:before { content: ""; }
-.wall-icon.wall-icon-status:before { content: ""; }
-.wall-icon.wall-icon-url:before { content: ""; }
-.wall-icon.wall-icon-file:before { content: ""; }
-.wall-icon.wall-icon-content:before { content: ""; }
-.wall-icon.wall-icon-find-me:before { content: ""; }
+.wall-icon.wall-icon-photo:before { content: "\f030"; }
+.wall-icon.wall-icon-status:before { content: "\f040"; }
+.wall-icon.wall-icon-url:before { content: "\f0c1"; }
+.wall-icon.wall-icon-file:before { content: "\f0ee"; }
+.wall-icon.wall-icon-content:before { content: "\f0ea"; }
+.wall-icon.wall-icon-find-me:before { content: "\f05b"; }
 
 .wall-container { position: relative; margin: 10px; }
-.wall-container * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-.wall-container form { padding: 0; background: transparent; -moz-transition: all 1s; -o-transition: all 1s; -webkit-transition: all 1s; transition: all 1s; }
+.wall-container * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.wall-container form { padding: 0; background: transparent; -webkit-transition: all 1s; -moz-transition: all 1s; -o-transition: all 1s; transition: all 1s; }
 .wall-container form fieldset { margin: 0; padding: 0; border: 0; }
 .wall-container form fieldset > div { margin-bottom: 10px; }
 .wall-container form label { font-weight: normal; display: inline-block; margin-bottom: 7px; float: left; }
-.wall-container form textarea { height: 75px; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; padding: 8px; margin-bottom: 10px; }
-.wall-container form input[type="text"] { -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
+.wall-container form textarea { height: 75px; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; padding: 8px; margin-bottom: 10px; }
+.wall-container form input[type="text"] { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; }
 .wall-container form .wall-find-me { float: right; }
 .wall-container form .wall-bar-controls { text-align: right; margin: 0; }
 .wall-container form .wall-bar-controls > li { display: inline-block; }
@@ -63,7 +62,7 @@
 .wall-post-alt > .elgg-body .wall-bubble:before { content: " "; position: absolute; right: 0; top: 0; width: 0px; height: 0px; border-style: solid; border-width: 15px 15px 0 0; border-color: #dddddd transparent transparent transparent; margin-right: -16px; margin-top: -1px; z-index: 1; }
 .wall-post-alt > .elgg-body .wall-bubble:after { content: " "; position: absolute; right: 0; top: 0; width: 0px; height: 0px; border-style: solid; border-width: 15px 15px 0 0; border-color: #fff transparent transparent transparent; margin-right: -14px; margin-top: 0; z-index: 5; }
 
-.wall-poster-avatar, .wall-owner-avatar { -moz-border-radius: 1000px; -webkit-border-radius: 1000px; border-radius: 1000px; border: 1px solid #c3c3c3; }
+.wall-poster-avatar, .wall-owner-avatar { -webkit-border-radius: 1000px; -moz-border-radius: 1000px; -ms-border-radius: 1000px; -o-border-radius: 1000px; border-radius: 1000px; border: 1px solid #c3c3c3; }
 
 .wall-status-counter { text-align: right; left: 0; bottom: 0; padding: 0 8px; font-size: 11px; line-height: 20px; vertical-align: middle; color: #666; }
 .wall-status-counter .wall-chars-counter { margin: 0 5px 0 0; font-size: 12px; }
@@ -71,13 +70,13 @@
 
 .wall-attachments, .wall-url-preview { margin: 10px 0; }
 .wall-attachments img, .wall-attachments iframe, .wall-attachments object, .wall-attachments embed, .wall-url-preview img, .wall-url-preview iframe, .wall-url-preview object, .wall-url-preview embed { max-width: 100%; }
-.wall-attachments .elgg-gallery > li, .wall-url-preview .elgg-gallery > li { display: inline-block; float: none; padding: 10px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; width: 33%; }
+.wall-attachments .elgg-gallery > li, .wall-url-preview .elgg-gallery > li { display: inline-block; float: none; padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; width: 33%; }
 
-.wall-widget-list > li { padding: 10px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.wall-widget-list > li { padding: 10px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 .wall-attachments-gallery { margin: 0; }
 .wall-attachments-gallery > li { width: 100%; float: none; padding: 5px; margin: 0; }
-@media only screen and (min-width: 40.063em) { .wall-attachments-gallery.wall-block-grid-2 > li { float: left; width: 50%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+@media only screen and (min-width: 40.063em) { .wall-attachments-gallery.wall-block-grid-2 > li { float: left; width: 50%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
   .wall-attachments-gallery.wall-block-grid-2 > li:nth-of-type(1n) { clear: none; }
   .wall-attachments-gallery.wall-block-grid-2 > li:nth-of-type(2n+1) { clear: both; } }
 @media only screen and (min-width: 40.063em) { .wall-attachments-gallery.wall-block-grid-3 > li { float: left; width: 33.33333%; padding: 5px; margin: 0; }

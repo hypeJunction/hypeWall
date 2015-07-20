@@ -2,6 +2,12 @@
 
 namespace hypeJunction\Wall;
 
+use ElggMenuItem;
+use ElggRiverItem;
+use ElggUser;
+use hypeJunction\Scraper\Models\Resources;
+use hypeJunction\Scraper\Services\Extractor;
+
 /**
  * Plugin hooks service
  */
@@ -31,7 +37,7 @@ class HookHandlers {
 	 * @param array  $params Additional params
 	 * @return string Filtered URL
 	 */
-	function urlHandler($hook, $type, $return, $params) {
+	public function urlHandler($hook, $type, $return, $params) {
 
 		$entity = elgg_extract('entity', $params);
 
@@ -57,7 +63,7 @@ class HookHandlers {
 	 * @param array   $params Additional params
 	 * @return boolean Filtered permission
 	 */
-	function containerPermissionsCheck($hook, $type, $return, $params) {
+	public function containerPermissionsCheck($hook, $type, $return, $params) {
 		$container = elgg_extract('container', $params);
 		$user = elgg_extract('user', $params);
 		$subtype = elgg_extract('subtype', $params);
@@ -66,11 +72,11 @@ class HookHandlers {
 			return $return;
 		}
 
-		if (!$container instanceof \ElggUser) {
+		if (!$container instanceof ElggUser) {
 			return $return;
 		}
 
-		if (!$user instanceof \ElggUser) {
+		if (!$user instanceof ElggUser) {
 			return $return;
 		}
 
@@ -97,7 +103,7 @@ class HookHandlers {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	function entityMenuSetup($hook, $type, $return, $params) {
+	public function entityMenuSetup($hook, $type, $return, $params) {
 
 		$entity = elgg_extract('entity', $params);
 
@@ -107,7 +113,7 @@ class HookHandlers {
 
 		$logged_in = elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $entity->guid)) {
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory(array(
 						'name' => 'remove_tag',
 						'text' => elgg_echo('wall:remove_tag'),
 						'title' => elgg_echo('wall:remove_tag'),
@@ -124,21 +130,21 @@ class HookHandlers {
 				$action = "action/thewire/delete?guid=$entity->guid";
 			}
 			if ($action) {
-				$return[] = \ElggMenuItem::factory(array(
+				$return[] = ElggMenuItem::factory(array(
 							'name' => 'delete',
 							'text' => elgg_view_icon('delete'),
 							'title' => elgg_echo('wall:delete'),
 							'priority' => 900,
 							'href' => $action,
 							'is_action' => true,
-							'link_class' => 'elgg-requires-confirmation'
+							'confirm' => true,
 				));
 			}
 		}
 
 		if ($params['handler'] == 'wall') {
 			foreach ($return as $key => $item) {
-				if ($item instanceof \ElggMenuItem && $item->getName() == 'edit') {
+				if ($item instanceof ElggMenuItem && $item->getName() == 'edit') {
 					unset($return[$key]);
 				}
 			}
@@ -156,11 +162,11 @@ class HookHandlers {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	function riverMenuSetup($hook, $type, $return, $params) {
+	public function riverMenuSetup($hook, $type, $return, $params) {
 
 		$item = elgg_extract('item', $params);
 
-		if (!($item instanceof \ElggRiverItem)) {
+		if (!($item instanceof ElggRiverItem)) {
 			return $return;
 		}
 
@@ -170,7 +176,7 @@ class HookHandlers {
 
 			$logged_in = elgg_get_logged_in_user_entity();
 			if (check_entity_relationship($logged_in->guid, 'tagged_in', $object->guid)) {
-				$return[] = \ElggMenuItem::factory(array(
+				$return[] = ElggMenuItem::factory(array(
 							'name' => 'remove_tag',
 							'text' => elgg_echo('wall:remove_tag'),
 							'title' => elgg_echo('wall:remove_tag'),
@@ -188,14 +194,14 @@ class HookHandlers {
 				$action = "action/thewire/delete?guid=$object->guid";
 			}
 			if ($action) {
-				$return[] = \ElggMenuItem::factory(array(
+				$return[] = ElggMenuItem::factory(array(
 							'name' => 'delete',
 							'text' => elgg_view_icon('delete'),
 							'title' => elgg_echo('wall:delete'),
 							'priority' => 900,
 							'href' => $action,
 							'is_action' => true,
-							'link_class' => 'elgg-requires-confirmation'
+							'confirm' => true,
 				));
 			}
 		}
@@ -212,18 +218,18 @@ class HookHandlers {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	function ownerBlockMenuSetup($hook, $type, $return, $params) {
+	public function ownerBlockMenuSetup($hook, $type, $return, $params) {
 
 		$entity = elgg_extract('entity', $params);
 
 		if (elgg_instanceof($entity, 'user')) {
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory(array(
 						'name' => 'wall',
 						'text' => elgg_echo('wall'),
 						'href' => $this->router->normalize("owner/{$entity->username}"),
 			));
 		} else if (elgg_instanceof($entity, 'group') && $entity->wall_enable == 'yes') {
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory(array(
 						'name' => 'wall',
 						'text' => elgg_echo('wall:groups'),
 						'href' => $this->router->normalize("group/{$entity->guid}"),
@@ -242,11 +248,11 @@ class HookHandlers {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	function userHoverMenuSetup($hook, $type, $return, $params) {
+	public function userHoverMenuSetup($hook, $type, $return, $params) {
 		$entity = elgg_extract('entity', $params);
 
 		if (elgg_instanceof($entity, 'user')) {
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory(array(
 						'name' => 'wall',
 						'text' => ($entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) ? elgg_echo('wall:write') : elgg_echo('wall:view'),
 						'href' => $this->router->normalize("owner/{$entity->username}"),
@@ -264,7 +270,7 @@ class HookHandlers {
 	 * @param array  $params Additional params
 	 * @return array Updated lsit of views
 	 */
-	function getECMLViews($hook, $type, $views, $params) {
+	public function getECMLViews($hook, $type, $views, $params) {
 		$views['output/wall/url'] = elgg_echo('wall:ecml:url');
 		$views['output/wall/attachment'] = elgg_echo('wall:ecml:attachment');
 		$views['river/elements/layout'] = elgg_echo('wall:ecml:river');
@@ -281,7 +287,7 @@ class HookHandlers {
 	 * @uses $params['vars']
 	 * @return string
 	 */
-	function hijackWire($hook, $type, $return, $params) {
+	public function hijackWire($hook, $type, $return, $params) {
 
 		$vars = elgg_extract('vars', $params);
 		$entity = elgg_extract('entity', $vars);
@@ -307,11 +313,11 @@ class HookHandlers {
 	 * @uses $params['vars']
 	 * @return string
 	 */
-	function hijackWireRiver($hook, $type, $return, $params) {
+	public function hijackWireRiver($hook, $type, $return, $params) {
 
 		$vars = elgg_extract('vars', $params);
 		$item = elgg_extract('item', $vars);
-		if (!$item instanceof \ElggRiverItem) {
+		if (!$item instanceof ElggRiverItem) {
 			return $return;
 		}
 

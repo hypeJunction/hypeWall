@@ -4,13 +4,13 @@ if (!is_callable('hypeApps')) {
 	throw new Exception("hypeWall requires hypeApps");
 }
 
-$path = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR;
+$path = __DIR__;
 
-if (!file_exists("{$path}vendor/autoload.php")) {
+if (!file_exists("{$path}/vendor/autoload.php")) {
 	throw new Exception('hypeWall can not resolve composer dependencies. Run composer install');
 }
 
-require_once "{$path}vendor/autoload.php";
+require_once "{$path}/vendor/autoload.php";
 
 /**
  * Plugin container

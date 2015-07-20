@@ -98,8 +98,8 @@ class postAction extends Action {
 			}
 		}
 
-	$this->post->title = $this->title;
-	$this->post->description = $this->status;
+		$this->post->title = $this->title;
+		$this->post->description = $this->status;
 
 		if (!$guid) {
 			$this->result->addError(elgg_echo('wall:create:error'));
@@ -193,12 +193,15 @@ class postAction extends Action {
 		if (!empty($this->upload_guids)) {
 			foreach ($this->upload_guids as $upload_guid) {
 				$upload = get_entity($upload_guid);
-				$upload->description = $this->post->description;
-				$upload->origin = 'wall';
-				$upload->access_id = $this->post->access_id;
-				$upload->container_guid = ($this->container->canWriteToContainer($this->poster->guid, 'object', 'file')) ? $this->container->guid : ELGG_ENTITIES_ANY_VALUE;
-				$upload->save();
-				add_entity_relationship($upload_guid, 'attached', $this->post->guid);
+				if ($upload) {
+					$upload->description = $this->post->description;
+					$upload->origin = 'wall';
+					$upload->access_id = $this->post->access_id;
+					$upload->container_guid = ($this->container->canWriteToContainer($this->poster->guid, 'object', 'file')) ? $this->container->guid : ELGG_ENTITIES_ANY_VALUE;
+					if ($upload->save()) {
+						add_entity_relationship($upload_guid, 'attached', $this->post->guid);
+					}
+				}
 			}
 		}
 

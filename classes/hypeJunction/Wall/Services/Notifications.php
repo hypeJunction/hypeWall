@@ -15,7 +15,7 @@ class Notifications {
 	 * @param array                           $params       Additional params
 	 * @return Elgg_Notifications_Notification
 	 */
-	function formatMessage($hook, $type, $notification, $params) {
+	public function formatMessage($hook, $type, $notification, $params) {
 
 		$event = elgg_extract('event', $params);
 		$entity = $event->getObject();
@@ -62,7 +62,7 @@ class Notifications {
 	 * @param ElggEntity $entity      Published entity
 	 * @return boolean
 	 */
-	function sendCustomNotifications($event, $entity_type, $entity) {
+	public function sendCustomNotifications($event, $entity_type, $entity) {
 
 		if (!$entity instanceof Post || $entity->origi !== 'wall') {
 			return true;
@@ -149,7 +149,7 @@ class Notifications {
 	 * @param array   $params Additional params
 	 * @return boolean Updated flag
 	 */
-	function disableDefaultHandlerLegacy($hook, $type, $return, $params) {
+	public function disableDefaultHandlerLegacy($hook, $type, $return, $params) {
 
 		$event = elgg_extract('event', $params);
 		$object_type = elgg_extract('object_type', $params);
@@ -174,7 +174,7 @@ class Notifications {
 	 * @param \ElggEntity $entity      Published entity
 	 * @return boolean
 	 */
-	function sendLegacy($event, $entity_type, $entity) {
+	public function sendLegacy($event, $entity_type, $entity) {
 
 		if (!$entity instanceof Post || $entity->origin != 'wall') {
 			return true;
@@ -275,7 +275,7 @@ class Notifications {
 	 * @param array  $params  Hook params
 	 * @return string
 	 */
-	function formatMessageLegacy($hook, $type, $message, $params) {
+	public function formatMessageLegacy($hook, $type, $message, $params) {
 
 		$entity = elgg_extract('entity', $params);
 		$to_entity = elgg_extract('to_entity', $params);

@@ -209,15 +209,14 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 			}
 
 			event.preventDefault();
-			require('hypeList');
+			require(['hypeList']);
 			
 			var $form = $(this);
 			
 			$form.ajaxSubmit({
-				iframe: $form.is('[enctype^="multipart"]'),
+				//iframe: $form.is('[enctype^="multipart"]'),
 				dataType: 'json',
 				data: {
-					'X-Requested-With': 'XMLHttpRequest', // simulate XHR
 					container_guid: elgg.get_page_owner_guid(),
 					river: $form.closest('.wall-container').is('.wall-river'),
 					widget: $form.closest('.elgg-widgets').length

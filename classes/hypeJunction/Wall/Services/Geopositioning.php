@@ -11,7 +11,7 @@ class Geopositioning {
 	 * Get coordinates and location name of the current session
 	 * @return array
 	 */
-	function get() {
+	public function get() {
 		if (isset($_COOKIE[self::COOKIE_NAME])) {
 			return unserialize(base64_decode($_COOKIE[self::COOKIE_NAME]));
 		}
@@ -28,9 +28,9 @@ class Geopositioning {
 	 * @param string $location  Location
 	 * @param float  $latitude  Latitude
 	 * @param float  $longitude Longitude
-	 * @return void
+	 * @return stdClass
 	 */
-	function set($location = '', $latitude = 0, $longitude = 0) {
+	public function set($location = '', $latitude = 0, $longitude = 0) {
 
 		$location = sanitize_string($location);
 		$lat = (float) $latitude;
@@ -57,7 +57,8 @@ class Geopositioning {
 		} else {
 			setcookie(self::COOKIE_NAME, $cookie_value, strtotime("+30days"), "/", "");
 		}
-		
+
+		return (object) $geopositioning;
 	}
 
 	/**
@@ -66,7 +67,7 @@ class Geopositioning {
 	 * @param string $location Address to geocode
 	 * @return array
 	 */
-	function geocode($location = '') {
+	public function geocode($location = '') {
 		return elgg_trigger_plugin_hook('geocode', 'location', array('location' => $location));
 	}
 
