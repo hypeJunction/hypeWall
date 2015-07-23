@@ -8,7 +8,7 @@ elgg_entity_gatekeeper($owner->guid, 'user');
 elgg_set_page_owner_guid($owner->guid);
 
 $title = elgg_echo('wall:owner', array($owner->name));
-elgg_push_breadcrumb($title, $this->normalize(array('owner', $owner->username)));
+elgg_push_breadcrumb($title, hypeWall()->router->normalize(array('owner', $owner->username)));
 
 $post_guid = elgg_extract('post_guid', $vars);
 if ($post_guid) {
@@ -19,9 +19,6 @@ if ($post_guid) {
 $content = elgg_view("framework/wall/owner", array(
 	'post' => $post
 		));
-
-var_dump($content);
-die();
 
 if (elgg_is_xhr()) {
 	echo $content;

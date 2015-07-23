@@ -41,8 +41,8 @@ class Router {
 			case 'user' :
 			case 'owner' :
 				echo elgg_view('resources/wall/owner', array(
-					'username' => $username,
-					'post_guid' => $post_guid,
+					'username' => elgg_extract(1, $segments),
+					'post_guid' => elgg_extract(2, $segments),
 				));
 				return true;
 
