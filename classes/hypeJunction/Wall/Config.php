@@ -4,6 +4,17 @@ namespace hypeJunction\Wall;
 
 /**
  * Config
+ * @property int    $model
+ * @property bool   $geopositioning
+ * @property bool   $tag_friends
+ * @property bool   $url
+ * @property bool   $status
+ * @property bool   $photo
+ * @property bool   $content
+ * @property string $default_form
+ * @property bool   $third_party_wall
+ * @property string $status_input_type
+ * @property int    $character_limit
  */
 class Config extends \hypeJunction\Config {
 
@@ -24,6 +35,7 @@ class Config extends \hypeJunction\Config {
 			'default_form' => 'status',
 			'third_party_wall' => false,
 			'status_input_type' => 'plaintext',
+			'character_limit' => 0,
 		);
 	}
 

@@ -1,13 +1,17 @@
 <?php
 
-namespace hypeJunction\Wall\Post;
+namespace hypeJunction\Wall\Actions;
 
 use ElggObject;
+use ElggUser;
 use hypeJunction\Controllers\Action;
+use hypeJunction\Exceptions\PermissionsException;
+use hypeJunction\Integration;
+use hypeJunction\Wall\AccessCollection;
 use hypeJunction\Wall\Post;
 
 /**
- * @property \ElggUser $poster           User making the post
+ * @property ElggUser $poster           User making the post
  * @property Post      $post             Post created/being updated
  * @property int       $guid             GUID of an existing post
  * @property string    $status           Status message
@@ -21,7 +25,7 @@ use hypeJunction\Wall\Post;
  * @property string    $address          URL to attach to the post
  *
  */
-class postAction extends Action {
+class SavePost extends Action {
 
 	const CLASSNAME = __CLASS__;
 
@@ -63,12 +67,6 @@ class postAction extends Action {
 
 		// For underlying views to know who the container is
 		elgg_set_page_owner_guid($this->container->guid);
-
-		if ($this->poster->guid == $this->container_guid) {
-			$this->title = elgg_echo('wall:post:status_update', array(elgg_echo('wall:byline', array($this->poster->name))));
-		} else {
-			$this->title = elgg_echo('wall:post:wall_to_wall', array(elgg_echo('wall:byline', array($this->poster->name))));
-		}
 	}
 
 	/**
@@ -76,7 +74,7 @@ class postAction extends Action {
 	 */
 	public function validate() {
 		if (!$this->container || !$this->container->canWriteToContainer($this->poster->guid, 'object', $this->subtype)) {
-			throw new \hypeJunction\Exceptions\PermissionsException(elgg_echo('wall:error:container_permissions'));
+			throw new PermissionsException(elgg_echo('wall:error:container_permissions'));
 		}
 	}
 
@@ -106,7 +104,7 @@ class postAction extends Action {
 			return;
 		}
 
-		if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
+		if (Integration::isElggVersionBelow('1.9.0')) {
 			$river_id = add_to_river('river/object/hjwall/create', 'create', $this->poster->guid, $this->post->guid);
 		} else {
 			// Create a river entry for this wall post
@@ -168,7 +166,7 @@ class postAction extends Action {
 			$members[] = $this->poster->guid;
 			$members[] = $this->container->guid;
 
-			$acl_id = \hypeJunction\Wall\AccessCollection::create($members);
+			$acl_id = AccessCollection::create($members);
 			$this->post->access_id = $acl_id;
 			$this->post->save();
 		}

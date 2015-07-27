@@ -23,7 +23,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 			$(document).on('click.wall', '.wall-tab', wall.switchTab);
 			$(document).on('keyup.wall keydown.wall', 'textarea[data-limit]', wall.updateCounter);
 			$(document).on('keyup.wall', '.wall-input-status', wall.parseUrl);
-			$(document).on('blur.wall focusout.wall preview.wall clear.wall', wall.loadUrlPreview);
+			$(document).on('blur.wall focusout.wall preview.wall clear.wall', '.wall-url', wall.loadUrlPreview);
 			$(document).on('submit.wall', '.wall-form', wall.formSubmit);
 
 			elgg.config.wall = true;
@@ -39,6 +39,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 		 * @returns void
 		 */
 		findMe: function (e) {
+			e.preventDefault();
 			navigator.geolocation.getCurrentPosition(function (position) {
 				if (typeof elgg.session.geopositioning === 'undefined') {
 					elgg.session.geopositioning = {};
@@ -46,23 +47,25 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 
 				// Do not refresh position if distance is less than the increment constant
 				if (wall.calculateDistance(position.coords.latitude, position.coords.longitude, elgg.session.geopositioning.latitude, elgg.session.geopositioning.longitude) > wall.distanceIncrement) {
-
-					elgg.session.geopositioning.latitude = position.coords.latitude;
-					elgg.session.geopositioning.longitude = position.coords.longitude;
-					$.ajax({
-						crossDomain: true,
-						dataType: "json",
-						url: 'http://nominatim.openstreetmap.org/reverse',
-						data: {
-							format: 'json',
-							lat: position.coords.latitude,
-							lon: position.coords.longitude,
-							addressdetails: 1,
-							zoom: 10,
-							//json_callback: 'define'
-						},
-						success: wall.setGeopositioning(data),
-					});
+				$.ajax({
+					crossDomain: true,
+					dataType: "json",
+					url: '//nominatim.openstreetmap.org/reverse',
+					data: {
+						format: 'json',
+						lat: position.coords.latitude,
+						lon: position.coords.longitude,
+						addressdetails: 0,
+						zoom: 12,
+						//json_callback: 'define'
+					},
+					success: function (data) {
+						elgg.session.geopositioning.latitude = data.lat || position.coords.latitude;
+						elgg.session.geopositioning.longitude = data.long || position.coords.longitude;
+						elgg.session.geopositioning.location = data.display_name || {};
+						wall.setGeopositioning();
+					}
+				});
 				} else {
 					wall.setGeopositioning();
 				}
@@ -87,16 +90,11 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 		/**
 		 * Update session geopositioning and set wall location input values
 		 * This is used as a jsonp callbcack for nominatim lookup
-		 * @param object data
 		 * @returns void
 		 */
-		setGeopositioning: function (data) {
+		setGeopositioning: function () {
 			if (typeof elgg.session.geopositioning === 'undefined') {
 				elgg.session.geopositioning = {};
-			}
-
-			if (data && data.display_name) {
-				elgg.session.geopositioning.location = data.display_name;
 			}
 
 			if ($('.wall-location-tokeninput').length) {
@@ -210,9 +208,9 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 
 			event.preventDefault();
 			require(['hypeList']);
-			
+
 			var $form = $(this);
-			
+
 			$form.ajaxSubmit({
 				//iframe: $form.is('[enctype^="multipart"]'),
 				dataType: 'json',
@@ -227,7 +225,6 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 				},
 				success: function (data) {
 					if (data.status >= 0) {
-
 						$form.resetForm();
 						if ($('.elgg-input-tokeninput', $form).length) {
 							$('.elgg-input-tokeninput', $form).bind('clear', function (e) {
@@ -238,9 +235,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 						$('.token-input-dropdown').hide();
 						$form.find('.wall-url').trigger('clear');
 						$form.find('textarea:first').trigger('click');
-						if (data.output) {
-							$('.elgg-list-river,.wall-post-list').hypeList('fetchNewItems', null, true);
-						}
+						$('.elgg-list-river,.wall-post-list').hypeList('fetchNewItems', null, true);
 					}
 					if (data.system_messages) {
 						elgg.register_error(data.system_messages.error);

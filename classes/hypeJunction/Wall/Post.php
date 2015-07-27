@@ -9,12 +9,25 @@ class Post extends \ElggObject {
 	const SUBTYPE = 'hjwall';
 
 	/**
-	 * Initialize object attributes
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 		$this->attributes['subtype'] = self::SUBTYPE;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDisplayName() {
+		$owner = $this->getOwnerEntity();
+		$container = $this->getContainerEntity();
+		if ($owner->guid == $container->guid) {
+			return elgg_echo('wall:post:status_update', array(elgg_echo('wall:byline', array($owner->getDisplayName()))));
+		} else if ($owner) {
+			return elgg_echo('wall:post:wall_to_wall', array(elgg_echo('wall:byline', array($owner->getDisplayName()))));
+		}
+		return parent::getDisplayName();
 	}
 
 	/**

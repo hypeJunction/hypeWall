@@ -6,7 +6,7 @@ class Geopositioning {
 
 	const CLASSNAME = __CLASS__;
 	const COOKIE_NAME = 'Elgg_Wall_Geop';
-	
+
 	/**
 	 * Get coordinates and location name of the current session
 	 * @return array
@@ -69,6 +69,25 @@ class Geopositioning {
 	 */
 	public function geocode($location = '') {
 		return elgg_trigger_plugin_hook('geocode', 'location', array('location' => $location));
+	}
+
+	/**
+	 * Callback function for token input search
+	 *
+	 * @param string $term    Search term
+	 * @param array  $options Options
+	 * @return array
+	 */
+	public function search($term, $options = array()) {
+		$term = sanitize_string($term);
+
+		$query = str_replace(array('_', '%'), array('\_', '\%'), $term);
+
+		$options['metadata_names'] = array('location', 'temp_location');
+		$options['group_by'] = "v.string";
+		$options['wheres'] = array("v.string LIKE '%$query%'");
+
+		return elgg_get_metadata($options);
 	}
 
 }

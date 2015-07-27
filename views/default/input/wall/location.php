@@ -1,11 +1,11 @@
 <?php
 
-if (!elgg_view_exists('input/tokeninput') || !hypeWall()->config->get('geopositioning')) {
+if (!elgg_view_exists('input/tokeninput') || !hypeWall()->config->geopositioning) {
 	return;
 }
 
 if (!$vars['value']) {
-	$geopositioning = get_geopositioning();
+	$geopositioning = hypeWall()->geo->get();
 	if ($geopositioning['location']) {
 		$vars['value'] = $geopositioning['location'];
 	} else if (elgg_instanceof($vars['entity'])) {

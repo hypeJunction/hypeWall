@@ -108,14 +108,18 @@ final class Plugin extends \hypeJunction\Plugin {
 			elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:thewire', array($this->notifications, 'formatMessage'));
 		}
 
-		hypeApps()->actions->register('wall/status', Post\postAction::CLASSNAME);
-		hypeApps()->actions->register('wall/photo', Post\postAction::CLASSNAME);
-		hypeApps()->actions->register('wall/file', Post\postAction::CLASSNAME);
-		hypeApps()->actions->register('wall/url', Post\postAction::CLASSNAME);
-		hypeApps()->actions->register('wall/content', Post\postAction::CLASSNAME);
-		hypeApps()->actions->register('wall/delete', Post\deleteAction::CLASSNAME);
-		hypeApps()->actions->register('wall/remove_tag', Post\removeTagAction::CLASSNAME);
-		hypeApps()->actions->register('wall/geopositioning/update', Session\updateGeopAction::CLASSNAME, 'public');
+		$action_path = $this->plugin->getPath() . '/actions/';
+
+		elgg_register_action('wall/status', $action_path . 'wall/status.php');
+		elgg_register_action('wall/photo', $action_path . 'wall/status.php');
+		elgg_register_action('wall/file', $action_path . 'wall/status.php');
+		elgg_register_action('wall/url', $action_path . 'wall/status.php');
+		elgg_register_action('wall/content', $action_path . 'wall/status.php');
+
+		elgg_register_action('wall/delete', $action_path . 'wall/status.php');
+		elgg_register_action('wall/remove_tag', $action_path . 'wall/remove_tag.php');
+
+		elgg_register_action('wall/geopositioning/update', $action_path . 'wall/geopositioning/update.php', 'public');
 
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', array($this->hooks, 'containerPermissionsCheck'));
 

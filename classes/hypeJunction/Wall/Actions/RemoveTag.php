@@ -7,9 +7,7 @@ namespace hypeJunction\Wall\Post;
  * @property \ElggEntity $entity
  * @property \ElggUser   $user
  */
-class removeTagAction extends \hypeJunction\Controllers\Action {
-
-	const CLASSNAME = __CLASS__;
+class RemoveTag extends \hypeJunction\Controllers\Action {
 
 	/**
 	 * {@inheritdoc}
@@ -27,8 +25,6 @@ class removeTagAction extends \hypeJunction\Controllers\Action {
 		if (!$this->entity) {
 			throw new \hypeJunction\Exceptions\InvalidEntityException("Entity with guid $this->guid can not be loaded");
 		}
-
-		return true;
 	}
 
 	/**

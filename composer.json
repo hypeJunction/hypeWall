@@ -16,9 +16,13 @@
 	"extra": {
 		"installer-name": "hypeWall"
 	},
+	"config": {
+		"vendor-dir": "/vendor/"
+	},
 	"require": {
-		"php": ">=5.4",
-		"composer/installers": "1.0.*"
+		"php": ">=5.5",
+		"composer/installers": "1.0.*",
+		"hypejunction/hypeapps": "4.*"
 	},
 	"autoload": {
 		"psr-0": {

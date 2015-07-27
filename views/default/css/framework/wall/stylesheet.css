@@ -3,7 +3,7 @@
 .elgg-menu-wall-filter > li a { font-size: 20px; -webkit-border-radius: 1000px; -moz-border-radius: 1000px; -ms-border-radius: 1000px; -o-border-radius: 1000px; border-radius: 1000px; margin: 4px; color: #c3c3c3; }
 .elgg-menu-wall-filter > li.elgg-state-selected a, .elgg-menu-wall-filter > li a:hover { color: #306eb4; }
 
-.wall-icon { display: inline-block; font-family: 'ambercal'; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.wall-icon { display: inline-block; font-family: 'FontAwesome'; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 .wall-icon.wall-icon-photo:before { content: "\f030"; }
 .wall-icon.wall-icon-status:before { content: "\f040"; }
 .wall-icon.wall-icon-url:before { content: "\f0c1"; }

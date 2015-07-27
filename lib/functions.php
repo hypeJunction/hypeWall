@@ -10,16 +10,7 @@ namespace hypeJunction\Wall;
  * @return array
  */
 function search_locations($term, $options = array()) {
-
-	$term = sanitize_string($term);
-
-	$query = str_replace(array('_', '%'), array('\_', '\%'), $term);
-
-	$options['metadata_names'] = array('location', 'temp_location');
-	$options['group_by'] = "v.string";
-	$options['wheres'] = array("v.string LIKE '%$query%'");
-
-	return elgg_get_metadata($options);
+	return hypeWall()->geo->search($term, $options);
 }
 
 
