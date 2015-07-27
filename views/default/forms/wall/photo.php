@@ -10,7 +10,7 @@ $status = elgg_view('input/wall/status', array(
 	'placeholder' => elgg_echo('wall:status:placeholder')
 		));
 
-$container_guid = elgg_get_plugin_user_setting('wall_collection', 0, PLUGIN_ID);
+$container_guid = elgg_get_plugin_user_setting('wall_collection', 0, 'hypeWall');
 if (!$container_guid) {
 	$container_guid = elgg_get_page_owner_guid();
 }

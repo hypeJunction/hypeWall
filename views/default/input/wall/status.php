@@ -1,8 +1,6 @@
 <?php
 
-namespace hypeJunction\Wall;
-
-$input_type = elgg_get_plugin_setting('status_input_type', PLUGIN_ID);
+$input_type = hypeWall()->config->status_input_type;
 if (!$input_type) {
 	$input_type = 'plaintext';
 }
@@ -12,7 +10,7 @@ if (!$vars['value'] && elgg_instanceof($vars['entity'])) {
 }
 
 $vars['class'] = "{$vars['class']} wall-input-status-wire";
-$char_limit = (int) elgg_get_plugin_setting('character_limit', PLUGIN_ID);
+$char_limit = hypeWall()->config->character_limit;
 if ($char_limit > 0) {
 	$vars['data-limit'] = $char_limit;
 	$counter = '<div class="wall-status-counter" data-counter>';

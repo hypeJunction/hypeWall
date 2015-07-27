@@ -161,7 +161,7 @@ class Upgrades {
 		));
 
 		foreach ($folders as $folder) {
-			elgg_set_plugin_user_setting('wall_collection', $folder->guid, $folder->owner_guid, PLUGIN_ID);
+			elgg_set_plugin_user_setting('wall_collection', $folder->guid, $folder->owner_guid, 'hypeWall');
 		}
 
 		/**

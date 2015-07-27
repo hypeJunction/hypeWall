@@ -141,7 +141,7 @@ class SavePost extends Action {
 			foreach ($this->friend_guids as $friend_guid) {
 				if (add_entity_relationship($friend_guid, 'tagged_in', $this->post->guid)) {
 					if (!in_array($this->access_id, array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC))) {
-						$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend_guid, PLUGIN_ID);
+						$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend_guid, 'hypeWall');
 						if (!is_null($river_access_id) && $river_access_id !== ACCESS_PRIVATE) {
 							$river_id = elgg_create_river_item(array(
 								'view' => 'river/relationship/tagged/create',
