@@ -11,18 +11,21 @@ use hypeJunction\Wall\AccessCollection;
 use hypeJunction\Wall\Post;
 
 /**
- * @property ElggUser $poster           User making the post
- * @property Post      $post             Post created/being updated
- * @property int       $guid             GUID of an existing post
- * @property string    $status           Status message
- * @property string    $subtype          Subtype of the post object
- * @property int       $access_id        Post access
- * @property int       $container_guid   GUID of the container entity
- * @property string    $location         Location tag
- * @property int[]     $friend_guids     Friends tagged in a post
- * @property int[]     $attachment_guids Entities to attach to the post
- * @property int[]     $upload_guids     Files to attach to the post
- * @property string    $address          URL to attach to the post
+ * @property ElggUser      $poster           User making the post
+ * @property Post          $post             Post created/being updated
+ * @property int           $guid             GUID of an existing post
+ * @property string        $status           Status message
+ * @property string        $subtype          Subtype of the post object
+ * @property int           $access_id        Post access
+ * @property int           $container_guid   GUID of the container entity
+ * @property string        $location         Location tag
+ * @property int[]         $friend_guids     Friends tagged in a post
+ * @property int[]         $attachment_guids Entities to attach to the post
+ * @property int[]         $upload_guids     Files to attach to the post
+ * @property string        $address          URL to attach to the post
+ * @property ElggRiverItem $river            Created river item
+ * @property bool          $make_bookmark    Make bookmark
+ * @property ElggObject    $bookmark         Created bookmark object
  *
  */
 class SavePost extends Action {
@@ -99,7 +102,7 @@ class SavePost extends Action {
 		$this->post->title = $this->title;
 		$this->post->description = $this->status;
 
-		if (!$guid) {
+		if (!$this->post->guid) {
 			$this->result->addError(elgg_echo('wall:create:error'));
 			return;
 		}
@@ -111,12 +114,18 @@ class SavePost extends Action {
 			$river_id = elgg_create_river_item(array(
 				'view' => 'river/object/hjwall/create',
 				'action_type' => 'create',
-				'subject_guid' => $this->post->getOwnerGUID(),
-				'object_guid' => $this->post->getGUID(),
-				'target_guid' => $this->post->getContainerGUID(),
+				'subject_guid' => $this->post->owner_guid,
+				'object_guid' => $this->post->guid,
+				'target_guid' => $this->post->container_guid,
 			));
 		}
 
+		$river = elgg_get_river(array(
+			'ids' => $river_id,
+		));
+
+		$this->river = ($river) ? $river[0] : null;
+		
 		$this->post->origin = 'wall';
 
 		$qualifiers = elgg_trigger_plugin_hook('extract:qualifiers', 'wall', array('source' => $this->post->description), array());
@@ -206,7 +215,7 @@ class SavePost extends Action {
 		$this->post->setLocation($this->location);
 		$this->post->address = $this->address;
 
-		if ($this->post->address && get_input('make_bookmark', false)) {
+		if ($this->post->address && $this->make_bookmark) {
 
 			$document = elgg_trigger_plugin_hook('extract:meta', 'wall', array('src' => $this->post->address));
 
@@ -229,6 +238,8 @@ class SavePost extends Action {
 			}
 
 			$bookmark->save();
+
+			$this->bookmark = $bookmark;
 		}
 
 		if ($this->post->save()) {
