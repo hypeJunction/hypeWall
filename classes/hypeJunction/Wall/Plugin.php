@@ -116,7 +116,7 @@ final class Plugin extends \hypeJunction\Plugin {
 		elgg_register_action('wall/url', $action_path . 'wall/status.php');
 		elgg_register_action('wall/content', $action_path . 'wall/status.php');
 
-		elgg_register_action('wall/delete', $action_path . 'wall/status.php');
+		elgg_register_action('wall/delete', $action_path . 'wall/delete.php');
 		elgg_register_action('wall/remove_tag', $action_path . 'wall/remove_tag.php');
 
 		elgg_register_action('wall/geopositioning/update', $action_path . 'wall/geopositioning/update.php', 'public');
