@@ -265,7 +265,11 @@ class SavePost extends Action {
 			}
 
 			$this->result->addMessage(elgg_echo('wall:create:success'));
-			$this->result->setForwardURL($this->post->getURL());
+			if ($this->container instanceof \ElggUser) {
+				$this->result->setForwardURL(hypeWall()->router->normalize("owner/{$this->container->username}"));
+			} else {
+				$this->result->setForwardURL(hypeWall()->router->normalize("container/{$this->container->guid}"));
+			}
 		} else {
 			$this->result->addError(elgg_echo('wall:create:error'));
 		}
