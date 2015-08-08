@@ -1,5 +1,6 @@
 {
 	"name": "hypejunction/hypewall",
+	"version": "4.0.1",
 	"type": "elgg-plugin",
 	"description": "Rich status updates",
 	"homepage": "http://hypejunction.com",
@@ -16,11 +17,7 @@
 	"extra": {
 		"installer-name": "hypeWall"
 	},
-	"config": {
-		"vendor-dir": "/vendor/"
-	},
-	"require": {
-		"php": ">=5.5",
+	"require-dev": {
 		"composer/installers": "1.0.*",
 		"hypejunction/hypeapps": "4.*"
 	},
