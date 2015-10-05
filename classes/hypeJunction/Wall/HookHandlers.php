@@ -328,4 +328,61 @@ class HookHandlers {
 
 		return $return;
 	}
+
+	public function getGraphAlias($hook, $type, $return, $params) {
+		$return['object'][Post::SUBTYPE] = ':wall';
+		return $return;
+	}
+
+	public function getPostProperties($hook, $type, $return, $params) {
+
+		$fields[] = 'location';
+						$fields[] = 'address';
+						$fields[] = 'tagged_users';
+						$fields[] = 'attachments';
+
+		$return[] = new \hypeJunction\Data\Property('location', array(
+			'getter' => '\hypeJunction\Data\Values::getLocation',
+			'setter' => '\hypeJunction\Data\Values::setLocation',
+			'type' => 'string',
+			'input' => 'location',
+			'output' => 'location',
+			'validation' => array(
+				'rules' => array(
+					'type' => 'location',
+				)
+			)
+		));
+
+		$return[] = new \hypeJunction\Data\Property('address', array(
+			'getter' => '\hypeJunction\Data\Values::getVerbatim',
+			'setter' => '\hypeJunction\Data\Values::setVerbatim',
+			'type' => 'url',
+			'input' => 'url',
+			'output' => 'url',
+			'validation' => array(
+				'rules' => array(
+					'type' => 'url',
+				)
+			),
+		));
+
+		$return[] = new \hypeJunction\Data\Property('embed', array(
+			'attribute' => 'address',
+			'getter' => '\hypeJunction\Data\Values::getUrlMetadata',
+			'read_only' => true,
+		));
+
+		$return[] = new \hypeJunction\Data\Property('tagged_users', array(
+			'getter' => '\hypeJunction\Wall\Post::getTaggedUsersProp',
+			'read_only' => true,
+		));
+
+		$return[] = new \hypeJunction\Data\Property('attachments', array(
+			'getter' => '\hypeJunction\Wall\Post::getAttachmentsProp',
+			'read_only' => true,
+		));
+
+		return $return;
+	}
 }

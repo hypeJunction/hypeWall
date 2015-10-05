@@ -137,6 +137,12 @@ final class Plugin extends \hypeJunction\Plugin {
 
 		add_group_tool_option('wall', elgg_echo('wall:groups:enable'), false);
 		elgg_extend_view('groups/tool_latest', 'framework/wall/group_module');
+
+		// Export
+		$subtype = Post::SUBTYPE;
+		elgg_register_plugin_hook_handler('aliases', 'graph', array($this->hooks, 'getGraphAlias'));
+		elgg_register_plugin_hook_handler('graph:properties', "object:$subtype", array($this->hooks, 'getPostProperties'));
+		// @todo Move graph controller when interface is implemented in hypeApps
 	}
 
 }

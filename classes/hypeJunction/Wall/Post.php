@@ -213,4 +213,24 @@ class Post extends \ElggObject {
 		return $tagged_friends;
 	}
 
+	public static function getTaggedUsersProp(\hypeJunction\Data\PropertyInterface $prop, Post $post) {
+		return new \hypeJunction\BatchResult('elgg_get_entities_from_relationship', array(
+			'types' => 'user',
+			'relationship' => 'tagged_in',
+			'relationship_guid' => (int) $post->guid,
+			'inverse_relationship' => true,
+			'limit' => \hypeJunction\Graph\Graph::LIMIT_MAX,
+		));
+	}
+
+	public static function getAttachmentsProp(\hypeJunction\Data\PropertyInterface $prop, Post $post) {
+		return new \hypeJunction\BatchResult('elgg_get_entities_from_relationship', array(
+			'relationship' => 'attached',
+			'relationship_guid' => (int) $post->guid,
+			'inverse_relationship' => true,
+			'limit' => \hypeJunction\Graph\Graph::LIMIT_MAX,
+		));
+	}
+
+
 }
