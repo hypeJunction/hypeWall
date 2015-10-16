@@ -36,5 +36,9 @@
 		<name>hypeDropzone</name>
 		<version>4.0.0</version>
 	</suggests>
+	<suggests>
+		<type>plugin</type>
+		<name>hypeLists</name>
+	</suggests>
 	
 </plugin_manifest>
