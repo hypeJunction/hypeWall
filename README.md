@@ -11,7 +11,7 @@ Rich user interface for sharing status updates, links and content via user walls
 ## Screenshots
 
 ![Wall Form](https://raw.github.com/hypeJunction/hypeWall/master/screenshots/wall-form.png "Form")
-![Wall View](https://raw.github.com/hypeJunction/hypeWall/master/screenshots/form-items.png "Wall items")
+![Wall View](https://raw.github.com/hypeJunction/hypeWall/master/screenshots/wall-items.png "Wall items")
 
 
 ## Features
