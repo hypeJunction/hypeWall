@@ -101,7 +101,8 @@ class SavePost extends Action {
 
 		$this->post->title = $this->title;
 		$this->post->description = $this->status;
-
+		$this->post->access_id = $this->access_id;
+		
 		if (!$this->post->guid) {
 			$this->result->addError(elgg_echo('wall:create:error'));
 			return;
