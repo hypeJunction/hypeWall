@@ -48,7 +48,7 @@ class Router {
 
 			case 'post' :
 
-				$guid = elgg_extract(1, $page);
+				$guid = elgg_extract(1, $segments);
 
 				elgg_entity_gatekeeper($guid, 'object');
 
@@ -58,7 +58,7 @@ class Router {
 
 			case 'group' :
 			case 'container' :
-				$guid = elgg_extract(1, $page);
+				$guid = elgg_extract(1, $segments);
 
 				elgg_entity_gatekeeper($guid);
 
@@ -68,9 +68,9 @@ class Router {
 
 				$name = elgg_instanceof($group, 'object') ? $group->title : $group->name;
 				$title = elgg_echo('wall:owner', array($name));
-				elgg_push_breadcrumb($title, $this->normalize($page[0], $group->guid));
+				elgg_push_breadcrumb($title, $this->normalize($segments[0], $group->guid));
 
-				if (isset($page[2])) {
+				if (isset($segments[2])) {
 					elgg_entity_gatekeeper($page[2]);
 					$post = get_entity($page[2]);
 				}
