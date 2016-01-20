@@ -58,33 +58,10 @@ class Router {
 
 			case 'group' :
 			case 'container' :
-				$guid = elgg_extract(1, $segments);
-
-				elgg_entity_gatekeeper($guid);
-
-				$group = get_entity($guid);
-
-				elgg_set_page_owner_guid($group->guid);
-
-				$name = elgg_instanceof($group, 'object') ? $group->title : $group->name;
-				$title = elgg_echo('wall:owner', array($name));
-				elgg_push_breadcrumb($title, $this->normalize($segments[0], $group->guid));
-
-				if (isset($segments[2])) {
-					elgg_entity_gatekeeper($page[2]);
-					$post = get_entity($page[2]);
-				}
-
-				$content = elgg_view("framework/wall/group", array(
-					'post' => $post,
+				echo elgg_view('resources/wall/group', array(
+					'group_guid' => elgg_extract(1, $segments),
+					'post_guid' => elgg_extract(2, $segments),
 				));
-
-				$layout = elgg_view_layout('content', array(
-					'title' => $title,
-					'content' => $content,
-					'filter' => false,
-				));
-				echo elgg_view_page($title, $layout);
 				return true;
 		}
 
