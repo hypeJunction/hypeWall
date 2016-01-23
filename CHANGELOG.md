@@ -1,3 +1,14 @@
+<a name="4.4.1"></a>
+## [4.4.1](https://github.com/hypeJunction/hypeWall/compare/4.4.0...v4.4.1) (2016-01-23)
+
+
+### Bug Fixes
+
+* **composer:** update dependencies ([09be197](https://github.com/hypeJunction/hypeWall/commit/09be197))
+* **lists:** constrain lists by container ([829c3cd](https://github.com/hypeJunction/hypeWall/commit/829c3cd))
+
+
+
 <a name="4.4.0"></a>
 # [4.4.0](https://github.com/hypeJunction/hypeWall/compare/4.3.2...v4.4.0) (2016-01-23)
 
