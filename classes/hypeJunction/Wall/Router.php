@@ -30,42 +30,57 @@ class Router {
 	 */
 	public function handlePages($segments) {
 
-		elgg_push_breadcrumb(elgg_echo('wall'), $this->getPageHandlerId());
+		$page = array_shift($segments);
+		$target_guid = false;
+		$post_guids = (array) get_input('post_guids', array());
 
-		switch ($segments[0]) {
+		switch ($page) {
+
 			default :
-				$user = elgg_get_logged_in_user_entity();
-				forward($this->normalize(array('owner', $user->username)));
+				$target_guid = $page;
+				if (!$target_guid) {
+					$target_guid = elgg_get_logged_in_user_guid();
+				}
 				break;
 
 			case 'user' :
 			case 'owner' :
-				echo elgg_view('resources/wall/owner', array(
-					'username' => elgg_extract(1, $segments),
-					'post_guid' => elgg_extract(2, $segments),
-				));
-				return true;
-
-			case 'post' :
-
-				$guid = elgg_extract(1, $segments);
-
-				elgg_entity_gatekeeper($guid, 'object');
-
-				$post = get_entity($guid);
-				forward($post->getURL());
+				$username = array_shift($segments);
+				$user = get_user_by_username($username);
+				if ($user) {
+					$target_guid = $user->guid;
+				}
+				$post_guid = array_shift($segments);
+				if ($post_guid) {
+					$post_guids[] = $post_guid;
+				}
 				break;
 
 			case 'group' :
 			case 'container' :
-				echo elgg_view('resources/wall/group', array(
-					'group_guid' => elgg_extract(1, $segments),
-					'post_guid' => elgg_extract(2, $segments),
-				));
-				return true;
+				$target_guid = array_shift($segments);
+				$post_guid = array_shift($segments);
+				if ($post_guid) {
+					$post_guids[] = $post_guid;
+				}
+				break;
+
+			case 'post' :
+				$guid = array_shift($segments);
+				$post = get_entity($guid);
+				if (!$post || !in_array($post->getSubtype(), get_wall_subtypes())) {
+					return false;
+				}
+				$target_guid = $post->getContainerGUID();
+				$post_guids = array($post->guid);
+				break;
 		}
 
-		return false;
+		echo elgg_view('resources/wall', array(
+			'target_guid' => $target_guid,
+			'post_guids' => $post_guids,
+		));
+		return true;
 	}
 
 	/**

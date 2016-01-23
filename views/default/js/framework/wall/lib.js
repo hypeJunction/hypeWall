@@ -202,12 +202,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 		 */
 		formSubmit: function (event) {
 
-			if (!require.defined('hypeList')) {
-				return true;
-			}
-
 			event.preventDefault();
-			require(['hypeList']);
 
 			var $form = $(this);
 
@@ -235,7 +230,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 						$('.token-input-dropdown').hide();
 						$form.find('.wall-url').trigger('clear');
 						$form.find('textarea:first').trigger('click');
-						$('.elgg-list-river,.wall-post-list').hypeList('fetchNewItems', null, true);
+						$('.elgg-list-river,.wall-post-list').trigger('refresh');
 					}
 					if (data.system_messages) {
 						elgg.register_error(data.system_messages.error);

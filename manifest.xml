@@ -39,6 +39,7 @@
 	<suggests>
 		<type>plugin</type>
 		<name>hypeLists</name>
+		<version>3.5</version>
 	</suggests>
 	
 </plugin_manifest>
