@@ -5,7 +5,7 @@ if (!isset($vars['entity']->num_display)) {
 }
 
 if (!isset($vars['entity']->show_add_form)) {
-	$vars['entity']->show_add_form = false;
+	$vars['entity']->show_add_form = true;
 }
 
 $params = array(
