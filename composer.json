@@ -17,9 +17,9 @@
 	"extra": {
 		"installer-name": "hypeWall"
 	},
-	"require-dev": {
-		"composer/installers": "1.0.*",
-		"hypejunction/hypeapps": "4.*"
+	"require": {
+		"composer/installers": "~1.0",
+		"hypejunction/hypeapps": ">=4.*"
 	},
 	"autoload": {
 		"psr-0": {
