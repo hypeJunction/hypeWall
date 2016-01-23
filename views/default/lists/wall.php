@@ -47,7 +47,7 @@ $getter_options = array(
 	'object_guids' => $object_guids,
 	'action_types' => array('create'),
 	'wheres' => array(
-		"({$guid} IN (rv.subject_guid, rv.target_guid)
+		"({$guid} = rv.target_guid
 				OR EXISTS (SELECT 1 FROM {$dbprefix}entity_relationships WHERE guid_one = {$guid} AND relationship = 'tagged_in' AND guid_two = rv.object_guid))",
 	),
 	'base_url' => $base_url,
