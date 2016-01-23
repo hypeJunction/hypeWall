@@ -19,7 +19,7 @@
 	},
 	"require": {
 		"composer/installers": "~1.0",
-		"hypejunction/hypeapps": ">=4.*"
+		"hypejunction/hypeapps": ">=4.0"
 	},
 	"autoload": {
 		"psr-0": {
