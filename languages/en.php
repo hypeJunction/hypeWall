@@ -140,6 +140,7 @@ $english = array(
 	'wall:ownership:your' => 'on your %s',
 	'wall:ownership:owner' => 'on %s\'s %s',
 
+	'wall:widget:description' => 'Allows others to view and post on your wall',
 	'wall:widget:showaddform' => 'Show a form to add new posts',
 
 	'wall:groups:enable' => 'Enable group wall',
