@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Wall;
+
 $entity = elgg_extract('entity', $vars);
 $poster = $entity->getOwnerEntity();
 $wall_owner = $entity->getContainerEntity();
