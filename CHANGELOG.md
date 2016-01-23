@@ -1,3 +1,13 @@
+<a name="4.4.2"></a>
+## [4.4.2](https://github.com/hypeJunction/hypeWall/compare/4.4.1...v4.4.2) (2016-01-23)
+
+
+### Bug Fixes
+
+* **composer:** update dependencies ([911f0c1](https://github.com/hypeJunction/hypeWall/commit/911f0c1))
+
+
+
 <a name="4.4.1"></a>
 ## [4.4.1](https://github.com/hypeJunction/hypeWall/compare/4.4.0...v4.4.1) (2016-01-23)
 
