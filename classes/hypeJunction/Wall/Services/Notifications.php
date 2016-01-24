@@ -46,17 +46,27 @@ class Notifications {
 			$ownership = elgg_echo('wall:ownership:owner', array($wall_owner->name, $target), $language);
 		}
 
-		$notification->subject = elgg_echo('wall:new:notification:subject', array($poster->name, $ownership), $language);
-		$notification->summary = elgg_view('output/url', array(
-			'text' => elgg_echo('wall:new:notification:summary', array($ownership), $language),
+		$poster_url = elgg_view('output/url', array(
+			'text' => $poster->name,
+			'href' => $poster->getURL(),
+		));
+
+		$ownership_url = elgg_view('output/url', array(
+			'text' => $ownership,
 			'href' => $entity->getURL(),
 		));
+
+		$notification->summary = elgg_echo('wall:new:notification:subject', array($poster_url, $ownership_url), $language);
+		$notification->subject = strip_tags($notification->summary);
+
 		$notification->body = elgg_echo('wall:new:notification:message', array(
 			$poster->name,
 			$ownership,
 			$entity->formatMessage(true),
 			$entity->getURL()
 				), $language);
+
+		return $notification;
 	}
 
 	/**
@@ -139,11 +149,8 @@ class Notifications {
 				'href' => $entity->getURL(),
 			));
 
-			$subject = elgg_echo('wall:tagged:notification:subject', array($poster_url, $post_url), $language);
-			$summary = elgg_view('output/url', array(
-				'text' => $subject,
-				'href' => $entity->getURL(),
-			));
+			$summary = elgg_echo('wall:tagged:notification:subject', array($poster_url, $post_url), $language);
+			$subject = strip_tags($subject);
 			$body = elgg_echo('wall:tagged:notification:message', array(
 				$poster_url,
 				$message,
