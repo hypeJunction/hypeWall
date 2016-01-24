@@ -45,7 +45,8 @@ $english = array(
 	'wall:status:placeholder' => 'What\'s on your mind?',
 	'wall:url:placeholder' => 'Add a link',
 
-	'wall:tagged:notification:subject' => '%s tagged you in a post',
+	'wall:tagged:post' => 'a post',
+	'wall:tagged:notification:subject' => '%s tagged you in %s',
 	'wall:tagged:notification:message' => '
 		%s tagged you in a post: <br />
 		<blockquote>
