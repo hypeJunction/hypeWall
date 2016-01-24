@@ -60,8 +60,8 @@ class Notifications {
 		$notification->subject = strip_tags($notification->summary);
 
 		$notification->body = elgg_echo('wall:new:notification:message', array(
-			$poster->name,
-			$ownership,
+			$poster_url,
+			$ownership_url,
 			$entity->formatMessage(true),
 			$entity->getURL()
 				), $language);
