@@ -1,3 +1,15 @@
+<a name="4.4.3"></a>
+## [4.4.3](https://github.com/hypeJunction/hypeWall/compare/4.4.2...v4.4.3) (2016-01-24)
+
+
+### Bug Fixes
+
+* **notifications:** fix bugs and improve formatting ([531a95f](https://github.com/hypeJunction/hypeWall/commit/531a95f))
+* **notifications:** fix bugs and improve formatting ([6c9167a](https://github.com/hypeJunction/hypeWall/commit/6c9167a))
+* **notifications:** fix bugs and improve formatting ([26473ba](https://github.com/hypeJunction/hypeWall/commit/26473ba))
+
+
+
 <a name="4.4.2"></a>
 ## [4.4.2](https://github.com/hypeJunction/hypeWall/compare/4.4.1...v4.4.2) (2016-01-23)
 
