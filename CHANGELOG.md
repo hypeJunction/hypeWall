@@ -1,3 +1,13 @@
+<a name="4.4.4"></a>
+## [4.4.4](https://github.com/hypeJunction/hypeWall/compare/4.4.3...v4.4.4) (2016-01-25)
+
+
+### Bug Fixes
+
+* **notifications:** mark wall post as read with notifier when river view is rendered ([a3f7028](https://github.com/hypeJunction/hypeWall/commit/a3f7028))
+
+
+
 <a name="4.4.3"></a>
 ## [4.4.3](https://github.com/hypeJunction/hypeWall/compare/4.4.2...v4.4.3) (2016-01-24)
 
