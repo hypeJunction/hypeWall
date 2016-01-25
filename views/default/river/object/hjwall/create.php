@@ -11,3 +11,7 @@ echo elgg_view('river/item', array(
 	'message' => $object->formatMessage(),
 	'attachments' => $object->formatAttachments(),
 ));
+
+echo elgg_view('notifier/view_listener', array(
+	'entity' => $object,
+));
