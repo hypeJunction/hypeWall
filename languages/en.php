@@ -152,6 +152,9 @@ $english = array(
 	'wall:settings:status_input_type:text' => 'One-liner',
 	'wall:settings:status_input_type:plaintext' => 'Multiline (no editor)',
 	'wall:settings:status_input_type:longtext' => 'Multiline (with editor, if enabled)',
+
+	'usersettings:plugins:hypeWall' => 'Wall',
+	
 );
 
 add_translation("en", $english);
