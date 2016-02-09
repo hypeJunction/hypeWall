@@ -1,3 +1,14 @@
+<a name="4.4.5"></a>
+## [4.4.5](https://github.com/hypeJunction/hypeWall/compare/4.4.4...v4.4.5) (2016-02-09)
+
+
+### Bug Fixes
+
+* **menus:** fix usersettings menu label ([7b8330d](https://github.com/hypeJunction/hypeWall/commit/7b8330d))
+* **posts:** make wall posts likeable ([eddecba](https://github.com/hypeJunction/hypeWall/commit/eddecba))
+
+
+
 <a name="4.4.4"></a>
 ## [4.4.4](https://github.com/hypeJunction/hypeWall/compare/4.4.3...v4.4.4) (2016-01-25)
 
