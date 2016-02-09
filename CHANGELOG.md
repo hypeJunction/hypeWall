@@ -1,3 +1,17 @@
+<a name="4.4.7"></a>
+## [4.4.7](https://github.com/hypeJunction/hypeWall/compare/4.4.6...v4.4.7) (2016-02-09)
+
+
+### Bug Fixes
+
+* **lists:** always enable pagination if hypeLists is enabled ([76704b1](https://github.com/hypeJunction/hypeWall/commit/76704b1))
+
+### Features
+
+* **ajax:** instantly update wall list on ajax ([f76dc08](https://github.com/hypeJunction/hypeWall/commit/f76dc08))
+
+
+
 <a name="4.4.6"></a>
 ## [4.4.6](https://github.com/hypeJunction/hypeWall/compare/4.4.5...v4.4.6) (2016-02-09)
 
