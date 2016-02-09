@@ -40,7 +40,13 @@ $list_options = array(
 	'list_class' => implode(' ', $list_class),
 	'item_class' => implode(' ', $item_class),
 	'no_results' => $no_results,
+	'pagination' => elgg_is_active_plugin('hypeLists') || !elgg_in_context('widgets'),
+	'pagination_type' => 'infinite',
+	'base_url' => $base_url,
+	'list_id' => "wall-$guid",
+	'auto_refresh' => 30,
 );
+
 $getter_options = array(
 	'types' => 'object',
 	'subtypes' => \hypeJunction\Wall\get_wall_subtypes(),
@@ -50,9 +56,6 @@ $getter_options = array(
 		"({$guid} = rv.target_guid
 				OR EXISTS (SELECT 1 FROM {$dbprefix}entity_relationships WHERE guid_one = {$guid} AND relationship = 'tagged_in' AND guid_two = rv.object_guid))",
 	),
-	'base_url' => $base_url,
-	'list_id' => "wall-$guid",
-	'auto_refresh' => 30,
 );
 
 $options = array_merge($list_options, $options, $getter_options);
