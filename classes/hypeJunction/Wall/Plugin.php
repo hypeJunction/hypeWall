@@ -106,6 +106,8 @@ final class Plugin extends \hypeJunction\Plugin {
 			elgg_register_notification_event('object', 'thewire', array('publish'));
 			elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:hjwall', array($this->notifications, 'formatMessage'));
 			elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:thewire', array($this->notifications, 'formatMessage'));
+
+			elgg_register_plugin_hook_handler('likes:is_likable', 'object:hjwall', 'Elgg\Values::getTrue');
 		}
 
 		$action_path = $this->plugin->getPath() . '/actions/';
