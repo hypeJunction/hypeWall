@@ -1,3 +1,13 @@
+<a name="4.4.6"></a>
+## [4.4.6](https://github.com/hypeJunction/hypeWall/compare/4.4.5...v4.4.6) (2016-02-09)
+
+
+### Bug Fixes
+
+* **languages:** fix plugin name appearance in user settings ([14f2c19](https://github.com/hypeJunction/hypeWall/commit/14f2c19))
+
+
+
 <a name="4.4.5"></a>
 ## [4.4.5](https://github.com/hypeJunction/hypeWall/compare/4.4.4...v4.4.5) (2016-02-09)
 
