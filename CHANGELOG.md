@@ -1,3 +1,13 @@
+<a name="4.4.8"></a>
+## [4.4.8](https://github.com/hypeJunction/hypeWall/compare/4.4.7...v4.4.8) (2016-09-11)
+
+
+### Bug Fixes
+
+* **js:** river is once again instantly updated when hypeLists is enabled ([3712ff3](https://github.com/hypeJunction/hypeWall/commit/3712ff3))
+
+
+
 <a name="4.4.7"></a>
 ## [4.4.7](https://github.com/hypeJunction/hypeWall/compare/4.4.6...v4.4.7) (2016-02-09)
 
