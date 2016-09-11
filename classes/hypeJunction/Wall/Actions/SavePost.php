@@ -262,7 +262,11 @@ class SavePost extends Action {
 			}
 
 			if (elgg_is_xhr()) {
-				$this->result->output .= elgg_list_river(array('object_guids' => $this->post->guid));
+				$this->result->output .= elgg_list_river(array(
+					'object_guids' => $this->post->guid,
+					'pagination' => false,
+					'limit' => 0,
+				));
 			}
 
 			$this->result->addMessage(elgg_echo('wall:create:success'));

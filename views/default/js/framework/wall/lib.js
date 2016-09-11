@@ -230,8 +230,12 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 						$('.token-input-dropdown').hide();
 						$form.find('.wall-url').trigger('clear');
 						$form.find('textarea:first').trigger('click');
-						$('[data-list-id="wall-' + elgg.get_page_owner_guid() + '"] > .elgg-list').trigger('addFetchedItems', [data.output, null, true]);
-						$('.elgg-list-river,.wall-post-list').trigger('refresh', [null, true]);
+						if ($('.elgg-list-river,.wall-post-list') > 1) {
+							$('[data-list-id="wall-' + elgg.get_page_owner_guid() + '"] > .elgg-list').children('.elgg-list').trigger('addFetchedItems', [data.output, null, true]);
+						} else {
+							$('.elgg-list-river,.wall-post-list').trigger('addFetchedItems', [data.output, null, true]);
+						}
+						$('.elgg-list-river,.wall-post-list').trigger('refresh', [null, false]);
 					}
 					if (data.system_messages) {
 						elgg.register_error(data.system_messages.error);
