@@ -1,0 +1,132 @@
+.elgg-menu-wall-filter {
+  text-align: right;
+  margin: 10px;
+}
+.elgg-menu-wall-filter .elgg-icon {
+  font-size: 20px;
+  color: inherit;
+}
+.elgg-menu-wall-filter > li {
+  display: inline-block;
+}
+.elgg-menu-wall-filter > li a {
+  color: #cccccc;
+}
+.elgg-menu-wall-filter > li.elgg-state-selected a,
+.elgg-menu-wall-filter > li a:hover {
+  color: #008fb4;
+}
+
+.wall-find-me {
+  float: right;
+  font-weight: normal;
+  font-size: 90%;
+}
+
+.wall-tagged-friends,
+.wall-tagged-location,
+.wall-tagged-attachments {
+  font-size: 90%;
+  color: #666;
+}
+
+.wall-status-counter {
+  text-align: right;
+  left: 0;
+  bottom: 0;
+  padding: 0 8px;
+  font-size: 11px;
+  line-height: 20px;
+  vertical-align: middle;
+  color: #666;
+}
+.wall-status-counter .wall-chars-counter {
+  margin: 0 5px 0 0;
+  font-size: 12px;
+}
+.wall-status-counter.wall-status-counter-overflow .wall-chars-counter {
+  color: darkred;
+  font-weight: bold;
+}
+
+.wall-attachments,
+.wall-url-preview {
+  margin: 10px 0;
+}
+.wall-attachments img,
+.wall-attachments iframe,
+.wall-attachments object,
+.wall-attachments embed,
+.wall-url-preview img,
+.wall-url-preview iframe,
+.wall-url-preview object,
+.wall-url-preview embed {
+  max-width: 100%;
+}
+
+.wall-attachments-gallery {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.wall-attachments-gallery > li {
+  padding: 2px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.wall-attachments-gallery img {
+  max-width: 300px;
+  max-height: 200px;
+  vertical-align: middle;
+}
+
+.elgg-widget .wall-attachments-gallery img {
+  max-width: 100%;
+}
+
+.wall-widget-list > li {
+  padding: 10px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.elgg-menu-wall-tools > li {
+  margin: 2px;
+}
+
+.elgg-menu-wall-tools > li > a {
+  padding: 2px;
+  background: #eee;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  line-height: 26px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+
+.elgg-menu-wall-tools > li > a .elgg-icon {
+  color: #666;
+  line-height: 26px;
+  vertical-align: middle;
+}
+
+.elgg-menu-wall-tools > li > a:hover {
+  background: #dcdcdc;
+}
+
+.wall-field-url .elgg-input-single-checkbox {
+  font-weight: normal;
+  font-size: 90%;
+  margin: 5px;
+  display: block;
+}

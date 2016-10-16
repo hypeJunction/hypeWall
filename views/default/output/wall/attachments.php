@@ -1,71 +1,55 @@
 <?php
-
 /**
  * Displays a list of attached entities
  * First shows a gallery/grid of images, followed by a list of other entities
  * 
  * @uses $vars['entity'] Entity, whose attachments are being displayed
  */
-
-namespace hypeJunction\Wall;
-
-elgg_push_context('wall-attachments');
+if (!is_callable('hypeapps_get_attachments')) {
+	return;
+}
 
 $entity = elgg_extract('entity', $vars);
 
-// Show images first
-$options = array(
-	'relationship' => 'attached',
-	'relationship_guid' => $entity->guid,
-	'inverse_relationship' => true,
-	'metadata_name_value_pairs' => array(
-		'name' => 'simpletype', 'value' => 'image',
-	),
-	'count' => true,
+$attachments = hypeapps_get_attachments($entity, [
+	'batch' => true,
 	'limit' => 0,
-);
-$count = elgg_get_entities_from_relationship($options);
+		]);
 
-$image_guids = array(ELGG_ENTITIES_NO_VALUE);
+$images = [];
+$non_images = [];
 
-if ($count) {
-	$class = 'elgg-gallery wall-attachments-gallery';
-	if ($count <= 6) {
-		if ($count % 2 == 0) {
-			$class .= ' wall-block-grid-2';
-		} else {
-			$class .= ' wall-block-grid-3';
-		}
+foreach ($attachments as $attachment) {
+	if ($attachment instanceof ElggFile && $attachment->simpletype == 'image') {
+		$images[] = $attachment;
 	} else {
-		$class .= ' wall-block-grid-4';
+		$non_images[] = $attachment;
 	}
-	
-	unset($options['count']);
-	$images = elgg_get_entities_from_relationship($options);
-
-	echo "<ul class=\"$class\">";
-	foreach ($images as $image) {
-		$image_guids[] = $image->guid;
-		echo '<li class="elgg-item">';
-		echo elgg_view_entity_icon($image, 'large', array(
-			'class' => 'wall-attachment-image-preview',
-		));
-		echo '</li>';
-	}
-	echo '</ul>';
 }
 
-// List other attachments
-$in_image_guids = implode(',', $image_guids);
-$options = array(
-	'list_class' => 'wall-attachments-list',
-	'full_view' => false,
-	'relationship' => 'attached',
-	'relationship_guid' => $entity->guid,
-	'inverse_relationship' => true,
-	'wheres' => array("e.guid NOT IN ($in_image_guids)"),
-	'limit' => 0,
-);
-echo elgg_list_entities_from_relationship($options);
+elgg_push_context('wall-attachments');
+
+if (empty($non_images)) {
+	echo elgg_view_entity_list($images, [
+		'full_view' => false,
+		'pagination' => false,
+		'list_type' => 'gallery',
+		'gallery_class' => 'wall-attachments-gallery',
+		'item_view' => 'output/wall/image',
+		'rel' => "wall-popup-{$entity->guid}",
+	]);
+} else {
+	echo elgg_view_entity_list(array_merge($images, $non_images), [
+		'full_view' => false,
+		'pagination' => false,
+		'list_class' => 'wall-attachments-list',
+	]);
+}
 
 elgg_pop_context();
+?>
+<script>
+	require(['output/wall/attachments'], function (lib) {
+		lib.init();
+	});
+</script>

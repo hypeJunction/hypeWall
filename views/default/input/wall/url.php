@@ -1,12 +1,17 @@
 <?php
 
-namespace hypeJunction\Wall;
+echo elgg_view('input/url', $vars);
 
-if (isset($vars['class'])) {
-	$vars['class'] = "{$vars['class']} wall-url";
-} else {
-	$vars['class'] = 'wall-url';
+if (elgg_is_active_plugin('bookmarks')) {
+	echo elgg_view('input/checkbox', [
+		'checked' => false,
+		'name' => 'make_bookmark',
+		'value' => 1,
+		'label' => elgg_echo('wall:make_bookmark'),
+		'class' => 'wall-make-bookmark-checkbox',
+	]);
 }
 
-echo '<label>' . elgg_echo('wall:url') . '</label>';
-echo elgg_view('input/url', $vars);
+echo elgg_format_element('div', [
+	'class' => 'wall-url-preview',
+]);

@@ -10,7 +10,7 @@ $target = get_entity($target_guid);
 
 elgg_set_page_owner_guid($target->guid);
 
-elgg_push_breadcrumb(elgg_echo('wall'), hypeWall()->router->getPageHandlerId());
+elgg_push_breadcrumb(elgg_echo('wall'), 'wall');
 
 if (is_callable(array($target, 'getDisplayName'))) {
 	$name = $target->getDisplayName();
@@ -18,7 +18,7 @@ if (is_callable(array($target, 'getDisplayName'))) {
 	$name = $target instanceof ElggObject ? $target->title : $target->name;
 }
 $title = elgg_echo('wall:owner', array($name));
-elgg_push_breadcrumb($title, hypeWall()->router->normalize($target->guid));
+elgg_push_breadcrumb($title, "wall/$target->guid");
 
 $content = elgg_view('lists/wall', array(
 	'entity' => $target,

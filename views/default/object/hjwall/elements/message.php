@@ -1,22 +1,23 @@
 <?php
 
+use hypeJunction\Wall\Post;
+
 /**
  * Outputs formatted wall message
- * @uses $vars['entity'] Entity (wall or wire post, or other?)
+ *
+ * @uses $vars['entity']          Wall post
  * @uses $vars['include_address'] Include attached URL address
  */
 
-namespace hypeJunction\Wall;
-
 $entity = elgg_extract('entity', $vars);
-/* @var ElggEntity $entity */
 
-if (!elgg_instanceof($entity)) {
+if (!$entity instanceof Post) {
 	return true;
 }
 
 $status = elgg_view('output/longtext', [
 	'value' => $entity->description,
+	'class' => 'wall-status',
 ]);
 
 if (elgg_view_exists('output/linkify')) {
@@ -38,7 +39,7 @@ if ($address) {
 	}
 }
 
-$tagged_friends = get_tagged_friends($entity, 'links');
+$tagged_friends = $entity->getTaggedFriends('links');
 if ($tagged_friends) {
 	$message[] = elgg_format_element('span', array(
 		'class' => 'wall-tagged-friends',

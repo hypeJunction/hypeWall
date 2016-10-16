@@ -2,9 +2,14 @@
 
 namespace hypeJunction\Wall;
 
-class Post extends \ElggObject {
+use ElggBatch;
+use ElggObject;
+use hypeJunction\BatchResult;
+use hypeJunction\Data\Property;
+use hypeJunction\Data\PropertyInterface;
 
-	const CLASSNAME = __CLASS__;
+class Post extends ElggObject {
+
 	const TYPE = 'object';
 	const SUBTYPE = 'hjwall';
 
@@ -49,7 +54,7 @@ class Post extends \ElggObject {
 	 * Prepare wall post attachments
 	 * @return string|false
 	 */
-	function formatAttachments() {
+	public function formatAttachments() {
 
 		$attachments = array();
 
@@ -72,7 +77,7 @@ class Post extends \ElggObject {
 	 * Prepare wall river summary
 	 * @return string
 	 */
-	function formatSummary() {
+	public function formatSummary() {
 
 		$subject = $this->getOwnerEntity();
 		$wall_owner = $this->getContainerEntity();
@@ -97,7 +102,6 @@ class Post extends \ElggObject {
 			$files = elgg_get_entities_from_relationship(array(
 				'relationship' => 'attached',
 				'relationship_guid' => $this->guid,
-				'inverse_relationship' => true,
 				'count' => true,
 			));
 			if ($files) {
@@ -109,7 +113,6 @@ class Post extends \ElggObject {
 					),
 					'relationship' => 'attached',
 					'relationship_guid' => $this->guid,
-					'inverse_relationship' => true,
 					'count' => true,
 				));
 				if ($files == $images) {
@@ -143,14 +146,13 @@ class Post extends \ElggObject {
 	 * @param size   $size   Icon size
 	 * @return mixed
 	 */
-	function getAttachments($format = null, $size = 'small') {
+	public function getAttachments($format = null, $size = 'small') {
 
 		$attachment_tags = array();
 
-		$attachments = new \ElggBatch('elgg_get_entities_from_relationship', array(
+		$attachments = new ElggBatch('elgg_get_entities_from_relationship', array(
 			'relationship' => 'attached',
 			'relationship_guid' => $this->guid,
-			'inverse_relationship' => true,
 			'limit' => false
 		));
 
@@ -181,11 +183,11 @@ class Post extends \ElggObject {
 	 * @param size   $size   Icon size
 	 * @return mixed
 	 */
-	function getTaggedFriends($format = null, $size = 'small') {
+	public function getTaggedFriends($format = null, $size = 'small') {
 
 		$tagged_friends = array();
 
-		$tags = new \ElggBatch('elgg_get_entities_from_relationship', array(
+		$tags = new ElggBatch('elgg_get_entities_from_relationship', array(
 			'types' => 'user',
 			'relationship' => 'tagged_in',
 			'relationship_guid' => $this->guid,
@@ -213,8 +215,8 @@ class Post extends \ElggObject {
 		return $tagged_friends;
 	}
 
-	public static function getTaggedUsersProp(\hypeJunction\Data\PropertyInterface $prop, Post $post) {
-		return new \hypeJunction\BatchResult('elgg_get_entities_from_relationship', array(
+	public static function getTaggedUsersProp(PropertyInterface $prop, Post $post) {
+		return new BatchResult('elgg_get_entities_from_relationship', array(
 			'types' => 'user',
 			'relationship' => 'tagged_in',
 			'relationship_guid' => (int) $post->guid,
@@ -223,14 +225,69 @@ class Post extends \ElggObject {
 		));
 	}
 
-	public static function getAttachmentsProp(\hypeJunction\Data\PropertyInterface $prop, Post $post) {
-		return new \hypeJunction\BatchResult('elgg_get_entities_from_relationship', array(
+	public static function getAttachmentsProp(PropertyInterface $prop, Post $post) {
+		return new BatchResult('elgg_get_entities_from_relationship', array(
 			'relationship' => 'attached',
 			'relationship_guid' => (int) $post->guid,
-			'inverse_relationship' => true,
 			'limit' => \hypeJunction\Graph\Graph::LIMIT_MAX,
 		));
 	}
 
+	public static function getGraphAlias($hook, $type, $return, $params) {
+		$return['object'][Post::SUBTYPE] = ':wall';
+		return $return;
+	}
+
+	public static function getPostProperties($hook, $type, $return, $params) {
+
+		$fields[] = 'location';
+		$fields[] = 'address';
+		$fields[] = 'tagged_users';
+		$fields[] = 'attachments';
+
+		$return[] = new Property('location', array(
+			'getter' => '\hypeJunction\Data\Values::getLocation',
+			'setter' => '\hypeJunction\Data\Values::setLocation',
+			'type' => 'string',
+			'input' => 'location',
+			'output' => 'location',
+			'validation' => array(
+				'rules' => array(
+					'type' => 'location',
+				)
+			)
+		));
+
+		$return[] = new Property('address', array(
+			'getter' => '\hypeJunction\Data\Values::getVerbatim',
+			'setter' => '\hypeJunction\Data\Values::setVerbatim',
+			'type' => 'url',
+			'input' => 'url',
+			'output' => 'url',
+			'validation' => array(
+				'rules' => array(
+					'type' => 'url',
+				)
+			),
+		));
+
+		$return[] = new Property('embed', array(
+			'attribute' => 'address',
+			'getter' => '\hypeJunction\Data\Values::getUrlMetadata',
+			'read_only' => true,
+		));
+
+		$return[] = new Property('tagged_users', array(
+			'getter' => '\hypeJunction\Wall\Post::getTaggedUsersProp',
+			'read_only' => true,
+		));
+
+		$return[] = new Property('attachments', array(
+			'getter' => '\hypeJunction\Wall\Post::getAttachmentsProp',
+			'read_only' => true,
+		));
+
+		return $return;
+	}
 
 }

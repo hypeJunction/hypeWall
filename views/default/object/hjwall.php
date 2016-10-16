@@ -21,11 +21,6 @@ $menu = elgg_view_menu('entity', array(
 	'class' => 'elgg-menu-hz',
 		));
 
-if (elgg_in_context('thewire')) {
-	$metadata = $menu;
-	$menu = '';
-}
-
 if (elgg_in_context('widgets')) {
 	$menu = $metadata = '';
 }
@@ -53,4 +48,4 @@ $user_icon = elgg_view_entity_icon($poster, 'medium', array(
 	'img_class' => 'wall-poster-avatar'
 		));
 
-echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post'));
+echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post clearfix'));

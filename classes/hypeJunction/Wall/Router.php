@@ -4,23 +4,9 @@ namespace hypeJunction\Wall;
 
 /**
  * Routing and page handling service
+ * @access private
  */
 class Router {
-
-	/**
-	 * Config
-	 * @var Config
-	 */
-	private $config;
-
-	/**
-	 * Constructor
-	 *
-	 * @param Config $config
-	 */
-	public function __construct(Config $config) {
-		$this->config = $config;
-	}
 
 	/**
 	 * Handles embedded URLs
@@ -28,7 +14,7 @@ class Router {
 	 * @param array $segments URL segments
 	 * @return boolean
 	 */
-	public function handlePages($segments) {
+	public static function handleWallPages($segments) {
 
 		$page = array_shift($segments);
 		$target_guid = false;
@@ -67,50 +53,52 @@ class Router {
 
 			case 'post' :
 				$guid = array_shift($segments);
+				elgg_entity_gatekeeper($guid, 'object', Post::SUBTYPE);
+
 				$post = get_entity($guid);
-				if (!$post || !in_array($post->getSubtype(), get_wall_subtypes())) {
-					return false;
-				}
 				$target_guid = $post->getContainerGUID();
-				$post_guids = array($post->guid);
+				$post_guids = [$post->guid];
 				break;
+
+			case 'edit' :
+				$guid = array_shift($segments);
+				echo elgg_view_resource('wall/edit', [
+					'guid' => $guid,
+				]);
+				return true;
 		}
 
 		echo elgg_view('resources/wall', array(
 			'target_guid' => $target_guid,
 			'post_guids' => $post_guids,
 		));
+
 		return true;
 	}
 
 	/**
-	 * Returns page handler ID
-	 * @return string
-	 */
-	public function getPageHandlerId() {
-		return hypeWall()->config->get('pagehandler_id');
-	}
-
-	/**
-	 * Prefixes the URL with the page handler ID and normalizes it
+	 * Give wall posts their own URL
 	 *
-	 * @param mixed $url   URL as string or array of segments
-	 * @param array $query Query params to add to the URL
-	 * @return string
+	 * @param string $hook   Equals 'entity:url'
+	 * @param string $type   Equals 'object'
+	 * @param string $return Current URL
+	 * @param array  $params Additional params
+	 * @return string Filtered URL
 	 */
-	public function normalize($url = '', $query = array()) {
+	public static function setEntityUrls($hook, $type, $return, $params) {
 
-		if (is_array($url)) {
-			$url = implode('/', $url);
+		$entity = elgg_extract('entity', $params);
+
+		if ($entity instanceof Post && $entity->getSubtype() == Post::SUBTYPE) {
+			$container = $entity->getContainerEntity();
+			if (elgg_instanceof($container, 'group')) {
+				return elgg_normalize_url("wall/group/$container->guid/$entity->guid#elgg-object-$entity->guid");
+			} else if (elgg_instanceof($container, 'user')) {
+				return elgg_normalize_url("wall/owner/$container->username/$entity->guid#elgg-object-$entity->guid");
+			}
 		}
 
-		$url = implode('/', array($this->getPageHandlerId(), $url));
-
-		if (!empty($query)) {
-			$url = elgg_http_add_url_query_elements($url, $query);
-		}
-
-		return elgg_normalize_url($url);
+		return $return;
 	}
 
 }

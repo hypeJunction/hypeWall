@@ -11,31 +11,41 @@
 
 	<author>Ismayil Khayredinov (ismayil.khayredinov@gmail.com)</author>
 	<website>http://hypeJunction.com</website>
-	<copyright>2011-2014 (c) Ismayil Khayredinov</copyright>
+	<copyright>2011-2017 (c) Ismayil Khayredinov</copyright>
 	<license>GNU Public License version 2</license>
 
 	<requires>
 		<type>elgg_release</type>
-		<version>1.8</version>
+		<version>2.3</version>
 	</requires>
 
-	<requires>
-		<type>plugin</type>
-		<name>hypeApps</name>
-	</requires>
 	<suggests>
 		<type>plugin</type>
 		<name>hypeScraper</name>
+		<version>5.0.0</version>
 	</suggests>
+	
+	<suggests>
+		<type>plugin</type>
+		<name>hypeAttachments</name>
+	</suggests>
+
+	<suggests>
+		<type>plugin</type>
+		<name>access_grant</name>
+	</suggests>
+
 	<suggests>
 		<type>plugin</type>
 		<name>elgg_tokeninput</name>
 	</suggests>
+
 	<suggests>
 		<type>plugin</type>
 		<name>hypeDropzone</name>
 		<version>4.0.0</version>
 	</suggests>
+
 	<suggests>
 		<type>plugin</type>
 		<name>hypeLists</name>

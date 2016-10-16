@@ -1,17 +1,15 @@
-define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
+define(function (require) {
+
+	var elgg = require('elgg');
+	var $ = require('jquery');
+	require('jquery.form');
 
 	var wall = {
-		distanceIncrement: 500, // 500 m
-
 		/**
 		 * Bind events to DOM elements
 		 * @returns void
 		 */
 		init: function () {
-
-			if (elgg.config.wall) {
-				return;
-			}
 
 			if (typeof navigator === 'undefined') {
 				$('.wall-find-me').hide();
@@ -26,27 +24,20 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 			$(document).on('blur.wall focusout.wall preview.wall clear.wall', '.wall-url', wall.loadUrlPreview);
 			$(document).on('submit.wall', '.wall-form', wall.formSubmit);
 
-			elgg.config.wall = true;
+			$(document).on('click', '.elgg-menu-wall-tools-default > li > a', function (e) {
+				e.preventDefault();
+				var $form = $(this).closest('form');
+				var href = $(this).data('section');
+				$(href, $form).removeClass('hidden');
+				$(this).parent().hide();
+			});
+
+			wall.init = elgg.nullFunction();
 		},
-		/**
-		 * If the geopositioning of the session is not set, try to obtain it
-		 * using the browser geolocation service
-		 *
-		 * @link http://nominatim.openstreetmap.org/reverse Uses nominatim reverse geocoding service
-		 * @see seCurrentPosition for caching logic
-		 * @todo Implement JSONP for this AMD mod
-		 * @param object position
-		 * @returns void
-		 */
 		findMe: function (e) {
 			e.preventDefault();
+			var $form = $(this).closest('form');
 			navigator.geolocation.getCurrentPosition(function (position) {
-				if (typeof elgg.session.geopositioning === 'undefined') {
-					elgg.session.geopositioning = {};
-				}
-
-				// Do not refresh position if distance is less than the increment constant
-				if (wall.calculateDistance(position.coords.latitude, position.coords.longitude, elgg.session.geopositioning.latitude, elgg.session.geopositioning.longitude) > wall.distanceIncrement) {
 				$.ajax({
 					crossDomain: true,
 					dataType: "json",
@@ -56,57 +47,12 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 						lat: position.coords.latitude,
 						lon: position.coords.longitude,
 						addressdetails: 0,
-						zoom: 12,
-						//json_callback: 'define'
+						zoom: 12
 					},
 					success: function (data) {
-						elgg.session.geopositioning.latitude = data.lat || position.coords.latitude;
-						elgg.session.geopositioning.longitude = data.long || position.coords.longitude;
-						elgg.session.geopositioning.location = data.display_name || {};
-						wall.setGeopositioning();
+						$form.find('.wall-input-location').val(data.display_name);
 					}
 				});
-				} else {
-					wall.setGeopositioning();
-				}
-			});
-		},
-		/**
-		 * Calculate distance in metres between two geographicsl points
-		 */
-		calculateDistance: function (lat1, lon1, lat2, lon2) {
-			var radlat1 = Math.PI * lat1 / 180;
-			var radlat2 = Math.PI * lat2 / 180;
-			var radlon1 = Math.PI * lon1 / 180;
-			var radlon2 = Math.PI * lon2 / 180;
-			var theta = lon1 - lon2;
-			var radtheta = Math.PI * theta / 180;
-			var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-			dist = Math.acos(dist);
-			dist = dist * 180 / Math.PI;
-			dist = dist * 60 * 1.1515 * 1.609344 * 1000;
-			return dist;
-		},
-		/**
-		 * Update session geopositioning and set wall location input values
-		 * This is used as a jsonp callbcack for nominatim lookup
-		 * @returns void
-		 */
-		setGeopositioning: function () {
-			if (typeof elgg.session.geopositioning === 'undefined') {
-				elgg.session.geopositioning = {};
-			}
-
-			if ($('.wall-location-tokeninput').length) {
-				$('.wall-location-tokeninput').bind('update', function (e) {
-					$(this).tokenInput("add", {
-						label: elgg.session.geopositioning.location,
-						value: elgg.session.geopositioning.location
-					});
-				}).trigger('update');
-			}
-			elgg.action('wall/geopositioning/update', {
-				data: elgg.session.geopositioning,
 			});
 		},
 		/**
@@ -162,6 +108,7 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 			var $preview = $form.find('.wall-url-preview');
 			var url = $elem.val();
 			if (!url) {
+				wall.loadedUrlPreview = null;
 				$preview.html('');
 			} else if (url !== wall.loadedUrlPreview) {
 				elgg.ajax('ajax/view/output/wall/url', {
@@ -174,25 +121,12 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 					},
 					success: function (data) {
 						$preview.html(data);
-						if (typeof oembed !== 'undefined') {
-							$preview.find('a[title^=oembed]').oembed(null, {
-								embedMethod: 'fill',
-								maxWidth: 500
-							});
-						}
-						$elem.closest('.wall-input-url').show();
 						wall.loadedUrlPreview = url;
 						wall.loadedPreviewHtml = data;
 					}
 				});
 			} else if (!$preview.html()) {
 				$preview.html(wall.loadedPreviewHtml);
-				if (typeof oembed !== 'undefined') {
-					$preview.find('a[title^=oembed]').oembed(null, {
-						embedMethod: 'fill',
-						maxWidth: 500
-					});
-				}
 			}
 		},
 		/**
@@ -228,8 +162,13 @@ define(['jquery', 'elgg', 'jquery.form'], function ($, elgg) {
 						}
 						$('.elgg-dropzone-preview', $form).remove();
 						$('.token-input-dropdown').hide();
-						$form.find('.wall-url').trigger('clear');
+						$form.find('.wall-url').val('').trigger('clear');
 						$form.find('textarea:first').trigger('click');
+						$form.find('[data-section]').each(function() {
+							$(this).parent().show();
+							var href = $(this).data('section');
+							$(href, $form).addClass('hidden');
+						});
 						if ($('.elgg-list-river,.wall-post-list').length > 1) {
 							$('[data-list-id="wall-' + elgg.get_page_owner_guid() + '"] > .elgg-list').children('.elgg-list').trigger('addFetchedItems', [data.output, null, true]);
 						} else {

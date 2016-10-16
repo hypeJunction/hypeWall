@@ -1,29 +1,22 @@
 <?php
 
-$input_type = hypeWall()->config->status_input_type;
-if (!$input_type) {
-	$input_type = 'plaintext';
-}
-
-if (!$vars['value'] && elgg_instanceof($vars['entity'])) {
-	$vars['value'] = $vars['entity']->description;
-}
-
-$vars['class'] = "{$vars['class']} wall-input-status-wire";
-$char_limit = hypeWall()->config->character_limit;
+$char_limit = elgg_get_plugin_setting('character_limit', 'hypeWall', 0);
 if ($char_limit > 0) {
 	$vars['data-limit'] = $char_limit;
-	$counter = '<div class="wall-status-counter" data-counter>';
-	$counter .= '<span data-counter-indicator class="wall-chars-counter">';
-	$counter .= $char_limit;
-	$counter .= '</span>';
-	$counter .= elgg_echo('wall:characters_remaining');
-	$counter .= '</div>';
+
+	$indicator = elgg_format_element('span', [
+		'data-counter-indicator' => '',
+		'class' => 'wall-chars-counter',
+	], $char_limit);
+
+	$indicator .= elgg_echo('wall:characters_remaining');
+
+	$counter = elgg_format_element('div', [
+		'class' => 'wall-status-counter',
+		'data-counter' => '',
+	], $indicator);
+
 }
 
-if (!isset($vars['name'])) {
-	$vars['name'] = 'status';
-}
-
+echo elgg_view('input/plaintext', $vars);
 echo $counter;
-echo elgg_view("input/$input_type", $vars);

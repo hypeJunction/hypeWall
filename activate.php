@@ -2,8 +2,11 @@
 
 require_once __DIR__ . '/autoloader.php';
 
+use hypeJunction\Wall\Post;
+
 $subtypes = array(
-	hypeJunction\Wall\Post::SUBTYPE => hypeJunction\Wall\Post::CLASSNAME
+	Post::SUBTYPE => Post::class,
+	ElggWire::SUBTYPE => ElggWire::class,
 );
 
 foreach ($subtypes as $subtype => $class) {

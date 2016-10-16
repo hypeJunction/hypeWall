@@ -29,7 +29,7 @@ $list_class = (array) elgg_extract('list_class', $vars, array());
 $list_class[] = 'wall-post-list';
 
 $item_class = (array) elgg_extract('item_class', $vars, array());
-$item_class[] = 'wall-post';
+$item_class[] = 'wall-post clearfix';
 
 $dbprefix = elgg_get_config('dbprefix');
 
@@ -44,12 +44,12 @@ $list_options = array(
 	'pagination_type' => 'infinite',
 	'base_url' => $base_url,
 	'list_id' => "wall-$guid",
-	'auto_refresh' => 30,
+	//'auto_refresh' => 30,
 );
 
 $getter_options = array(
 	'types' => 'object',
-	'subtypes' => \hypeJunction\Wall\get_wall_subtypes(),
+	'subtypes' => hypeJunction\Wall\Post::SUBTYPE,
 	'object_guids' => $object_guids,
 	'action_types' => array('create'),
 	'wheres' => array(

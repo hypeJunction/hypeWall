@@ -1,88 +1,198 @@
 <?php
 
-/**
- * Form that allows users to update their status
- */
-
-namespace hypeJunction\Wall;
-
-$status = elgg_view('input/wall/status', array(
+elgg_register_menu_item('wall-filter', array(
 	'name' => 'status',
-	'class' => 'wall-input-status',
-	'placeholder' => elgg_echo('wall:status:placeholder')
-		));
-
-$url = elgg_view('input/wall/url', array(
-	'name' => 'address',
-	'placeholder' => elgg_echo('wall:url:placeholder'),
-		));
-
-if (WALL_GEOPOSITIONING) {
-	$location = '<div class="wall-input-tag-location">';
-	$location .= elgg_view('input/wall/location', array(
-		'name' => 'location',
-		'data-hint-text' => elgg_echo('wall:tag:location:hint'),
-	));
-	$location .= '</div>';
-}
-
-if (WALL_TAG_FRIENDS) {
-	$friends = '<div class="wall-input-tag-friends">';
-	$friends .= elgg_view('input/wall/friend', array(
-		'name' => 'friend_guids',
-		'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
-	));
-	$friends .= '</div>';
-}
-
-$footer_controls = array();
-$footer_controls['access'] = elgg_view('input/access', array(
-	'class' => 'wall-access',
-	'name' => 'access_id'
-		));
-
-$footer_controls['submit'] = elgg_view('input/submit', array(
-	'value' => elgg_echo('wall:post'),
-	'class' => 'elgg-button elgg-button-submit',
-		));
-
-$controls = '';
-foreach ($footer_controls as $name => $footer_control) {
-	$controls .= elgg_format_element('li', array(
-		'class' => "wall-bar-control-$name",
-			), $footer_control);
-}
-
-$footer .= elgg_format_element('ul', array(
-	'class' => 'wall-bar-controls',
-		), $controls);
-
-$footer = elgg_format_element('fieldset', array(
-	'class' => 'elgg-foot text-right',
-		), $footer);
-
-$hidden .= elgg_view('input/hidden', array(
-	'name' => 'origin',
-	'value' => 'wall',
-		));
-
-$hidden .= elgg_view('input/hidden', array(
-	'name' => 'container_guid',
-	'value' => elgg_extract('container_guid', $vars, elgg_get_page_owner_guid())
+	'text' => elgg_view_icon('comment', ['class' => 'wall-icon wall-icon-status']),
+	'title' => elgg_echo('wall:status'),
+	'href' => '#wall-form-status',
+	'link_class' => 'wall-tab',
+	'selected' => true,
+	'priority' => 100
 ));
 
-$html = <<<HTML
-	<fieldset class="wall-fieldset-status">$status</fieldset>
-	<fieldset class="wall-fieldset-attachment">
-		<div class="wall-input-url hidden">$url</div>
-		<div class="wall-url-preview"></div>
-	</fieldset>
-	<fieldset class="wall-fieldset-tags">
-		$location
-		$friends
-	</fieldset>
-	$footer
-	$hidden
-HTML;
+$entity = elgg_extract('entity', $vars);
 
-echo $html;
+$tools = [];
+$fields = [];
+
+$fields[] = [
+	'#type' => 'wall/status',
+	'#class' => 'wall-field-status',
+	'class' => 'wall-input-status',
+	'name' => 'status',
+	'value' => $entity ? $entity->description : '',
+	'placeholder' => elgg_echo('wall:status:placeholder'),
+	'rows' => 2,
+	'entity' => $entity,
+];
+
+if (elgg_get_plugin_setting('url', 'hypeWall')) {
+	$fields[] = [
+		'#type' => 'wall/url',
+		'#label' => elgg_echo('wall:url'),
+		'#class' => 'wall-field-url hidden',
+		'name' => 'address',
+		'value' => $entity ? $entity->address : '',
+		'class' => 'wall-url',
+		'placeholder' => elgg_echo('wall:url:placeholder'),
+		'entity' => $entity,
+	];
+
+	$tools[] = [
+		'name' => 'add-url',
+		'text' => elgg_view_icon('link'),
+		'title' => elgg_echo('wall:url'),
+		'data-section' => '.wall-field-url',
+	];
+}
+
+if (elgg_get_plugin_setting('photo', 'hypeWall') && elgg_is_active_plugin('hypeAttachments')) {
+
+	$fields[] = [
+		'#type' => 'wall/file',
+		'#label' => elgg_echo('wall:photo'),
+		'#class' => 'wall-field-photo hidden',
+		'name' => 'upload_guids',
+		'class' => 'wall-photo',
+		'entity' => $entity,
+	];
+
+	$tools[] = [
+		'name' => 'add-photo',
+		'text' => elgg_view_icon('camera'),
+		'title' => elgg_echo('wall:photo'),
+		'data-section' => '.wall-field-photo',
+	];
+}
+
+if (elgg_get_plugin_setting('content', 'hypeWall') && elgg_is_active_plugin('hypeAttachments')) {
+	$fields[] = [
+		'#type' => 'wall/attachment',
+		'#label' => elgg_echo('wall:attachment'),
+		'#class' => 'wall-field-content hidden',
+		'name' => 'attachment_guids',
+		'class' => 'wall-content',
+		'entity' => $entity,
+	];
+
+	$tools[] = [
+		'name' => 'add-content',
+		'text' => elgg_view_icon('clipboard'),
+		'title' => elgg_echo('wall:attachment'),
+		'data-section' => '.wall-field-content',
+	];
+}
+
+if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
+	$find_me = elgg_view('output/url', [
+		'href' => '#',
+		'text' => elgg_echo('wall:find_me'),
+		'title' => elgg_echo('wall:tag:location:findme'),
+		'class' => 'wall-find-me',
+		'entity' => $entity,
+	]);
+
+	$fields[] = [
+		'#type' => 'location',
+		'#label' => $find_me . elgg_echo('wall:location'),
+		'#class' => 'wall-field-location hidden',
+		'class' => 'wall-input-location',
+		'name' => 'location',
+		'value' => $entity ? $entity->location : '',
+		'placeholder' => elgg_echo('wall:tag:location:hint'),
+		'entity' => $entity,
+	];
+
+	$tools[] = [
+		'name' => 'add-location',
+		'text' => elgg_view_icon('map-marker'),
+		'title' => elgg_echo('wall:location'),
+		'data-section' => '.wall-field-location',
+	];
+}
+
+if (elgg_get_plugin_setting('tag_friends', 'hypeWall')) {
+	$fields[] = [
+		'#type' => 'wall/friend',
+		'#label' => elgg_echo('wall:tag_friends'),
+		'#class' => 'wall-field-friends hidden',
+		'name' => 'friend_guids',
+		'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
+		'entity' => $entity,
+	];
+	$tools[] = [
+		'name' => 'tag-friends',
+		'text' => elgg_view_icon('user-plus'),
+		'title' => elgg_echo('wall:tag_friends'),
+		'data-section' => '.wall-field-friends',
+	];
+}
+
+if (elgg_get_plugin_setting('tags', 'hypeWall')) {
+	$fields[] = [
+		'#type' => 'tags',
+		'#label' => elgg_echo('wall:tags'),
+		'#class' => 'wall-field-tags hidden',
+		'name' => 'tags',
+		'value' => $entity ? $entity->tags : '',
+		'class' => 'wall-tags',
+		'entity' => $entity,
+	];
+
+	$tools[] = [
+		'name' => 'add-tags',
+		'text' => elgg_view_icon('tags'),
+		'title' => elgg_echo('wall:tags'),
+		'data-section' => '.wall-field-tags',
+	];
+}
+
+$fields[] = [
+	'#type' => 'hidden',
+	'name' => 'origin',
+	'value' => 'wall',
+];
+
+$fields[] = [
+	'#type' => 'hidden',
+	'name' => 'guid',
+	'value' => $entity->guid,
+];
+
+$fields[] = [
+	'#type' => 'hidden',
+	'name' => 'container_guid',
+	'value' => $entity ? $entity->container_guid : elgg_extract('container_guid', $vars, elgg_get_page_owner_guid()),
+];
+
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
+}
+
+$footer = elgg_view_menu('wall-tools', [
+	'class' => 'elgg-menu-hz float',
+	'sort_by' => 'priority',
+	'items' => $tools,
+		]);
+
+$footer .= elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'justify' => 'right',
+	'fields' => [
+		[
+			'#type' => 'access',
+			'name' => 'access_id',
+			'value' => $entity ? $entity->access_id : get_default_access(),
+			'class' => 'wall-access',
+		],
+		[
+			'#type' => 'submit',
+			'value' => elgg_echo('wall:post'),
+		],
+	],
+		]);
+
+elgg_set_form_footer($footer);
+
+
