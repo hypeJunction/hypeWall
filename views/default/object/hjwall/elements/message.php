@@ -15,7 +15,10 @@ if (!elgg_instanceof($entity)) {
 	return true;
 }
 
-$status = $entity->description;
+$status = elgg_view('output/longtext', [
+	'value' => $entity->description,
+]);
+
 if (elgg_view_exists('output/linkify')) {
 	$status = elgg_view('output/linkify', array(
 		'value' => $status,
