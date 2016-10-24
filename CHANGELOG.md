@@ -1,3 +1,15 @@
+<a name="4.4.9"></a>
+## [4.4.9](https://github.com/hypeJunction/hypeWall/compare/4.4.8...v4.4.9) (2016-10-24)
+
+
+### Bug Fixes
+
+* **input:** do not strip tags from the status ([9bf63b4](https://github.com/hypeJunction/hypeWall/commit/9bf63b4))
+* **js:** add missing length check ([9107f01](https://github.com/hypeJunction/hypeWall/commit/9107f01))
+* **output:** output wall status via longtext output ([fcab534](https://github.com/hypeJunction/hypeWall/commit/fcab534))
+
+
+
 <a name="4.4.8"></a>
 ## [4.4.8](https://github.com/hypeJunction/hypeWall/compare/4.4.7...v4.4.8) (2016-09-11)
 
