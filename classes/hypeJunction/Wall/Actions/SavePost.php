@@ -40,7 +40,6 @@ class SavePost extends Action {
 
 		$this->post = get_entity($this->guid);
 		$this->poster = elgg_get_logged_in_user_entity();
-		$this->status = ($this->status) ? strip_tags($this->status) : '';
 
 		// GUIDs of friends that were tagged in the post
 		if (!is_array($this->friend_guids)) {
