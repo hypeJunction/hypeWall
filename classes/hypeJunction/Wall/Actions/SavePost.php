@@ -264,6 +264,7 @@ class SavePost extends Action {
 				$this->result->output .= elgg_list_river(array(
 					'object_guids' => $this->post->guid,
 					'pagination' => false,
+					'pagination_type' => false,
 					'limit' => 0,
 				));
 			}
