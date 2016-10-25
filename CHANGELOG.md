@@ -1,3 +1,13 @@
+<a name="4.4.10"></a>
+## [4.4.10](https://github.com/hypeJunction/hypeWall/compare/4.4.9...v4.4.10) (2016-10-25)
+
+
+### Bug Fixes
+
+* **js:** ensure that post action does not wrap the list ([27a5f0c](https://github.com/hypeJunction/hypeWall/commit/27a5f0c))
+
+
+
 <a name="4.4.9"></a>
 ## [4.4.9](https://github.com/hypeJunction/hypeWall/compare/4.4.8...v4.4.9) (2016-10-24)
 
