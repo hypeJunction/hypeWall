@@ -1,3 +1,13 @@
+<a name="4.4.11"></a>
+## [4.4.11](https://github.com/hypeJunction/hypeWall/compare/4.4.10...v4.4.11) (2016-11-30)
+
+
+### Bug Fixes
+
+* **photos:** fix issues with processing file uploads ([ab5f001](https://github.com/hypeJunction/hypeWall/commit/ab5f001)), closes [#27](https://github.com/hypeJunction/hypeWall/issues/27)
+
+
+
 <a name="4.4.10"></a>
 ## [4.4.10](https://github.com/hypeJunction/hypeWall/compare/4.4.9...v4.4.10) (2016-10-25)
 
