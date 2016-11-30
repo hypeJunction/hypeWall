@@ -189,13 +189,22 @@ class SavePost extends Action {
 
 		// files being uploaded via $_FILES
 		$uploads = hypeApps()->uploader->handle('upload_guids');
+		$uploaded_file_guids = [];
 		if ($uploads) {
 			foreach ($uploads as $upload) {
-				if ($upload->guid) {
-					$this->upload_guids[] = $upload->guid;
+				if ($upload instanceof \ElggFile) {
+					$file_obj = $upload;
+				} else if ($upload instanceof \hypeJunction\Files\Upload) {
+					$file_obj = $upload->file;
+				}
+				if ($file_obj->guid) {
+					$uploaded_file_guids[] = $file_obj->guid;
 				}
 			}
 		}
+
+		// Something is broken in the hypeApps setter, so doing this hack for now
+		$this->upload_guids = array_merge($this->upload_guids, $uploaded_file_guids);
 
 		if (!empty($this->upload_guids)) {
 			foreach ($this->upload_guids as $upload_guid) {
