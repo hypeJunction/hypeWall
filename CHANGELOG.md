@@ -1,3 +1,22 @@
+<a name="5.0.0"></a>
+# [5.0.0](https://github.com/hypeJunction/hypeWall/compare/4.4.11...v5.0.0) (2017-02-28)
+
+
+### Features
+
+* **releases:** upgrade to Elgg 2.3 ([4b76c9f](https://github.com/hypeJunction/hypeWall/commit/4b76c9f))
+
+
+### BREAKING CHANGES
+
+* releases: Now requires Elgg 2.2
+Drops hypeApps requirement, subsequently no longer supports
+certain APIs, no longer extends and implements hypeApps classes
+and interfaces.
+Most of the views have been rewritten to improved user experience.
+
+
+
 <a name="4.4.11"></a>
 ## [4.4.11](https://github.com/hypeJunction/hypeWall/compare/4.4.10...v4.4.11) (2016-11-30)
 
