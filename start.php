@@ -58,11 +58,6 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('graph:properties', "object:$subtype", [Post::class, 'getPostProperties']);
 });
 
-elgg_register_plugin_hook_handler('upgrade', 'system', function() {
-
-	if (!elgg_is_admin_logged_in()) {
-		return;
-	}
-
+elgg_register_event_handler('upgrade', 'system', function() {
 	require_once __DIR__ . '/lib/upgrades.php';
 });

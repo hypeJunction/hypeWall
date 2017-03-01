@@ -2,9 +2,11 @@
 
 use hypeJunction\Wall\Post;
 
+if (!elgg_is_admin_logged_in()) {
+	return;
+}
+
 run_function_once('wall_upgrade_20140211');
-run_function_once('wall_upgrade_20161016a');
-run_function_once('wall_upgrade_20161016b');
 
 function wall_upgrade_20140211() {
 
@@ -170,12 +172,12 @@ function wall_upgrade_20140211() {
 	elgg_set_ignore_access($ia);
 }
 
-/**
- * Migrate thewire posts made on the wall
- * In 5.0, support for using the wall to post to the wire has been dropped
- */
-function wall_upgrade_20161016a() {
+if (!elgg_get_plugin_setting('migrate_wire_to_wall', 'hypeWall')) {
 
+	/**
+	 * Migrate thewire posts made on the wall
+	 * In 5.0, support for using the wall to post to the wire has been dropped
+	 */
 	$posts = new ElggBatch('elgg_get_entities_from_metadata', [
 		'types' => 'object',
 		'subtypes' => 'thewire',
@@ -210,13 +212,17 @@ function wall_upgrade_20161016a() {
 			WHERE object_type = 'object' AND object_id = $post->guid
 		");
 	}
+
+	system_message('Wire posts made through the wall have been migrated to wall posts');
+
+	elgg_set_plugin_setting('migrate_wire_to_wall', time(), 'hypeWall');
 }
 
-/**
- * Reverse attached relationship to be consistent with hypeAttachments
- */
-function wall_upgrade_20161016b() {
+if (!elgg_get_plugin_setting('reverse_attachments', 'hypeWall')) {
 
+	/**
+	 * Reverse attached relationship to be consistent with hypeAttachments
+	 */
 	$dbprefix = elgg_get_config('dbprefix');
 	$posts = new ElggBatch('elgg_get_entities', [
 		'type' => 'object',
@@ -236,8 +242,11 @@ function wall_upgrade_20161016b() {
 		$result = update_data("
 			UPDATE {$dbprefix}entity_relationships
 			SET guid_two = guid_one, guid_one = $post->guid
-			WHERE guid_two = $post->guid AND relationship = attached
+			WHERE guid_two = $post->guid AND relationship = 'attached'
 		");
 	}
-	
+
+	system_message('Wall attachment relationship direction has been reversed for consistency with other plugins');
+
+	elgg_set_plugin_setting('reverse_attachments', time(), 'hypeWall');
 }
