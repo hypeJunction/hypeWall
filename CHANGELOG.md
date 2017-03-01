@@ -1,3 +1,15 @@
+<a name="5.0.1"></a>
+## [5.0.1](https://github.com/hypeJunction/hypeWall/compare/5.0.0...v5.0.1) (2017-03-01)
+
+
+### Bug Fixes
+
+* **forms:** improved edit post experience ([5a0d439](https://github.com/hypeJunction/hypeWall/commit/5a0d439))
+* **upgrade:** upgrade scripts now run as they should ([eebbbcc](https://github.com/hypeJunction/hypeWall/commit/eebbbcc))
+* **views:** object listing no longer calls removed functions ([f6b962d](https://github.com/hypeJunction/hypeWall/commit/f6b962d))
+
+
+
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/hypeJunction/hypeWall/compare/4.4.11...v5.0.0) (2017-02-28)
 
