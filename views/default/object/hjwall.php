@@ -1,51 +1,68 @@
 <?php
 
-namespace hypeJunction\Wall;
+use hypeJunction\Wall\Post;
 
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof Post) {
+	return;
+}
+
 $poster = $entity->getOwnerEntity();
 $wall_owner = $entity->getContainerEntity();
 
-$message = format_wall_message($entity);
-$content = '<div class="wall-message">' . $message . '</div>';
+$content = '';
 
-$attachments = format_wall_attachments($entity);
+$message = $entity->formatMessage();
+if ($message) {
+	$content .= elgg_format_element('div', [
+		'class' => 'wall-message',
+			], $message);
+}
+
+$attachments = $entity->formatAttachments();
 if ($attachments) {
-	$content .= '<div class="wall-attachments">' . $attachments . '</div>';
+	$content .= elgg_format_element('div', [
+		'class' => 'wall-attachments',
+			], $attachments);
 }
 
-$menu = elgg_view_menu('entity', array(
-	'entity' => $entity,
-	'handler' => 'wall',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-		));
-
-if (elgg_in_context('widgets')) {
-	$menu = $metadata = '';
+$menu = '';
+if (!elgg_in_context('widgets')) {
+	$menu = elgg_view_menu('entity', array(
+		'entity' => $entity,
+		'handler' => 'wall',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	));
 }
 
-$content .= $menu;
-
-if (elgg_extract('full_view', $vars, false)) {
-	$content .= elgg_view_comments($entity);
-}
-
-$params = array(
-	'entity' => $entity,
-	'title' => false,
-	'metadata' => $metadata,
-	'tags' => false,
-	'subtitle' => format_wall_summary($entity),
-	'content' => $content,
-);
-
-$params = $params + $vars;
-$content = '<div class="wall-bubble">' . elgg_view('object/elements/summary', $params) . '</div>';
-
+$subtitle = $entity->formatSummary();
 $user_icon = elgg_view_entity_icon($poster, 'medium', array(
 	'use_hover' => false,
 	'img_class' => 'wall-poster-avatar'
 		));
 
-echo elgg_view_image_block($user_icon, $content, array('class' => 'wall-post clearfix'));
+if (elgg_extract('full_view', $vars, false)) {
+	$summary = elgg_view('object/elements/summary', [
+		'entity' => $entity,
+		'title' => false,
+		'metadata' => $menu,
+		'subtitle' => $subtitle,
+	]);
+
+	echo elgg_view('object/elements/full', [
+		'entity' => $entity,
+		'summary' => $summary,
+		'icon' => $icon,
+		'body' => $content . elgg_view_comments($entity),
+	]);
+} else {
+	echo elgg_view('object/elements/summary', [
+		'entity' => $entity,
+		'title' => false,
+		'metadata' => $menu,
+		'subtitle' => $subtitle,
+		'content' => $content,
+		'icon' => $user_icon,
+	]);
+}
