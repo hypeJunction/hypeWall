@@ -12,27 +12,22 @@ elgg_set_page_owner_guid($target->guid);
 
 elgg_push_breadcrumb(elgg_echo('wall'), 'wall');
 
-if (is_callable(array($target, 'getDisplayName'))) {
-	$name = $target->getDisplayName();
-} else {
-	$name = $target instanceof ElggObject ? $target->title : $target->name;
-}
-$title = elgg_echo('wall:owner', array($name));
+$title = elgg_echo('wall:owner', [$target->getDisplayName()]);
 elgg_push_breadcrumb($title, "wall/$target->guid");
 
-$content = elgg_view('lists/wall', array(
+$content = elgg_view('lists/wall', [
 	'entity' => $target,
 	'post_guids' => $post_guids,
-		));
+		]);
 
 if (elgg_is_xhr()) {
 	echo $content;
 } else {
-	$layout = elgg_view_layout('content', array(
+	$layout = elgg_view_layout('content', [
 		'title' => $title,
 		'content' => $content,
 		'filter' => false,
-	));
+	]);
 
 	echo elgg_view_page($title, $layout);
 }
