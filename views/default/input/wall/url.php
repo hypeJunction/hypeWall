@@ -12,6 +12,14 @@ if (elgg_is_active_plugin('bookmarks')) {
 	]);
 }
 
+$preview = '';
+$value = elgg_extract('value', $vars);
+if ($value) {
+	$preview = elgg_view('output/wall/url', [
+		'value' => $value,
+	]);
+}
+
 echo elgg_format_element('div', [
 	'class' => 'wall-url-preview',
-]);
+], $preview);

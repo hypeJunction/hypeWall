@@ -27,7 +27,7 @@ if ($entity) {
 
 $forms = elgg_view_form('wall/status', array(
 	'id' => 'wall-form-status',
-	'class' => 'wall-form',
+	'class' => ['wall-form', $entity ? 'wall-form-edit' : ''],
 		), $vars);
 
 if (!$entity) {

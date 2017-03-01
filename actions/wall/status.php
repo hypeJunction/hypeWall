@@ -43,6 +43,14 @@ if (is_callable('hypeapps_extract_tokens')) {
 	}
 }
 
+$tags = array_map(function($tag) {
+	$tag = trim($tag);
+	if (strpos($tag, '#') === 0) {
+		$tag = substr($tag, 1);
+	}
+	return $tag;
+}, $tags);
+
 if (empty($description) && empty($address) && empty($attachment_guids) && empty($upload_guids)) {
 	return elgg_error_response(elgg_echo('wall:error:empty_form'));
 }

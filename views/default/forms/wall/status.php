@@ -20,19 +20,21 @@ $fields[] = [
 	'#class' => 'wall-field-status',
 	'class' => 'wall-input-status',
 	'name' => 'status',
-	'value' => $entity ? $entity->description : '',
+	'value' => $entity ? $entity->description : get_input('status'),
 	'placeholder' => elgg_echo('wall:status:placeholder'),
 	'rows' => 2,
 	'entity' => $entity,
 ];
 
 if (elgg_get_plugin_setting('url', 'hypeWall')) {
+
+	$value = $entity ? $entity->address : get_input('address');
 	$fields[] = [
 		'#type' => 'wall/url',
 		'#label' => elgg_echo('wall:url'),
-		'#class' => 'wall-field-url hidden',
+		'#class' => ['wall-field-url', !$value ? 'hidden' : ''],
 		'name' => 'address',
-		'value' => $entity ? $entity->address : '',
+		'value' => $value,
 		'class' => 'wall-url',
 		'placeholder' => elgg_echo('wall:url:placeholder'),
 		'entity' => $entity,
@@ -43,6 +45,7 @@ if (elgg_get_plugin_setting('url', 'hypeWall')) {
 		'text' => elgg_view_icon('link'),
 		'title' => elgg_echo('wall:url'),
 		'data-section' => '.wall-field-url',
+		'item_class' => $value ? 'hidden' : '',
 	];
 }
 
@@ -84,6 +87,7 @@ if (elgg_get_plugin_setting('content', 'hypeWall') && elgg_is_active_plugin('hyp
 }
 
 if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
+	$value = $entity ? $entity->location : get_input('address');
 	$find_me = elgg_view('output/url', [
 		'href' => '#',
 		'text' => elgg_echo('wall:find_me'),
@@ -95,10 +99,10 @@ if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
 	$fields[] = [
 		'#type' => 'location',
 		'#label' => $find_me . elgg_echo('wall:location'),
-		'#class' => 'wall-field-location hidden',
+		'#class' => ['wall-field-location', !$value ? 'hidden' : ''],
 		'class' => 'wall-input-location',
 		'name' => 'location',
-		'value' => $entity ? $entity->location : '',
+		'value' => $value,
 		'placeholder' => elgg_echo('wall:tag:location:hint'),
 		'entity' => $entity,
 	];
@@ -108,6 +112,7 @@ if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
 		'text' => elgg_view_icon('map-marker'),
 		'title' => elgg_echo('wall:location'),
 		'data-section' => '.wall-field-location',
+		'item_class' => $value ? 'hidden' : '',
 	];
 }
 
@@ -129,12 +134,13 @@ if (elgg_get_plugin_setting('tag_friends', 'hypeWall')) {
 }
 
 if (elgg_get_plugin_setting('tags', 'hypeWall')) {
+	$value = $entity ? $entity->tags : get_input('tags');
 	$fields[] = [
 		'#type' => 'tags',
 		'#label' => elgg_echo('wall:tags'),
-		'#class' => 'wall-field-tags hidden',
+		'#class' => ['wall-field-tags', !$value ? 'hidden' : ''],
 		'name' => 'tags',
-		'value' => $entity ? $entity->tags : '',
+		'value' => $value,
 		'class' => 'wall-tags',
 		'entity' => $entity,
 	];
@@ -144,6 +150,7 @@ if (elgg_get_plugin_setting('tags', 'hypeWall')) {
 		'text' => elgg_view_icon('tags'),
 		'title' => elgg_echo('wall:tags'),
 		'data-section' => '.wall-field-tags',
+		'item_class' => $value ? 'hidden' : '',
 	];
 }
 
@@ -168,6 +175,10 @@ $fields[] = [
 foreach ($fields as $field) {
 	echo elgg_view_field($field);
 }
+
+echo elgg_view('output/attachments', [
+	'entity' => $entity,
+]);
 
 $footer = elgg_view_menu('wall-tools', [
 	'class' => 'elgg-menu-hz float',

@@ -22,14 +22,14 @@ define(function (require) {
 			$(document).on('keyup.wall keydown.wall', 'textarea[data-limit]', wall.updateCounter);
 			$(document).on('keyup.wall', '.wall-input-status', wall.parseUrl);
 			$(document).on('blur.wall focusout.wall preview.wall clear.wall', '.wall-url', wall.loadUrlPreview);
-			$(document).on('submit.wall', '.wall-form', wall.formSubmit);
+			$(document).on('submit.wall', '.wall-form:not(.wall-form-edit)', wall.formSubmit);
 
 			$(document).on('click', '.elgg-menu-wall-tools-default > li > a', function (e) {
 				e.preventDefault();
 				var $form = $(this).closest('form');
 				var href = $(this).data('section');
 				$(href, $form).removeClass('hidden');
-				$(this).parent().hide();
+				$(this).parent().addClass('hidden');
 			});
 
 			wall.init = elgg.nullFunction();
@@ -165,7 +165,7 @@ define(function (require) {
 						$form.find('.wall-url').val('').trigger('clear');
 						$form.find('textarea:first').trigger('click');
 						$form.find('[data-section]').each(function() {
-							$(this).parent().show();
+							$(this).parent().removeClass('hidden');
 							var href = $(this).data('section');
 							$(href, $form).addClass('hidden');
 						});
