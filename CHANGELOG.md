@@ -1,3 +1,13 @@
+<a name="5.0.2"></a>
+## [5.0.2](https://github.com/hypeJunction/hypeWall/compare/5.0.1...v5.0.2) (2017-03-02)
+
+
+### Bug Fixes
+
+* **activate:** remove redundant wire subtype class registration ([b8b5bf4](https://github.com/hypeJunction/hypeWall/commit/b8b5bf4)), closes [#90](https://github.com/hypeJunction/hypeWall/issues/90)
+
+
+
 <a name="5.0.1"></a>
 ## [5.0.1](https://github.com/hypeJunction/hypeWall/compare/5.0.0...v5.0.1) (2017-03-01)
 
