@@ -1,3 +1,13 @@
+<a name="5.0.3"></a>
+## [5.0.3](https://github.com/hypeJunction/hypeWall/compare/5.0.2...v5.0.3) (2017-03-02)
+
+
+### Bug Fixes
+
+* **action:** use correct input value for description ([6d23b90](https://github.com/hypeJunction/hypeWall/commit/6d23b90)), closes [#91](https://github.com/hypeJunction/hypeWall/issues/91)
+
+
+
 <a name="5.0.2"></a>
 ## [5.0.2](https://github.com/hypeJunction/hypeWall/compare/5.0.1...v5.0.2) (2017-03-02)
 
