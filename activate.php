@@ -6,7 +6,6 @@ use hypeJunction\Wall\Post;
 
 $subtypes = array(
 	Post::SUBTYPE => Post::class,
-	ElggWire::SUBTYPE => ElggWire::class,
 );
 
 foreach ($subtypes as $subtype => $class) {
