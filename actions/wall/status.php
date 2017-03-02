@@ -7,7 +7,6 @@ $poster = elgg_get_logged_in_user_entity();
 $guid = get_input('guid');
 $status = get_input('status', '');
 $title = htmlentities(get_input('title', ''), ENT_QUOTES, 'UTF-8');
-$description = get_input('description', '');
 $location = get_input('location');
 $access_id = get_input('access_id', get_default_access());
 $address = get_input('address');
@@ -51,7 +50,7 @@ $tags = array_map(function($tag) {
 	return $tag;
 }, $tags);
 
-if (empty($description) && empty($address) && empty($attachment_guids) && empty($upload_guids)) {
+if (empty($status) && empty($address) && empty($attachment_guids) && empty($upload_guids)) {
 	return elgg_error_response(elgg_echo('wall:error:empty_form'));
 }
 
