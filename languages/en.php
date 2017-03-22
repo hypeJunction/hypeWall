@@ -94,6 +94,7 @@ $english = array(
 	'wall:filefolder' => 'Wall Uploads',
 	'wall:upload' => 'Wall File Upload',
 	'wall:tags' => 'Add tags',
+	'wall:repost' => 'Repost to your wall',
 	'wall:photo:placeholder' => 'Tell something about this photo',
 	'wall:file:placeholder' => 'Tell something about this file',
 	'wall:filehasntuploaded' => 'Please wait for the file to upload',

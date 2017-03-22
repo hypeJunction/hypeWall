@@ -46,7 +46,8 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'entityMenuSetup']);
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', [Menus::class, 'ownerBlockMenuSetup']);
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', [Menus::class, 'userHoverMenuSetup']);
-
+	elgg_register_plugin_hook_handler('register', 'menu:scraper:card', [Menus::class, 'setupCardMenu']);
+	
 	elgg_register_widget_type('wall', elgg_echo('wall'), elgg_echo('wall:widget:description'));
 
 	add_group_tool_option('wall', elgg_echo('wall:groups:enable'), false);

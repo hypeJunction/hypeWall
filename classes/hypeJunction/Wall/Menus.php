@@ -173,4 +173,36 @@ class Menus {
 		return $return;
 	}
 
+	/**
+	 * Setup menu
+	 *
+	 * @param string         $hook   "register"
+	 * @param string         $type   "menu:scraper:card"
+	 * @param ElggMenuItem[] $return Menu
+	 * @param array          $params Hook params
+	 * @return ElggMenuItem[]
+	 */
+	public static function setupCardMenu($hook, $type, $return, $params) {
+
+		$user = elgg_get_logged_in_user_entity();
+		if (!$user) {
+			return;
+		}
+
+		$href = elgg_extract('href', $params);
+		if (!$href) {
+			return;
+		}
+
+		$return[] = ElggMenuItem::factory([
+			'name' => 'repost',
+			'href' => elgg_http_add_url_query_elements("wall/owner/$user->username", [
+				'address' => $href,
+			]),
+			'text' => elgg_view_icon('retweet'),
+			'title' => elgg_echo('wall:repost'),
+		]);
+
+		return $return;
+	}
 }
