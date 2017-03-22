@@ -1,3 +1,17 @@
+<a name="5.1.0"></a>
+# [5.1.0](https://github.com/hypeJunction/hypeWall/compare/5.0.3...v5.1.0) (2017-03-22)
+
+
+### Bug Fixes
+
+* **forms:** use correct input value for location ([b1ae1e3](https://github.com/hypeJunction/hypeWall/commit/b1ae1e3))
+
+### Features
+
+* **wall:** add option to repost cards to wall ([b9af634](https://github.com/hypeJunction/hypeWall/commit/b9af634))
+
+
+
 <a name="5.0.3"></a>
 ## [5.0.3](https://github.com/hypeJunction/hypeWall/compare/5.0.2...v5.0.3) (2017-03-02)
 
