@@ -87,7 +87,7 @@ if (elgg_get_plugin_setting('content', 'hypeWall') && elgg_is_active_plugin('hyp
 }
 
 if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
-	$value = $entity ? $entity->location : get_input('address');
+	$value = $entity ? $entity->location : get_input('location');
 	$find_me = elgg_view('output/url', [
 		'href' => '#',
 		'text' => elgg_echo('wall:find_me'),
