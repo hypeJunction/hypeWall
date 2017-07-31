@@ -1,3 +1,13 @@
+<a name="5.1.1"></a>
+## [5.1.1](https://github.com/hypeJunction/hypeWall/compare/5.1.0...v5.1.1) (2017-07-31)
+
+
+### Bug Fixes
+
+* **menus:** wall tools menu now receives the entity ([7ece1f2](https://github.com/hypeJunction/hypeWall/commit/7ece1f2))
+
+
+
 <a name="5.1.0"></a>
 # [5.1.0](https://github.com/hypeJunction/hypeWall/compare/5.0.3...v5.1.0) (2017-03-22)
 
