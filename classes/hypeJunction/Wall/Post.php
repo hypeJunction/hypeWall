@@ -70,7 +70,8 @@ class Post extends ElggObject {
 			'entity' => $this,
 		));
 
-		return (count($attachments)) ? implode('', $attachments) : false;
+		$output = (count($attachments)) ? implode('', $attachments) : false;
+		return elgg_trigger_plugin_hook('attachments:format', 'wall', array('entity' => $this), $output);
 	}
 
 	/**
@@ -136,7 +137,8 @@ class Post extends ElggObject {
 			$summary[] = elgg_echo('wall:owner:suffix', array($wall_owner_link));
 		}
 
-		return implode(' ', $summary);
+		$output = implode(' ', $summary);
+		return elgg_trigger_plugin_hook('summary:format', 'wall', array('entity' => $this), $output);
 	}
 
 	/**
