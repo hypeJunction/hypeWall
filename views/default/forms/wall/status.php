@@ -184,6 +184,7 @@ $footer = elgg_view_menu('wall-tools', [
 	'class' => 'elgg-menu-hz float',
 	'sort_by' => 'priority',
 	'items' => $tools,
+	'entity' => $entity,
 		]);
 
 $footer .= elgg_view_field([
