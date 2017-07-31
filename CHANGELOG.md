@@ -1,3 +1,13 @@
+<a name="5.2.0"></a>
+# [5.2.0](https://github.com/hypeJunction/hypeWall/compare/5.1.1...v5.2.0) (2017-07-31)
+
+
+### Features
+
+* **format:** add hooks to format summary and attachments ([80bc992](https://github.com/hypeJunction/hypeWall/commit/80bc992))
+
+
+
 <a name="5.1.1"></a>
 ## [5.1.1](https://github.com/hypeJunction/hypeWall/compare/5.1.0...v5.1.1) (2017-07-31)
 
