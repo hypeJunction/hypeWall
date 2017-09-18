@@ -2,6 +2,8 @@
 
 namespace hypeJunction\Wall;
 
+use ElggUser;
+
 /**
  * @access private
  */
