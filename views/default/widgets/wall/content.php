@@ -2,6 +2,10 @@
 
 elgg_push_context('wall');
 
+if (!isset($vars['entity']->num_display)) {
+	$vars['entity']->num_display = 4;
+}
+
 $entity = elgg_extract('entity', $vars);
 
 
